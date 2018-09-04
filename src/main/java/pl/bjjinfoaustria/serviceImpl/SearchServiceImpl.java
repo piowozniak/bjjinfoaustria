@@ -14,7 +14,7 @@ public class SearchServiceImpl implements SearchService {
 	
 	@Autowired
 	private GymRepository gymRepository;
-	
+	@Override
 	public List<Gym> getGymsByAttributes(String name, String city, String region) {
 		if (name.isEmpty() && city.isEmpty() && region.isEmpty()) {
 			return gymRepository.findAll();

@@ -51,24 +51,24 @@ public class GymController {
 	
 	@RequestMapping(path="/delete/{id}")
 	public String deleteGym(@PathVariable("id") Long id, Model model) {
-		Gym gym = gymRepository.findOne(id);
+		Gym gym = gymServiceImpl.findGym(id);
 		model.addAttribute("gym", gym);
 		return "deletegym";
 	}
 	@PostMapping(path="/delete")
 	public String deleteConfirm(@ModelAttribute("gym") Gym gym) {
-		gymRepository.delete(gym);
+		gymServiceImpl.deleteGym(gym);
 		return "redirect:search";
 	}
 	@RequestMapping(path="/edit/{id}")
 	public String editGym(@PathVariable("id") Long id, Model model) {
-		Gym gym = gymRepository.findOne(id);
+		Gym gym = gymServiceImpl.findGym(id);
 		model.addAttribute("gym", gym);
 		return "addgym";
 	}
 	@PostMapping(path="/edit")
 	public String editConfirm(@ModelAttribute("gym") Gym gym) {
-		gymRepository.save(gym);
+		gymServiceImpl.addGym(gym);
 		return "redirect:search";
 	}
 	

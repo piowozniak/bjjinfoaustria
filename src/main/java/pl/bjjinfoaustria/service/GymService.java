@@ -8,6 +8,8 @@ import pl.bjjinfoaustria.entity.Gym;
 public interface GymService {
 	
 	void addGym(Gym gym);
+	Gym findGym(long id);
+	void deleteGym(Gym gym);
 		
 
 }
