@@ -7,9 +7,10 @@ import org.springframework.stereotype.Component;
 
 import pl.bjjinfoaustria.entity.Event;
 import pl.bjjinfoaustria.enums.StatusE;
+import pl.bjjinfoaustria.service.EventService;
 
 //@Component
-public class EventServiceImpl {
+public class EventServiceImpl implements EventService {
 	
 
 //	

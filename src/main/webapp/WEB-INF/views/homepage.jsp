@@ -33,5 +33,8 @@
 	</f:form>
 	<a href="/bookstore/search">search gyms</a></br>
 	<a href="/bookstore/add">add</a>
+	<f:form action="/bookstore/add" method="get">
+		<button type="submit">add</button>
+	</f:form>
 </body>
 </html>

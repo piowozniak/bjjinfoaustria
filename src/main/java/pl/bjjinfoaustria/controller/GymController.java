@@ -30,10 +30,6 @@ import pl.bjjinfoaustria.entity.City;
 @Controller
 public class GymController {
 
-	@Autowired
-	GymRepository gymRepository;
-	@Autowired
-	CityRepository cityRepository;
 	@Autowired 
 	GymServiceImpl gymServiceImpl;
 	
