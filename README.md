@@ -1,1 +1,1 @@
-Gym search. Used technologies: JavaEE, Spring (DI, MVC, Spring Data, REST API), Hibernate(relations, form validation) 
+bjjinfoaustria
