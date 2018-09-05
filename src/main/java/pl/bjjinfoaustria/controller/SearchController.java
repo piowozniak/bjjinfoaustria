@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import pl.bjjinfoaustria.entity.Gym;
 import pl.bjjinfoaustria.repository.GymRepository;
+import pl.bjjinfoaustria.service.SearchService;
 import pl.bjjinfoaustria.serviceImpl.SearchServiceImpl;
 
 @Controller
@@ -23,23 +24,23 @@ public class SearchController {
 	@Autowired
 	GymRepository gymRepository;
 	@Autowired
-	SearchServiceImpl searchServiceImpl;
+	SearchService searchService;
 	
 	@RequestMapping("/")
 	public String getAllGyms(Model model) {
-		List<Gym> gyms = gymRepository.findAll();
+		List<Gym> gyms = searchService.findAll();
 		model.addAttribute("gyms", gyms);
 		return "homepage";
 	}
 	@RequestMapping("/search")
 	public String searchForGymsForm(Model model) {
-		List<Gym> gyms = gymRepository.findAll();
+		List<Gym> gyms = searchService.findAll();
 		model.addAttribute("gyms", gyms);
 		return "searchforgyms";
 	}
 	@GetMapping("/gymsbycity")
 	public String getGyms(@RequestParam("city") String city, @RequestParam("name") String name, @RequestParam("region") String region, Model model) {
-		model.addAttribute("gyms", searchServiceImpl.getGymsByAttributes(name, city, region));
+		model.addAttribute("gyms", searchService.getGymsByAttributes(name, city, region));
 		return "searchforgyms";
 	}
 	@ModelAttribute("cities")

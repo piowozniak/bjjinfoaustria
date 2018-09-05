@@ -24,5 +24,9 @@ public class SearchServiceImpl implements SearchService {
 		}
 		return gymRepository.findGymsByCity(city, name, region);
 	}
+	@Override
+	public List<Gym> findAll() {
+		return gymRepository.findAll();
+	}
 
 }

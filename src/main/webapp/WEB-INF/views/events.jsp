@@ -17,21 +17,22 @@
 	<h2>events</h2>
 	<c:forEach items="${events }" var="event">
 		<tr>
-			<td >${event.nameOfEvent }</td>
-			<f:select path="typeOfEvent" items="typeOfEvents"/>
-			<td >${event.host }</td>
-			<td >${event.organisator }</td>
-			<td >${event.startDate }</td>
-			<td >${event.endDate }</td>
-			<td >${event.startHour }</td>
-			<td >${event.deadLine }</td>
-			<td >${event.locationCity }</td>
-			<td >${event.locationAddress }</td>
-			<td >${event.fee }</td>
+			<td>${event.nameOfEvent }</td>
+			<td>${event.typeOfEvent }</td>
+			<td>${event.host }</td>
+			<td>${event.organizer }</td>
+			<td>${event.startDate }</td>
+			<td>${event.endDate }</td>
+			<td>${event.startHour }</td>
+			<td>${event.deadline }</td>
+			<td>${event.locationCity }</td>
+			<td>${event.locationAddress }</td>
+			<td>${event.fee }</td>
 			
+			<form method="get" action="/bjjinfoaustria/addparticipant/${event.id }">
+				<button type="submit">join the event</button>				
+			</form>
 		</tr>
-	
-	
 	</c:forEach>
 	<form method="get" action="/bjjinfoaustria/createevent">
 		<button type="submit">add event</button>

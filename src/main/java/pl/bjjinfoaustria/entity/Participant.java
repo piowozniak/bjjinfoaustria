@@ -15,6 +15,15 @@ public class Participant {
 	private String lastName;
 	private String email;
 	private String phoneNumber;
+	private long idEventu;
+	
+	
+	public long getIdEventu() {
+		return idEventu;
+	}
+	public void setIdEventu(long idEventu) {
+		this.idEventu = idEventu;
+	}
 	public long getId() {
 		return id;
 	}

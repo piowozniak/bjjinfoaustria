@@ -14,9 +14,69 @@
 </style>
 </head>
 <body>
-	<h2>add</h2>
-
+	<h2>add event</h2>
 	<!--  dodawanie event  -->
+		<f:form action="/bjjinfoaustria/createevent" method="post" modelAttribute="event">
+		<div>
+			Id:
+			<f:input path="id" disabled="true"/>
+		</div>
+		<div>
+			Event name:
+			<f:input path="nameOfEvent" />
+		</div>
+		<div>
+			Organizer:
+			<f:input path="organizer" />
+		</div>
+		<div>
+			Host:
+			<f:input path="host" />
+		</div>
+		<div>
+		Type of event:
+		<f:select path="typeOfEvent" items="${listOfEvents}" />
+		</div>
+
+		Start date:
+		<f:input path="startDate" />
+		<div>
+		</div>
+		End date:
+		<f:input path="endDate" />
+		<div>
+		<div>
+		Start hour:
+		<f:input path="startHour" />
+		</div>
+		<div>
+		Deadline:
+		<f:input path="deadline" />
+		</div>
+		<div>
+		City:
+		<f:input path="locationCity" />
+		</div>
+		<div>
+		Address:
+		<f:input path="locationAddress" />
+		</div>
+		<div>
+		Fee:
+		<f:input path="fee" />
+		</div>
+		<div>
+			<f:hidden path="id" />
+		</div>
+		<button type="submit">submit</button>
+	</f:form>
+	
+	
+	<f:form action="/bjjinfoaustria/createevent" method="get">
+		<button type="submit">back</button>
+	</f:form>
+
+	
 
 
 </body>

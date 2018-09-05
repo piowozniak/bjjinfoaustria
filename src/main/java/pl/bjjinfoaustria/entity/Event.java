@@ -26,7 +26,7 @@ public class Event {
 	private List<Participant> participants;
 	private String typeOfEvent;
 	private String host;
-	private String organisator;
+	private String organizer;
 	private String startDate;
 	private String endDate;
 	private String startHour;
@@ -34,7 +34,7 @@ public class Event {
 	private String locationCity;
 	private String locationAddress;
 	private String fee;
-	private StatusE status;
+	private String status;
 	
 	
 	public List<Participant> getParticipants() {
@@ -67,11 +67,11 @@ public class Event {
 	public void setHost(String host) {
 		this.host = host;
 	}
-	public String getOrganisator() {
-		return organisator;
+	public String getOrganizer() {
+		return organizer;
 	}
-	public void setOrganisator(String organisator) {
-		this.organisator = organisator;
+	public void setOrganizer(String organizer) {
+		this.organizer = organizer;
 	}
 	public String getStartDate() {
 		return startDate;
@@ -115,11 +115,11 @@ public class Event {
 	public void setFee(String fee) {
 		this.fee = fee;
 	}
-	public StatusE getStatus() {
+	public String getStatus() {
 		return status;
 	}
-	public void setStatus(StatusE status) {
-		this.status = status;
+	public void setStatus(String string) {
+		this.status = string;
 	}
 
 	
