@@ -17,7 +17,7 @@
 	<h2>add</h2>
 
 	<!--  dodawanie gym  -->
-	<f:form action="/bookstore/add" method="post" modelAttribute="gym">
+	<f:form action="/bjjinfoaustria/add" method="post" modelAttribute="gym">
 		<div>
 			Id:
 			<f:input path="id" disabled="true"/>
@@ -51,7 +51,7 @@
 		</div>
 		<button type="submit">submit</button>
 	</f:form>
-	<f:form action="/bookstore/" method="get">
+	<f:form action="/bjjinfoaustria/" method="get">
 		<button type="submit">back</button>
 	</f:form>
 

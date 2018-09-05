@@ -17,7 +17,7 @@
 	<h2>confirm</h2>
 
 	<!--  usuwanie gym  -->
-	<f:form action="/bookstore/delete" method="delete" modelAttribute="gym">
+	<f:form action="/bjjinfoaustria/delete" method="delete" modelAttribute="gym">
 		<p>Are you sure you want to delete gym ${gym.name }?</p>
 		<div>
 			<input type="submit" value="confirm">
@@ -26,7 +26,7 @@
 			<f:hidden path="id" />
 		</div>
 	</f:form>
-	<f:form action="/bookstore/search" method="get">
+	<f:form action="/bjjinfoaustria/search" method="get">
 		<button type="submit">cancel</button>
 	</f:form>
 

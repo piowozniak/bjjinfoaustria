@@ -15,8 +15,27 @@
 </head>
 <body>
 	<h2>events</h2>
-
-	<!--  lista event  -->
+	<c:forEach items="${events }" var="event">
+		<tr>
+			<td >${event.nameOfEvent }</td>
+			<f:select path="typeOfEvent" items="typeOfEvents"/>
+			<td >${event.host }</td>
+			<td >${event.organisator }</td>
+			<td >${event.startDate }</td>
+			<td >${event.endDate }</td>
+			<td >${event.startHour }</td>
+			<td >${event.deadLine }</td>
+			<td >${event.locationCity }</td>
+			<td >${event.locationAddress }</td>
+			<td >${event.fee }</td>
+			
+		</tr>
+	
+	
+	</c:forEach>
+	<form method="get" action="/bjjinfoaustria/createevent">
+		<button type="submit">add event</button>
+	</form>
 
 
 </body>

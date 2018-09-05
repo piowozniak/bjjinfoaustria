@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,6 +29,7 @@ import pl.bjjinfoaustria.entity.City;
 
 
 @Controller
+@ComponentScan(basePackages="pl.bjjinfoaustria")
 public class GymController {
 
 	@Autowired 

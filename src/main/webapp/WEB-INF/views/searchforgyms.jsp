@@ -17,7 +17,7 @@
 	<h2>search</h2>
 
 		<!--  wyszukiwarka  -->
-	<f:form action="/bookstore/gymsbycity" method="get">
+	<f:form action="/bjjinfoaustria/gymsbycity" method="get">
 		<input name="name" />
 		<select name="city">
 		<option value="">CHOOSE</option>
@@ -43,10 +43,10 @@
 			<td>${gym.address}</td>
 			<td>${gym.phoneNumber}</td>
 			<td>${gym.headCoach}</td>
-			<a href="/bookstore/edit/${gym.id }">edit</a>
-			<a href="/bookstore/delete/${gym.id }">delete</a>
+			<a href="/bjjinfoaustria/edit/${gym.id }">edit</a>
+			<a href="/bjjinfoaustria/delete/${gym.id }">delete</a>
 		</tr></br>
 	</c:forEach>
-<div><a href="/bookstore/">back</a></div>
+<div><a href="/bjjinfoaustria/">back</a></div>
 </body>
 </html>

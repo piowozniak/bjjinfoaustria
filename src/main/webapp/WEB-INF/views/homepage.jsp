@@ -16,7 +16,7 @@
 <body>
 	<h2>hello</h2>
 	<!-- lista wszystkich -->
-	<f:form method="delete" action="/bookstore/delete">
+	<f:form method="delete" action="/bjjinfoaustria/delete">
 	<c:forEach items="${gyms}" var="gym">
 		<div>
 			<tr>
@@ -31,10 +31,15 @@
 		</div>
 	</c:forEach>
 	</f:form>
-	<a href="/bookstore/search">search gyms</a></br>
-	<a href="/bookstore/add">add</a>
-	<f:form action="/bookstore/add" method="get">
+
+	<f:form action="/bjjinfoaustria/search" method="get">
+		<button type="submit">search</button>
+	</f:form>
+	<f:form action="/bjjinfoaustria/add" method="get">
 		<button type="submit">add</button>
+	</f:form>
+	<f:form action="/bjjinfoaustria/events" method="get">
+		<button type="submit">events</button>
 	</f:form>
 </body>
 </html>
