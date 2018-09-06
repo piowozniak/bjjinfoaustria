@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 
 import pl.bjjinfoaustria.entity.Event;
 import pl.bjjinfoaustria.entity.Participant;
+import pl.bjjinfoaustria.entity.User;
 import pl.bjjinfoaustria.enums.StatusE;
 import pl.bjjinfoaustria.repository.EventRepository;
 import pl.bjjinfoaustria.repository.ParticipantRepository;
+import pl.bjjinfoaustria.repository.UserRepository;
 import pl.bjjinfoaustria.service.EventService;
 
 @Service
@@ -18,7 +20,7 @@ public class EventServiceImpl implements EventService {
 	@Autowired
 	EventRepository eventRepository;
 	@Autowired
-	ParticipantRepository participantRepository;
+	UserRepository userRepository;
 	
 	@Override
 	public void addEvent(Event event) {
@@ -32,11 +34,10 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
-	public void addParticipant(Participant participant) {
-		Event event = findEventById(participant.getIdEventu());
-		event.getParticipants().add(participant);	
-		eventRepository.saveAndFlush(event);
-		participantRepository.saveAndFlush(participant);
+	public void addParticipant(User user) {
+	
+//		eventRepository.saveAndFlush(event);
+		userRepository.saveAndFlush(user);
 	}
 
 	@Override

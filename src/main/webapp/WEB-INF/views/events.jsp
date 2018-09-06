@@ -29,7 +29,7 @@
 			<td>${event.locationAddress }</td>
 			<td>${event.fee }</td>
 			
-			<form method="get" action="/bjjinfoaustria/addparticipant/${event.id }">
+			<form method="get" action="/bjjinfoaustria/adduser/${event.id }">
 				<button type="submit">join the event</button>				
 			</form>
 		</tr>

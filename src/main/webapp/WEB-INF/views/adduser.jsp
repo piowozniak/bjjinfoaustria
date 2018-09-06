@@ -17,7 +17,7 @@
 	<h2>join the event</h2>
 
 	<!--  dodawanie do eventu  -->
-	<f:form action="/bjjinfoaustria/addparticipant/" method="post" modelAttribute="participant">
+	<f:form action="/bjjinfoaustria/adduser/" method="post" modelAttribute="user">
 		<div>
 			Id:
 			<f:input path="id" disabled="true"/>
@@ -38,17 +38,13 @@
 			Email:
 			<f:input path="email" />
 		</div>
-		<div>
-			id eventu:
-			<f:input path="idEventu"/>
-		</div>
-
+		
 		<div>
 			<f:hidden path="id" />
 		</div>
 		<button type="submit">submit</button>
 	</f:form>
-	<f:form action="/bjjinfoaustria/" method="get">
+	<f:form action="/bjjinfoaustria/events" method="get">
 		<button type="submit">back</button>
 	</f:form>
 

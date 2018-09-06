@@ -6,13 +6,14 @@ import org.springframework.stereotype.Service;
 
 import pl.bjjinfoaustria.entity.Event;
 import pl.bjjinfoaustria.entity.Participant;
+import pl.bjjinfoaustria.entity.User;
 
 @Service
 public interface EventService {
 	
 	void addEvent(Event event);
 	List<Event> allEvents();
-	void addParticipant(Participant participant);
+	void addParticipant(User user);
 	Event findEventById(long id);
 
 }

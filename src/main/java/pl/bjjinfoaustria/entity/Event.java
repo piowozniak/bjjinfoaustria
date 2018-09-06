@@ -3,18 +3,18 @@ package pl.bjjinfoaustria.entity;
 
 import java.util.List;
 
-import javax.persistence.ElementCollection;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.ManyToMany;
 
 
 import pl.bjjinfoaustria.enums.StatusE;
 
-@Entity
-@Table(name="events")
+@Entity(name="Event")
 public class Event {
 	
 	@Id
@@ -22,8 +22,8 @@ public class Event {
 	private long id;
 	private String nameOfEvent;
 	
-	@ElementCollection
-	private List<Participant> participants;
+	@ManyToMany(mappedBy = "events",fetch = FetchType.LAZY)
+	private List<User> participants;
 	private String typeOfEvent;
 	private String host;
 	private String organizer;
@@ -37,10 +37,10 @@ public class Event {
 	private String status;
 	
 	
-	public List<Participant> getParticipants() {
+	public List<User> getParticipants() {
 		return participants;
 	}
-	public void setParticipants(List<Participant> participants) {
+	public void setParticipants(List<User> participants) {
 		this.participants = participants;
 	}
 	public long getId() {

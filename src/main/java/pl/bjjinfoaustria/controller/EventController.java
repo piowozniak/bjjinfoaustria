@@ -1,5 +1,6 @@
 package pl.bjjinfoaustria.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import pl.bjjinfoaustria.entity.Event;
 import pl.bjjinfoaustria.entity.Participant;
+import pl.bjjinfoaustria.entity.User;
+import pl.bjjinfoaustria.repository.UserRepository;
 import pl.bjjinfoaustria.service.EventService;
 import pl.bjjinfoaustria.serviceImpl.EventServiceImpl;
 
@@ -24,6 +27,8 @@ public class EventController {
 	
 	@Autowired
 	EventService eventService;
+	@Autowired
+	UserRepository userRepository;
 	
 	@RequestMapping(path="/events")
 	public String allEvents(Model model) {
@@ -38,19 +43,39 @@ public class EventController {
 	}
 	@PostMapping(path="/createevent")
 	public String createEventConfirm(@ModelAttribute("event") Event event) {
+		User user1 = new User();
+		user1.setFirstName("John");
+		user1.setLastName("Kebab");
+		userRepository.save(user1);
+		User user2 = new User();
+		user2.setFirstName("dupa");
+		user2.setLastName("cyce");
+		userRepository.save(user2);
+
+		List<User> list = new ArrayList<User>();
+		event.setParticipants(list);
+		event.getParticipants().add(user1);
+		event.getParticipants().add(user2);
 		eventService.addEvent(event);
+		System.out.println(event.getParticipants().size());
 		return "redirect:events";
 	}
-	@GetMapping(path="/addparticipant/{id}")
+	@GetMapping(path="/adduser/{id}")
 	public String addParticipant(Model model, @PathVariable long id) {		
-		Participant participant = new Participant();
-		participant.setIdEventu(id);
-		model.addAttribute("participant", participant);
-		return "addparticipant";
+		Event event = eventService.findEventById(id);
+		System.out.println(event.getParticipants().size());
+		for (User user : event.getParticipants()) {
+			System.out.println(user.getFirstName());
+		}
+		User user = new User();
+		user.getEvents().add(event);
+//		user.setIdEventu(id);
+		model.addAttribute("user", user);
+		return "adduser";
 	}
-	@PostMapping(path="/addparticipant")
-	public String addParticipantForm(@ModelAttribute Participant participant) {
-		eventService.addParticipant(participant);
+	@PostMapping(path="/adduser")
+	public String addParticipantForm(@ModelAttribute User user) {
+		eventService.addParticipant(user);
 		return "redirect:events";
 	}
 	

@@ -19,6 +19,7 @@
                 value="metadata" />
             <property name="javax.persistence.sql-load-script-source"
                 value="META-INF/sql/data.sql" />
+			<property name="hibernate.enable_lazy_load_no_trans" value="true"/>
 		</properties>
 
 	</persistence-unit>
