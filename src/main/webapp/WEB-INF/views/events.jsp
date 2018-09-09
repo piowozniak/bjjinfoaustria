@@ -15,6 +15,7 @@
 </head>
 <body>
 	<h2>events</h2>
+
 	<c:forEach items="${events }" var="event">
 		<tr>
 			<td>${event.nameOfEvent }</td>
@@ -28,15 +29,47 @@
 			<td>${event.locationCity }</td>
 			<td>${event.locationAddress }</td>
 			<td>${event.fee }</td>
-			
-			<form method="get" action="/bjjinfoaustria/adduser/${event.id }">
-				<button type="submit">join the event</button>				
+
+			<form method="get" style="display: inline;" action="/bjjinfoaustria/deleteevent/${event.id }">
+				<button type="submit">delete event</button>
 			</form>
+			<form  method="get" style="display: inline;"
+				action="/bjjinfoaustria/addusertoevent/${event.id }">
+				<button type="submit">join the event</button>
+			</form>
+
 		</tr>
+		</br>
+		List of users:
+		</br><c:forEach items="${event.participants }" var="participant">
+			<tr>
+				<td>
+					${participant.firstName }
+				</td>
+				<td>
+					${participant.lastName}
+				</td>
+			</tr></br>
+		</c:forEach>
+		<div>----------------------------------------------</div>
+		</br>
 	</c:forEach>
 	<form method="get" action="/bjjinfoaustria/createevent">
 		<button type="submit">add event</button>
 	</form>
+	<c:forEach items="${users }" var="user">
+		<tr>
+			<td>${user.firstName }</td>
+			<td>${user.lastName }</td>
+			<td>${user.email }</td>
+			<td>${user.phoneNumber }</td>
+			<form method="get" style="display: inline;" action="/bjjinfoaustria/deleteuser/${user.id }">
+				<button type="submit">delete user</button>
+			</form>
+		</tr>
+		</br>
+	
+	</c:forEach>
 
 
 </body>

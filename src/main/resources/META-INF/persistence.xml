@@ -6,6 +6,7 @@
 	version="2.1">
 	<persistence-unit name="BjjInfoAustriaPersistenceUnit">
 		<properties>
+		<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
 			<property name="javax.persistence.jdbc.url"
 				value="jdbc:mysql://localhost:3306/BjjInfoAustria" />
 			<property name="javax.persistence.jdbc.user" value="root" />

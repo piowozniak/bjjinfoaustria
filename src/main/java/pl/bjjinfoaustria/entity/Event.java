@@ -21,8 +21,7 @@ public class Event {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String nameOfEvent;
-	
-	@ManyToMany(mappedBy = "events",fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY)
 	private List<User> participants;
 	private String typeOfEvent;
 	private String host;

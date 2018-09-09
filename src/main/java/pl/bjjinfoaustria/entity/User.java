@@ -19,7 +19,7 @@ public class User {
 	private String lastName;
 	private String email;
 	private String phoneNumber;
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "participants",fetch = FetchType.LAZY)
 	private List<Event> events;
 	
 	public long getId() {

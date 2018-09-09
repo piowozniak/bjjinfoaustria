@@ -34,15 +34,21 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
-	public void addParticipant(User user) {
-	
-//		eventRepository.saveAndFlush(event);
-		userRepository.saveAndFlush(user);
+	public void addParticipant(long eventId, long userId) {
+			Event event = eventRepository.findOne(eventId);
+			User user = userRepository.findOne(userId);
+			event.getParticipants().add(user);
+			eventRepository.saveAndFlush(event);
 	}
 
 	@Override
 	public Event findEventById(long id) {
 		return eventRepository.findOne(id);
+	}
+
+	@Override
+	public void deleteEvent(Event event) {
+		eventRepository.delete(event);
 	}
 	
 

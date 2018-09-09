@@ -14,23 +14,33 @@
 </style>
 </head>
 <body>
-	<h2>confirm</h2>
+	<h2>join the event</h2>
 
-	<!--  usuwanie gym  -->
-	<f:form action="/bjjinfoaustria/delete" method="delete" modelAttribute="gym">
-		<p>Are you sure you want to delete gym ${gym.name }?</p>
+	<!--  dodawanie do eventu  -->
+	<f:form action="/bjjinfoaustria/addusertoevent" method="post"
+		modelAttribute="eventUsers">
+
 		<div>
-			<input type="submit" value="confirm">
+			Event:
+			<h3>${eventUsers.idEventu}</h3>
 		</div>
+		<div>
+			Users:
+			<f:select path="idUsera" items="${participants}"
+				itemLabel="firstName" itemValue="id" />
+		</div>
+
 		<div>
 			<f:hidden path="id" />
 		</div>
-		<button type="submit">confirm</button>
+		<div>
+			<f:hidden path="idEventu" />
+		</div>
+		<button type="submit">submit</button>
 	</f:form>
-	<f:form action="/bjjinfoaustria/search" method="get">
-		<button type="submit">cancel</button>
+	<f:form action="/bjjinfoaustria/events" method="get">
+		<button type="submit">back</button>
 	</f:form>
-
 
 </body>
 </html>

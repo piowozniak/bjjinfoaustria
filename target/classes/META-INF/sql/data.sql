@@ -7,3 +7,16 @@ INSERT INTO cities (id, name) VALUES (1,'VIENNA');
 INSERT INTO cities (id, name) VALUES (2,'INNSBRUCK');
 INSERT INTO cities (id, name) VALUES (3,'LINZ');
 INSERT INTO cities (id, name) VALUES (4,'SALZBURG');
+
+
+
+
+INSERT INTO Event (id,nameOfEvent,typeOfEvent,host,organizer,startDate,endDate, startHour, deadline, locationCity, locationAddress,fee, status) VALUES (1,'Summer Camp','Camp','Carlos Maia','BJJ Graz','12-05-2019','20-05-2019', '10:00', '12-04-2019', 'Dupowo', 'Dupowato', '300', 'SUBMITTED');
+INSERT INTO Event (id,nameOfEvent,typeOfEvent,host,organizer,startDate,endDate, startHour, deadline, locationCity, locationAddress,fee, status) VALUES (2,'Adam Wardzinski Seminar','Seminar','Pawel Kozlowski','Alpha Jiut Jitsu','12-08-2019','13-05-2019', '10:00', '12-07-2019', 'Vienna', 'Dupowato', '50', 'SUBMITTED');
+INSERT INTO Event (id,nameOfEvent,typeOfEvent,host,organizer,startDate,endDate, startHour, deadline, locationCity, locationAddress,fee, status) VALUES (3,'Seminar with Rick Hunley','Seminar','Lemmy Krusic','ATT','12-05-2019','20-05-2019', '10:00', '12-04-2019', 'Linz', 'IndustrizeilleStrasse', '3000', 'SUBMITTED');
+INSERT INTO Event (id,nameOfEvent,typeOfEvent,host,organizer,startDate,endDate, startHour, deadline, locationCity, locationAddress,fee, status) VALUES (4,'Seminar with Frank Artnak','Seminar','Mani','AK16','12-05-2019','20-05-2019', '10:00', '12-04-2019', 'Linz', 'ShitHole', '1300', 'SUBMITTED');
+
+INSERT INTO User (id, firstName, lastName, email, phoneNumber) VALUES (1,'John','Kebab', 'dupa@dup.dup', '65465465');
+INSERT INTO User (id, firstName, lastName, email, phoneNumber) VALUES (2,'Dupa','Dupa', 'dupa@dup.dup', '65465465');
+INSERT INTO User (id, firstName, lastName, email, phoneNumber) VALUES (3,'Ble','Ble', 'Ble', '65465465');
+INSERT INTO User (id, firstName, lastName, email, phoneNumber) VALUES (4,'Gre','Gre', 'Gre', '65465465');

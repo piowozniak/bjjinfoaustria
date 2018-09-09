@@ -13,7 +13,8 @@ public interface EventService {
 	
 	void addEvent(Event event);
 	List<Event> allEvents();
-	void addParticipant(User user);
+	void addParticipant(long idEventu, long idUsera);
 	Event findEventById(long id);
+	void deleteEvent(Event event);
 
 }
