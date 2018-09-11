@@ -4,13 +4,15 @@ package pl.bjjinfoaustria.entity;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-
+import javax.persistence.OneToOne;
 
 import pl.bjjinfoaustria.enums.StatusE;
 
@@ -34,6 +36,8 @@ public class Event {
 	private String locationAddress;
 	private String fee;
 	private String status;
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Competition competition;
 	
 	
 	public List<User> getParticipants() {
@@ -119,6 +123,12 @@ public class Event {
 	}
 	public void setStatus(String string) {
 		this.status = string;
+	}
+	public Competition getCompetition() {
+		return competition;
+	}
+	public void setCompetition(Competition competition) {
+		this.competition = competition;
 	}
 
 	

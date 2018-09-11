@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import pl.bjjinfoaustria.dto.EventUsersDTO;
+import pl.bjjinfoaustria.entity.Competition;
 import pl.bjjinfoaustria.entity.Event;
 import pl.bjjinfoaustria.entity.Participant;
 import pl.bjjinfoaustria.entity.User;
+import pl.bjjinfoaustria.repository.CompetitionRepository;
 import pl.bjjinfoaustria.repository.UserRepository;
 import pl.bjjinfoaustria.service.EventService;
 import pl.bjjinfoaustria.serviceImpl.EventServiceImpl;
@@ -31,6 +33,7 @@ public class EventController {
 	EventService eventService;
 	@Autowired
 	UserRepository userRepository;
+	
 	
 	@RequestMapping(path="/events")
 	public String allEvents(Model model) {
@@ -45,11 +48,8 @@ public class EventController {
 		return "createevent";
 	}
 	@PostMapping(path="/createevent")
-	public String createEventConfirm(@ModelAttribute("event") Event event) {
-		eventService.addEvent(event);
-		List<Event> eventList = new ArrayList<>();
-		eventList.add(event);
-		return "redirect:events";
+	public String createEventConfirm(@ModelAttribute("event") Event event, Model model) {		
+		return eventService.addEvent(event, model);
 	}
 	
 	@GetMapping(path="/deleteevent/{id}")
@@ -66,16 +66,12 @@ public class EventController {
 	
 	@GetMapping(path="/addusertoevent/{id}")
 	public String addParticipant(Model model, @PathVariable long id) {		
-//		Event event = eventService.findEventById(id);
-//		List<User> userList = userRepository.findAll();
 		EventUsersDTO eventUsers = new EventUsersDTO(id);
 		model.addAttribute("eventUsers", eventUsers);
 		return "addusertoevent";
 	}
 	@PostMapping(path="/addusertoevent")
 	public String addParticipantForm(@ModelAttribute EventUsersDTO eventUsers) {
-		System.out.println(eventUsers.getIdEventu());
-		System.out.println(eventUsers.getIdUsera());
 		eventService.addParticipant(eventUsers.getIdEventu(), eventUsers.getIdUsera());
 		return "redirect:events";
 	}
@@ -98,7 +94,7 @@ public class EventController {
 	
 	@ModelAttribute("listOfEvents")
 	public List<String> getTypeOfEvent() {
-		List<String> listOfEvents = Arrays.asList("SEMINAR", "CAMP") ;
+		List<String> listOfEvents = Arrays.asList("SEMINAR", "CAMP", "COMPETITION") ;
 		return listOfEvents;
 	}
 	

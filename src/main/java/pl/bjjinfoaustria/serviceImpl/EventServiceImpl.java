@@ -4,11 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
+import pl.bjjinfoaustria.entity.Competition;
 import pl.bjjinfoaustria.entity.Event;
 import pl.bjjinfoaustria.entity.Participant;
 import pl.bjjinfoaustria.entity.User;
 import pl.bjjinfoaustria.enums.StatusE;
+import pl.bjjinfoaustria.repository.CompetitionRepository;
 import pl.bjjinfoaustria.repository.EventRepository;
 import pl.bjjinfoaustria.repository.ParticipantRepository;
 import pl.bjjinfoaustria.repository.UserRepository;
@@ -21,11 +24,18 @@ public class EventServiceImpl implements EventService {
 	EventRepository eventRepository;
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	CompetitionRepository competitionRepository;
 	
 	@Override
-	public void addEvent(Event event) {
-		event.setStatus("SUBMITTED");
+	public String addEvent(Event event, Model model) {
+		event.setStatus("SUBMITTED");		
 		eventRepository.saveAndFlush(event);
+		if (event.getTypeOfEvent().equals("COMPETITION")) {
+			addModelAttributeIfEventIsCompetition(model);
+			return  "competitionregistration";
+		}
+		return "redirect:events";
 	}
 
 	@Override
@@ -50,7 +60,9 @@ public class EventServiceImpl implements EventService {
 	public void deleteEvent(Event event) {
 		eventRepository.delete(event);
 	}
-	
+	private void addModelAttributeIfEventIsCompetition(Model model) {
+		model.addAttribute("competition", new Competition());
+	}
 
 
 }
