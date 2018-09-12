@@ -30,11 +30,12 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public String addEvent(Event event, Model model) {
 		event.setStatus("SUBMITTED");		
-		eventRepository.saveAndFlush(event);
 		if (event.getTypeOfEvent().equals("COMPETITION")) {
-			addModelAttributeIfEventIsCompetition(model);
+			eventRepository.saveAndFlush(event);
+			addModelAttributeIfEventIsCompetition(model, event);
 			return  "competitionregistration";
 		}
+		eventRepository.saveAndFlush(event);
 		return "redirect:events";
 	}
 
@@ -60,8 +61,11 @@ public class EventServiceImpl implements EventService {
 	public void deleteEvent(Event event) {
 		eventRepository.delete(event);
 	}
-	private void addModelAttributeIfEventIsCompetition(Model model) {
-		model.addAttribute("competition", new Competition());
+	private void addModelAttributeIfEventIsCompetition(Model model, Event event) {
+		Competition competition = new Competition();
+		competition.setEvent(event);
+		competitionRepository.saveAndFlush(competition);
+		model.addAttribute("competition", competition);
 	}
 
 

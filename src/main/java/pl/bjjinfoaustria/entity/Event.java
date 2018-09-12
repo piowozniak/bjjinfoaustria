@@ -14,8 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
-import pl.bjjinfoaustria.enums.StatusE;
-
 @Entity(name="Event")
 public class Event {
 	
@@ -36,7 +34,7 @@ public class Event {
 	private String locationAddress;
 	private String fee;
 	private String status;
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(mappedBy="event", fetch = FetchType.LAZY,  cascade = CascadeType.ALL, orphanRemoval = true)
 	private Competition competition;
 	
 	

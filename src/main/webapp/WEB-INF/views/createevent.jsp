@@ -72,7 +72,7 @@
 	</f:form>
 	
 	
-	<f:form action="/bjjinfoaustria/createevent" method="get">
+	<f:form action="/bjjinfoaustria/events" method="get">
 		<button type="submit">back</button>
 	</f:form>
 
