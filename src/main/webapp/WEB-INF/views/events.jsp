@@ -37,6 +37,10 @@
 				action="/bjjinfoaustria/addusertoevent/${event.id }">
 				<button type="submit">join the event</button>
 			</form>
+			<form  method="get" style="display: inline;"
+				action="/bjjinfoaustria/editevent/${event.id }">
+				<button type="submit">details</button>
+			</form>
 
 		</tr>
 		</br>

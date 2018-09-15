@@ -23,7 +23,7 @@ public class Competition {
 	private String nameOfTheEvent;	
 	@OneToOne
 	private Event event;
-	@OneToMany(mappedBy="competition", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="competition", fetch = FetchType.EAGER,  cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Division> divisions;
 	
 	public List<Division> getDivisions() {

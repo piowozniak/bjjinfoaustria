@@ -66,9 +66,8 @@ public class EventController {
 	
 	@GetMapping(path="/addusertoevent/{id}")
 	public String addParticipant(Model model, @PathVariable long id) {		
-		EventUsersDTO eventUsers = new EventUsersDTO(id);
-		model.addAttribute("eventUsers", eventUsers);
-		return "addusertoevent";
+
+		return eventService.joinTypeOfEvent(model, id);
 	}
 	@PostMapping(path="/addusertoevent")
 	public String addParticipantForm(@ModelAttribute EventUsersDTO eventUsers) {
@@ -85,6 +84,10 @@ public class EventController {
 	public String deleteUserConfirm(@ModelAttribute User user) {
 		userRepository.delete(user);
 		return "redirect:events";
+	}
+	@GetMapping(path="/editevent/{id}")
+	public String editEvent(@PathVariable("id") long id, Model model) {
+		return eventService.editEvent(id, model);
 	}
 	
 	@ModelAttribute("participants" )

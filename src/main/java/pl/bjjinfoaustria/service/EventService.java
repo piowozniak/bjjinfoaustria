@@ -12,10 +12,12 @@ import pl.bjjinfoaustria.entity.User;
 @Service
 public interface EventService {
 	
+	String joinTypeOfEvent(Model model, long id);
 	String addEvent(Event event, Model model);
 	List<Event> allEvents();
 	void addParticipant(long idEventu, long idUsera);
 	Event findEventById(long id);
 	void deleteEvent(Event event);
+	String editEvent(long id , Model model);
 
 }

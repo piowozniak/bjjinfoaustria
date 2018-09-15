@@ -14,41 +14,38 @@
 </style>
 </head>
 <body>
-	<h2>competition</h2>
-	<!--  dodawanie competition  -->
-	<f:form action="/bjjinfoaustria/createcompetition" method="post"
-		modelAttribute="competition">
-		<h3>${competition.event.nameOfEvent }</h3>
+	<h2>join the event</h2>
+
+	<!--  dodawanie do eventu  -->
+	<f:form action="/bjjinfoaustria/addusertoevent" method="post"
+		modelAttribute="eventUsers">
+
 		<div>
-			Id:
-			<f:input path="id" disabled="true" />
+			Event:
+			<h3>${eventUsers.idEventu}</h3>
+		</div>
+		<div>
+			Users:
+			<f:select path="idUsera" items="${participants}"
+				itemLabel="firstName" itemValue="id" />
+		</div>
+		<div>
+			Divisions:
+			<f:select path="division.id" items="${divisions}"
+				itemLabel="fullNameCategory" itemValue="id" />
 		</div>
 
 		<div>
 			<f:hidden path="id" />
 		</div>
+		<div>
+			<f:hidden path="idEventu" />
+		</div>
 		<button type="submit">submit</button>
-
 	</f:form>
-	<f:form action="/bjjinfoaustria/adddivision/${competition.id}"
-		method="get">
-		<button type="submit">add division</button>
-	</f:form>
-	<c:forEach items="${competition.divisions }" var="division">
-		<tr>
-			<td>${division.beltCategory }</td>
-			<td>${division.weightCategory }</td>
-		</tr></br>
-	</c:forEach>
-
-
-
 	<f:form action="/bjjinfoaustria/events" method="get">
 		<button type="submit">back</button>
 	</f:form>
-
-
-
 
 </body>
 </html>

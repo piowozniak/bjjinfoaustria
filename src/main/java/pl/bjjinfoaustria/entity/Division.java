@@ -3,6 +3,7 @@ package pl.bjjinfoaustria.entity;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,10 +20,11 @@ public class Division {
 	
 	private String beltCategory;
 	private String weightCategory;
+	private String fullNameCategory;
 	@OneToMany
     @JoinColumn(name="competition_id")
 	private List<User> competitors;
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="competition_id")
 	private Competition competition;
 
@@ -64,6 +66,14 @@ public class Division {
 
 	public void setCompetitors(List<User> competitors) {
 		this.competitors = competitors;
+	}
+
+	public String getFullNameCategory() {
+		return this.beltCategory + " " + this.weightCategory;
+	}
+
+	public void setFullNameCategory(String fullNameCategory) {
+		this.fullNameCategory = fullNameCategory;
 	}
 
 

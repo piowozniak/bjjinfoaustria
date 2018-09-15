@@ -2,6 +2,7 @@ package pl.bjjinfoaustria.dto;
 
 import java.util.List;
 
+import pl.bjjinfoaustria.entity.Division;
 import pl.bjjinfoaustria.entity.Event;
 import pl.bjjinfoaustria.entity.User;
 
@@ -11,12 +12,21 @@ public class EventUsersDTO {
 	private List<User> listOfUsers;
 	private long idEventu;
 	private long idUsera;
+	private Division division;
 	
 
 
 	public EventUsersDTO(long idEventu) {
 		super();
 		this.idEventu = idEventu;
+	}
+
+	public Division getDivision() {
+		return division;
+	}
+
+	public void setDivision(Division division) {
+		this.division = division;
 	}
 
 	public long getIdEventu() {
