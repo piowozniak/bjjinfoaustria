@@ -7,8 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import pl.bjjinfoaustria.entity.Competition;
 import pl.bjjinfoaustria.entity.Division;
+import pl.bjjinfoaustria.entity.Event;
+import pl.bjjinfoaustria.entity.User;
 import pl.bjjinfoaustria.repository.CompetitionRepository;
 import pl.bjjinfoaustria.repository.DivisionRepository;
+import pl.bjjinfoaustria.repository.EventRepository;
+import pl.bjjinfoaustria.repository.UserRepository;
 import pl.bjjinfoaustria.service.CompetitionService;
 @Service
 public class CompetitionServiceImpl implements CompetitionService {
@@ -17,6 +21,11 @@ public class CompetitionServiceImpl implements CompetitionService {
 	private CompetitionRepository competitionRepository;
 	@Autowired
 	DivisionRepository divisionRepository;
+	@Autowired
+	EventRepository eventRepository;
+	@Autowired
+	UserRepository userRepository;
+	
 	@Override
 	public String addCategoryToModel(Model model, long id) {
 		Competition competition = competitionRepository.findOne(id);
@@ -33,6 +42,24 @@ public class CompetitionServiceImpl implements CompetitionService {
 		Competition competition = competitionRepository.findOne(division.getCompetition().getId());
 		model.addAttribute("competition", competition);
 		return "competitionregistration";
+	}
+
+	@Override
+	public String addCompetitor(long eventId, long userId, Division division) {
+		Event event = eventRepository.findOne(eventId);
+		User user = userRepository.findOne(userId);
+		event.getParticipants().add(user);
+		eventRepository.saveAndFlush(event);
+		division = divisionRepository.findOne(division.getId());
+		division.getCompetitors().add(user);
+		divisionRepository.saveAndFlush(division);
+		division = divisionRepository.findOne(division.getId());
+		System.out.println(division.getFullNameCategory());
+		for(User u : division.getCompetitors()) {
+			System.out.println(u.getFirstName());
+
+		}
+		return "redirect:events";
 	}
 
 }

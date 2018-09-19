@@ -9,4 +9,5 @@ import pl.bjjinfoaustria.entity.Division;
 public interface CompetitionService {
 	String addCategoryToModel(Model model, long id);
 	String saveDivision(Division division, Model model);
+	String addCompetitor(long eventId, long userId, Division division );
 }

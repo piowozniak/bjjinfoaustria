@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import pl.bjjinfoaustria.dto.EventUsersDTO;
 import pl.bjjinfoaustria.entity.Competition;
 import pl.bjjinfoaustria.entity.Division;
 import pl.bjjinfoaustria.repository.CompetitionRepository;
@@ -42,6 +43,15 @@ public class CompetitionController {
 	public String addDivision(@ModelAttribute("division") Division division, Model model) {
 		return competitionService.saveDivision(division, model);
 	}	
+	@PostMapping(path="/addcompetitor")
+	public String addCompetitor(@ModelAttribute("eventUsers") EventUsersDTO eventUsers, Model model ) {
+		System.out.println(model.containsAttribute("eventUsers"));
+		System.out.println(eventUsers.getIdEventu() + "   id eventu");
+		System.out.println(eventUsers.getIdUsera() + "   id usera");
+		System.out.println(eventUsers.getDivision().getId() + "   id division");
+		
+		return competitionService.addCompetitor(eventUsers.getIdEventu(), eventUsers.getIdUsera(), eventUsers.getDivision());
+	}
 	
 	@ModelAttribute("beltCategories")
 	public List<String> getBeltCategories() {

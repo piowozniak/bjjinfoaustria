@@ -2,6 +2,7 @@ package pl.bjjinfoaustria.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -21,8 +22,8 @@ public class Division {
 	private String beltCategory;
 	private String weightCategory;
 	private String fullNameCategory;
-	@OneToMany
-    @JoinColumn(name="competition_id")
+	@OneToMany(fetch = FetchType.LAZY,  cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name="user_id")
 	private List<User> competitors;
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="competition_id")

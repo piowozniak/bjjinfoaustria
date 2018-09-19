@@ -15,5 +15,7 @@ public interface DivisionRepository extends JpaRepository<Division, Long>{
 			+ "from Division d join Competition c on c.id = d.competition_id where c.event_id = :id", 
 			  nativeQuery = true)
 	List<Division> findDivisionsFromCompetitionByEventId(@Param("id") long id);
+	
+	
 
 }

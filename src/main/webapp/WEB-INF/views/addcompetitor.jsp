@@ -16,8 +16,8 @@
 <body>
 	<h2>join the event</h2>
 
-	<!--  dodawanie do eventu  -->
-	<f:form action="/bjjinfoaustria/addusertoevent" method="post"
+	<!--  dodawanie do competitora  -->
+	<f:form action="/bjjinfoaustria/addcompetitor" method="post"
 		modelAttribute="eventUsers">
 
 		<div>

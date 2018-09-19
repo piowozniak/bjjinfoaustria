@@ -5,8 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity(name="EventUserDetails")
-public class EventUserDetails {
+@Entity(name="EventRegistration")
+public class EventRegistration {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
