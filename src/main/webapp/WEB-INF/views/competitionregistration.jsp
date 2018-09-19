@@ -17,8 +17,8 @@
 	<h2>competition</h2>
 	<!--  dodawanie competition  -->
 	<f:form action="/bjjinfoaustria/createcompetition" method="post"
-		modelAttribute="competition">
-		<h3>${competition.event.nameOfEvent }</h3>
+		modelAttribute="event">
+		<h3>${event.nameOfEvent }</h3>
 		<div>
 			Id:
 			<f:input path="id" disabled="true" />
@@ -30,11 +30,11 @@
 		<button type="submit">submit</button>
 
 	</f:form>
-	<f:form action="/bjjinfoaustria/adddivision/${competition.id}"
+	<f:form action="/bjjinfoaustria/adddivision/${event.id}"
 		method="get">
 		<button type="submit">add division</button>
 	</f:form>
-	<c:forEach items="${competition.divisions }" var="division">
+	<c:forEach items="${event.divisions }" var="division">
 		<tr>
 			<td>${division.beltCategory }</td>
 			<td>${division.weightCategory }</td>

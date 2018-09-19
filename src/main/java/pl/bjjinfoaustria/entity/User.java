@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Entity(name="User")
 public class User {
@@ -19,9 +20,17 @@ public class User {
 	private String lastName;
 	private String email;
 	private String phoneNumber;
-	@ManyToMany(mappedBy = "participants",fetch = FetchType.LAZY)
-	private List<Event> events;
+//	@ManyToMany(mappedBy = "participants",fetch = FetchType.LAZY)
+//	private List<Event> events;
+	@OneToMany(mappedBy="user", fetch = FetchType.EAGER,  cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Competitor> competitors;
 	
+	public List<Competitor> getCompetitors() {
+		return competitors;
+	}
+	public void setCompetitors(List<Competitor> competitors) {
+		this.competitors = competitors;
+	}
 	public long getId() {
 		return id;
 	}
@@ -52,11 +61,11 @@ public class User {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	public List<Event> getEvents() {
-		return events;
-	}
-	public void setEvents(List<Event> events) {
-		this.events = events;
-	}
+//	public List<Event> getEvents() {
+//		return events;
+//	}
+//	public void setEvents(List<Event> events) {
+//		this.events = events;
+//	}
 
 }

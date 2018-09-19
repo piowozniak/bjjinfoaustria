@@ -19,5 +19,6 @@ public interface EventService {
 	Event findEventById(long id);
 	void deleteEvent(Event event);
 	String editEvent(long id , Model model);
+	
 
 }

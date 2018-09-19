@@ -44,17 +44,7 @@
 
 		</tr>
 		</br>
-		List of users:
-		</br><c:forEach items="${event.participants }" var="participant">
-			<tr>
-				<td>
-					${participant.firstName }
-				</td>
-				<td>
-					${participant.lastName}
-				</td>
-			</tr></br>
-		</c:forEach>
+
 		<div>----------------------------------------------</div>
 		</br>
 	</c:forEach>

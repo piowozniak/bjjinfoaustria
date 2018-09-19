@@ -1,10 +1,12 @@
 package pl.bjjinfoaustria.entity;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity(name="Event")
@@ -21,8 +24,8 @@ public class Event {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String nameOfEvent;
-	@ManyToMany(fetch = FetchType.LAZY)
-	private List<User> participants;
+//	@ManyToMany(fetch = FetchType.LAZY)
+//	private List<User> participants;
 	private String typeOfEvent;
 	private String host;
 	private String organizer;
@@ -34,18 +37,36 @@ public class Event {
 	private String locationAddress;
 	private String fee;
 	private String status;
-	@OneToOne(mappedBy="event", fetch = FetchType.LAZY,  cascade = CascadeType.ALL, orphanRemoval = true)
-	private Competition competition;
+	@OneToMany(mappedBy="event", fetch = FetchType.EAGER,  cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Division> divisions;
+	@ElementCollection
+	private List<User> participants;
+//	@OneToOne(mappedBy="event", fetch = FetchType.LAZY,  cascade = CascadeType.ALL, orphanRemoval = true)
+//	private Competition competition;
 	
 	
 	public List<User> getParticipants() {
+		if (this.typeOfEvent.equals("SEMINAR")) {
+			List<User> users = new ArrayList<>();
+			for(Competitor c : this.divisions.get(0).getCompetitors()) {
+				users.add(c.getUser());
+			}
+			return users;
+		}
 		return participants;
 	}
 	public void setParticipants(List<User> participants) {
 		this.participants = participants;
 	}
+
 	public long getId() {
 		return id;
+	}
+	public List<Division> getDivisions() {
+		return divisions;
+	}
+	public void setDivisions(List<Division> divisions) {
+		this.divisions = divisions;
 	}
 	public String getTypeOfEvent() {
 		return typeOfEvent;
@@ -122,12 +143,12 @@ public class Event {
 	public void setStatus(String string) {
 		this.status = string;
 	}
-	public Competition getCompetition() {
-		return competition;
-	}
-	public void setCompetition(Competition competition) {
-		this.competition = competition;
-	}
+//	public Competition getCompetition() {
+//		return competition;
+//	}
+//	public void setCompetition(Competition competition) {
+//		this.competition = competition;
+//	}
 
 	
 	

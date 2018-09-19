@@ -22,19 +22,30 @@ public class Division {
 	private String beltCategory;
 	private String weightCategory;
 	private String fullNameCategory;
-	@OneToMany(fetch = FetchType.LAZY,  cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name="user_id")
-	private List<User> competitors;
+//	@OneToMany(fetch = FetchType.LAZY,  cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JoinColumn(name="user_id")
+//	private List<User> competitors;
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="competition_id")
-	private Competition competition;
+	@JoinColumn(name="event_id")
+	private Event event;
+	@OneToMany(mappedBy="division", fetch = FetchType.EAGER,  cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Competitor> competitors;
 
-	public Competition getCompetition() {
-		return competition;
+
+	public List<Competitor> getCompetitors() {
+		return competitors;
 	}
 
-	public void setCompetition(Competition competition) {
-		this.competition = competition;
+	public void setCompetitors(List<Competitor> competitors) {
+		this.competitors = competitors;
+	}
+
+	public Event getEvent() {
+		return event;
+	}
+
+	public void setEvent(Event event) {
+		this.event = event;
 	}
 
 	public long getId() {
@@ -61,13 +72,13 @@ public class Division {
 		this.weightCategory = weightCategory;
 	}
 
-	public List<User> getCompetitors() {
-		return competitors;
-	}
-
-	public void setCompetitors(List<User> competitors) {
-		this.competitors = competitors;
-	}
+//	public List<User> getCompetitors() {
+//		return competitors;
+//	}
+//
+//	public void setCompetitors(List<User> competitors) {
+//		this.competitors = competitors;
+//	}
 
 	public String getFullNameCategory() {
 		return this.beltCategory + " " + this.weightCategory;

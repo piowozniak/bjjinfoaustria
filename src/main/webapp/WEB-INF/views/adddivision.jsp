@@ -31,8 +31,8 @@
 			<f:select path="weightCategory" items="${ weightCategories}" />
 		</div>
 		<div>
-			Competition:
-			<f:input disabled="true" path="competition.id" item="${competition }" itemLabel="nameOfEvent" itemValue="id"/>
+			Event / competition:
+			<f:input disabled="true" path="event.id" item="${event }" itemLabel="nameOfEvent" itemValue="id"/>
 		</div>
 		
 		
@@ -41,7 +41,7 @@
 			
 		</div>
 		<div>
-			<f:hidden path="competition.id" />
+			<f:hidden path="event.id" />
 			
 		</div>
 		<button type="submit">submit</button>

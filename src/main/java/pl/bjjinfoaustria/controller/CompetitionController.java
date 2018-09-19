@@ -31,18 +31,11 @@ public class CompetitionController {
 	@Autowired
 	CompetitionRepository competitionRepository;
 	
-	@PostMapping(path="/createcompetition")
-	public String createCompetition(@ModelAttribute("competition") Competition competition, Model model) {
-		return "redirect:events";
-	}
-	@GetMapping(path="/adddivision/{id}")
-	public String addDivision(@PathVariable("id") long id, Model model) {
-		return competitionService.addCategoryToModel(model, id);
-	}
-	@PostMapping(path="/adddivision")
-	public String addDivision(@ModelAttribute("division") Division division, Model model) {
-		return competitionService.saveDivision(division, model);
-	}	
+//	@PostMapping(path="/createcompetition")
+//	public String createCompetition(@ModelAttribute("competition") Competition competition, Model model) {
+//		return "redirect:events";
+//	}
+	
 	@PostMapping(path="/addcompetitor")
 	public String addCompetitor(@ModelAttribute("eventUsers") EventUsersDTO eventUsers, Model model ) {
 		System.out.println(model.containsAttribute("eventUsers"));

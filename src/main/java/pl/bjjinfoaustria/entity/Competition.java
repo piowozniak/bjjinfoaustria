@@ -21,17 +21,17 @@ public class Competition {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String nameOfTheEvent;	
-	@OneToOne
-	private Event event;
-	@OneToMany(mappedBy="competition", fetch = FetchType.EAGER,  cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Division> divisions;
+//	@OneToOne
+//	private Event event;
+//	@OneToMany(mappedBy="competition", fetch = FetchType.EAGER,  cascade = CascadeType.ALL, orphanRemoval = true)
+//	private List<Division> divisions;
 	
-	public List<Division> getDivisions() {
-		return divisions;
-	}
-	public void setDivisions(List<Division> divisions) {
-		this.divisions = divisions;
-	}
+//	public List<Division> getDivisions() {
+//		return divisions;
+//	}
+//	public void setDivisions(List<Division> divisions) {
+//		this.divisions = divisions;
+//	}
 	public long getId() {
 		return id;
 	}
@@ -45,12 +45,12 @@ public class Competition {
 		this.nameOfTheEvent = nameOfTheEvent;
 
 	}
-	public Event getEvent() {
-		return event;
-	}
-	public void setEvent(Event event) {
-		this.event = event;
-	}
+//	public Event getEvent() {
+//		return event;
+//	}
+//	public void setEvent(Event event) {
+//		this.event = event;
+//	}
 
 	
 
