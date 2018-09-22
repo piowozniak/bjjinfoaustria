@@ -10,15 +10,14 @@ public class EventUsersDTO {
 	
 	private long id;
 	private List<User> listOfUsers;
-	private long idEventu;
+	private Event event;
 	private long idUsera;
 	private Division division;
 	
 
 
-	public EventUsersDTO(long idEventu) {
+	public EventUsersDTO(Event event) {
 		super();
-		this.idEventu = idEventu;
 	}
 
 	public Division getDivision() {
@@ -29,12 +28,12 @@ public class EventUsersDTO {
 		this.division = division;
 	}
 
-	public long getIdEventu() {
-		return idEventu;
+	public Event getEvent() {
+		return event;
 	}
 
-	public void setIdEventu(long idEventu) {
-		this.idEventu = idEventu;
+	public void setEvent(Event event) {
+		this.event = event;
 	}
 
 	public long getIdUsera() {

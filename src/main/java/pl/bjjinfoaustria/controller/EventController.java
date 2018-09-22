@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import pl.bjjinfoaustria.dto.EventUsersDTO;
 import pl.bjjinfoaustria.entity.Competition;
@@ -57,22 +58,6 @@ public class EventController {
 		return eventService.addEvent(event, model);
 	}
 	
-	@GetMapping(path="/adddivision/{id}")
-	public String addDivision(@PathVariable("id") long id, Model model) {
-		return divisionService.addCategoryToModel(model, id);
-	}
-	
-	@PostMapping(path="/adddivision")
-	public String addDivision(@ModelAttribute("division") Division division, Model model) {
-		return divisionService.addDivision(division, model);
-	}
-	
-	@PostMapping(path="/createcompetition")
-	public String createCompetition(@ModelAttribute("event") Event event, Model model) {
-		//TO DO submitowac zawody
-		return "redirect:events";
-	}
-	
 	@GetMapping(path="/deleteevent/{id}")
 	public String deleteEvent(Model model, @PathVariable long id) {
 		Event event = eventService.findEventById(id);
@@ -92,8 +77,10 @@ public class EventController {
 	}
 	
 	@PostMapping(path="/addusertoevent")
-	public String addParticipantForm(@ModelAttribute EventUsersDTO eventUsers) {
-		eventService.addParticipant(eventUsers.getIdEventu(), eventUsers.getIdUsera());
+	public String addParticipantForm(@ModelAttribute("eventUsersDTO") EventUsersDTO eventUsersDTO, Model model) {
+		System.out.println(model.containsAttribute("eventUsersDTO"));
+		System.out.println(eventUsersDTO.getIdUsera());
+		eventService.addParticipant(eventUsersDTO);
 		return "redirect:events";
 	}
 	
@@ -111,6 +98,11 @@ public class EventController {
 	@GetMapping(path="/editevent/{id}")
 	public String editEvent(@PathVariable("id") long id, Model model) {
 		return eventService.editEvent(id, model);
+	}
+	@GetMapping(path="/eventdetails/{id}")
+	public String showEventDetails(@PathVariable("id") long id, Model model) {
+		eventService.editEvent(id, model);
+		return "eventdetails";
 	}
 	
 	@ModelAttribute("participants" )

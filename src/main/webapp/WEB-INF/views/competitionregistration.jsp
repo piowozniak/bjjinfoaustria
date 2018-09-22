@@ -34,7 +34,7 @@
 		method="get">
 		<button type="submit">add division</button>
 	</f:form>
-	<c:forEach items="${event.divisions }" var="division">
+	<c:forEach items="${listOfDivisions }" var="division">
 		<tr>
 			<td>${division.beltCategory }</td>
 			<td>${division.weightCategory }</td>

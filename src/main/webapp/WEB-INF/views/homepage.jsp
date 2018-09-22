@@ -27,7 +27,8 @@
 				<td>${gym.phoneNumber}</td>
 				<td>${gym.headCoach}</td>			
 								
-			</tr>
+			</tr></br>
+			<div>--------------------
 		</div>
 	</c:forEach>
 	</f:form>

@@ -20,15 +20,7 @@
 		<tr>
 			<td>${event.nameOfEvent }</td>
 			<td>${event.typeOfEvent }</td>
-			<td>${event.host }</td>
-			<td>${event.organizer }</td>
-			<td>${event.startDate }</td>
-			<td>${event.endDate }</td>
-			<td>${event.startHour }</td>
-			<td>${event.deadline }</td>
-			<td>${event.locationCity }</td>
-			<td>${event.locationAddress }</td>
-			<td>${event.fee }</td>
+
 
 			<form method="get" style="display: inline;" action="/bjjinfoaustria/deleteevent/${event.id }">
 				<button type="submit">delete event</button>
@@ -39,6 +31,10 @@
 			</form>
 			<form  method="get" style="display: inline;"
 				action="/bjjinfoaustria/editevent/${event.id }">
+				<button type="submit">edit</button>
+			</form>
+			<form  method="get" style="display: inline;"
+				action="/bjjinfoaustria/eventdetails/${event.id }">
 				<button type="submit">details</button>
 			</form>
 

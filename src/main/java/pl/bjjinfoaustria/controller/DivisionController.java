@@ -1,6 +1,5 @@
 package pl.bjjinfoaustria.controller;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,37 +12,31 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import pl.bjjinfoaustria.dto.EventUsersDTO;
-import pl.bjjinfoaustria.entity.Competition;
 import pl.bjjinfoaustria.entity.Division;
-import pl.bjjinfoaustria.repository.CompetitionRepository;
-import pl.bjjinfoaustria.repository.DivisionRepository;
-import pl.bjjinfoaustria.service.CompetitionService;
+import pl.bjjinfoaustria.entity.Event;
+import pl.bjjinfoaustria.service.DivisionService;
+import pl.bjjinfoaustria.service.EventService;
 
 @Controller
 @ComponentScan(basePackages="pl.bjjinfoaustria")
-public class CompetitionController {
+public class DivisionController {
 	
 	@Autowired
-	CompetitionService competitionService;
-	@Autowired
-	DivisionRepository divisionRepository;
-	@Autowired
-	CompetitionRepository competitionRepository;
+	DivisionService divisionService;
 	
-//	@PostMapping(path="/createcompetition")
-//	public String createCompetition(@ModelAttribute("competition") Competition competition, Model model) {
-//		return "redirect:events";
-//	}
+	@GetMapping(path="/adddivision/{id}")
+	public String addDivision(@PathVariable("id") long id, Model model) {
+		return divisionService.addCategoryToModel(model, id);
+	}
 	
-	@PostMapping(path="/addcompetitor")
-	public String addCompetitor(@ModelAttribute("eventUsers") EventUsersDTO eventUsers, Model model ) {
-		System.out.println(model.containsAttribute("eventUsers"));
-//		System.out.println(eventUsers.getIdEventu() + "   id eventu");
-		System.out.println(eventUsers.getIdUsera() + "   id usera");
-		System.out.println(eventUsers.getDivision().getId() + "   id division");
-		
-		return "";
+	@PostMapping(path="/adddivision")
+	public String addDivision(@ModelAttribute("division") Division division, Model model) {
+		return divisionService.addDivision(division, model);
+	}
+	
+	@PostMapping(path="/createcompetition")
+	public String createCompetition(@ModelAttribute("event") Event event, Model model) {
+		return divisionService.saveDivisionInCompetition(event);
 	}
 	
 	@ModelAttribute("beltCategories")
@@ -57,7 +50,5 @@ public class CompetitionController {
 				Arrays.asList("-57kg", "-64kg", "-70kg", "-76kg", "-82,3kg", "-88,3kg", "-94,3kg", "-100,5 kg", "+100,5kg");
 		return beltCategories;
 	}
-	
-	
 
 }

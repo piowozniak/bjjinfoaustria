@@ -14,7 +14,7 @@
 </style>
 </head>
 <body>
-	<h2>join the event</h2>
+	<h2>divisions creator</h2>
 
 	<!--  dodawanie do eventu  -->
 	<f:form action="/bjjinfoaustria/adddivision" method="post" modelAttribute="division">

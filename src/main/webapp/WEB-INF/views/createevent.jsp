@@ -73,7 +73,7 @@
 	
 	
 	<f:form action="/bjjinfoaustria/events" method="get">
-		<button type="submit">back</button>
+		<button type="submit">cancel</button>
 	</f:form>
 
 	

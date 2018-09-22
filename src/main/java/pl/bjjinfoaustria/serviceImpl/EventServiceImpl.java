@@ -29,15 +29,15 @@ import pl.bjjinfoaustria.service.EventService;
 public class EventServiceImpl implements EventService, DivisionService {
 
 	@Autowired
-	EventRepository eventRepository;
+	private EventRepository eventRepository;
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
 	@Autowired
-	CompetitionRepository competitionRepository;
+	private DivisionRepository divisionRepository;
 	@Autowired
-	DivisionRepository divisionRepository;
-	@Autowired
-	CompetitorRepository competitorRepository;
+	private CompetitorRepository competitorRepository;
+	private List<Division> listOfDivisions = new ArrayList<>();
+	private Event event;
 	
 	@Override
 	public String addEvent(Event event, Model model) {
@@ -47,14 +47,18 @@ public class EventServiceImpl implements EventService, DivisionService {
 			addModelAttributeIfEventIsCompetition(model, event);
 			return  "competitionregistration";
 		}
+		System.out.println(event.getId());
+		Division division = new Division();
+		division.setEvent(event);
+		divisionRepository.saveAndFlush(division);
 		return "redirect:events";
 	}
 	
 	@Override
 	public String joinTypeOfEvent(Model model, long id) {
-		Event event = eventRepository.findOne(id);
-		EventUsersDTO eventUsers = new EventUsersDTO(id);
-		model.addAttribute("eventUsers", eventUsers);
+		event = eventRepository.findOne(id);
+		EventUsersDTO eventUsersDTO = new EventUsersDTO(event);
+		model.addAttribute("eventUsersDTO", eventUsersDTO);
 		if(event.getTypeOfEvent().equals("COMPETITION")) {
 			List<Division> divisions = divisionRepository.findDivisionsFromCompetitionByEventId(id);
 			model.addAttribute("divisions", divisions);			
@@ -69,11 +73,17 @@ public class EventServiceImpl implements EventService, DivisionService {
 	}
 
 	@Override
-	public void addParticipant(long eventId, long userId) {
-		Event event = eventRepository.findOne(eventId);
-		User user = userRepository.findOne(userId);
+	public void addParticipant(EventUsersDTO eventUsersDTO) {
+//		System.out.println()
+		User user = userRepository.findOne(eventUsersDTO.getIdUsera());
+		Competitor competitor = new Competitor();
+		competitor.setUser(user);
+		Division division = event.getDivisions().get(0);
+		System.out.println(division.getEvent().getNameOfEvent());
+		competitor.setDivision(division);
+		competitorRepository.saveAndFlush(competitor);
 //		event.getParticipants().add(user);
-		eventRepository.saveAndFlush(event);
+//		eventRepository.saveAndFlush(event);
 			
 	}
 
@@ -92,11 +102,10 @@ public class EventServiceImpl implements EventService, DivisionService {
 
 	@Override
 	public String editEvent(long id, Model model) {
-		Event event = eventRepository.findOne(id);
-//		if (event.getTypeOfEvent().equals("COMPETITION")) {
-//			model.addAttribute("competition", event.getCompetition());
-//			return "competitionregistration";
-//		}
+		event = eventRepository.findOne(id);
+		for (Division d : event.getDivisions()) {
+			System.out.println(d.getId());
+		}
 		model.addAttribute("event", event);
 		return "createevent";
 	}
@@ -104,7 +113,7 @@ public class EventServiceImpl implements EventService, DivisionService {
 	@Override
 	public String addCategoryToModel(Model model, long id) {
 		Division division = new Division();
-		Event event = eventRepository.findOne(id);
+		event = eventRepository.findOne(id);
 		division.setEvent(event);
 		model.addAttribute("division", division);
 		return "adddivision";
@@ -112,14 +121,42 @@ public class EventServiceImpl implements EventService, DivisionService {
 
 	@Override
 	public String addDivision(Division division, Model model) {
-		System.out.println(model.containsAttribute("division"));
-		System.out.println(division.getEvent().getId());
-		divisionRepository.saveAndFlush(division);
-		Event event = eventRepository.findOne(division.getEvent().getId());
+		listOfDivisions.add(division);
+		event = eventRepository.findOne(division.getEvent().getId());
 		model.addAttribute("event", event);
+		model.addAttribute("listOfDivisions", listOfDivisions);
 		return "competitionregistration";
 	}
+	@Override
+	public String saveDivisionInCompetition(Event event) {
+		for (Division d : listOfDivisions) {
+			divisionRepository.saveAndFlush(d);
+		}
+		return "redirect:events";
+	}
+	
 
+	@Override
+	public String deleteDivision(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Division> getListOfDivisions() {
+		return listOfDivisions;
+	}
+
+	public void setListOfDivisions(List<Division> listOfDivisions) {
+		this.listOfDivisions = listOfDivisions;
+	}
+
+	public Event getEvent() {
+		return event;
+	}
+
+	public void setEvent(Event event) {
+		this.event = event;
+	}
 
 
 

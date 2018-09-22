@@ -18,11 +18,11 @@
 
 	<!--  dodawanie do eventu  -->
 	<f:form action="/bjjinfoaustria/addusertoevent" method="post"
-		modelAttribute="eventUsers">
+		modelAttribute="eventUsersDTO">
 
 		<div>
 			Event:
-			<h3>${eventUsers.idEventu}</h3>
+			<h3>${eventUsersDTO.event.nameOfEvent}</h3>
 		</div>
 		<div>
 			Users:
@@ -34,7 +34,7 @@
 			<f:hidden path="id" />
 		</div>
 		<div>
-			<f:hidden path="idEventu" />
+			<f:hidden path="event.id" />
 		</div>
 		<button type="submit">submit</button>
 	</f:form>
