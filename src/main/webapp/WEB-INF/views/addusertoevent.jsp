@@ -22,19 +22,29 @@
 
 		<div>
 			Event:
-			<h3>${eventUsersDTO.event.nameOfEvent}</h3>
+			<h3>${event.nameOfEvent}</h3>
 		</div>
 		<div>
 			Users:
 			<f:select path="idUsera" items="${participants}"
 				itemLabel="firstName" itemValue="id" />
 		</div>
+		<c:if test="${event.typeOfEvent != 'COMPETITION' }">
+			<div>
+				Divisions:
+				<f:select path="division.id" items="${divisions}"
+					itemLabel="fullNameCategory" itemValue="id" />
+			</div>
+		</c:if>
 
 		<div>
 			<f:hidden path="id" />
 		</div>
 		<div>
 			<f:hidden path="event.id" />
+		</div>
+		<div>
+			<f:hidden path="event.typeOfEvent" />
 		</div>
 		<button type="submit">submit</button>
 	</f:form>

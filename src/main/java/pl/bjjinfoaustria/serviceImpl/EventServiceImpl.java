@@ -3,6 +3,7 @@ package pl.bjjinfoaustria.serviceImpl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,15 +40,15 @@ public class EventServiceImpl implements EventService, DivisionService {
 	private List<Division> listOfDivisions = new ArrayList<>();
 	private Event event;
 	
+	
 	@Override
-	public String addEvent(Event event, Model model) {
-		event.setStatus("SUBMITTED");
-		eventRepository.saveAndFlush(event);
+	public String addEvent(Event event, Model model) {		
 		if (event.getTypeOfEvent().equals("COMPETITION")) {			
 			addModelAttributeIfEventIsCompetition(model, event);
 			return  "competitionregistration";
 		}
-		System.out.println(event.getId());
+		event.setStatus("SUBMITTED");
+		eventRepository.saveAndFlush(event);
 		Division division = new Division();
 		division.setEvent(event);
 		divisionRepository.saveAndFlush(division);
@@ -62,7 +63,6 @@ public class EventServiceImpl implements EventService, DivisionService {
 		if(event.getTypeOfEvent().equals("COMPETITION")) {
 			List<Division> divisions = divisionRepository.findDivisionsFromCompetitionByEventId(id);
 			model.addAttribute("divisions", divisions);			
-			return "addcompetitor";
 		}
 		return "addusertoevent";
 	}
@@ -74,17 +74,18 @@ public class EventServiceImpl implements EventService, DivisionService {
 
 	@Override
 	public void addParticipant(EventUsersDTO eventUsersDTO) {
-//		System.out.println()
 		User user = userRepository.findOne(eventUsersDTO.getIdUsera());
 		Competitor competitor = new Competitor();
 		competitor.setUser(user);
-		Division division = event.getDivisions().get(0);
-		System.out.println(division.getEvent().getNameOfEvent());
+		Division division;
+		Optional<Division> div = Optional.ofNullable(eventUsersDTO.getDivision());
+		if (div.isPresent()) {
+			division = divisionRepository.findOne(eventUsersDTO.getDivision().getId());
+		} else {
+			division = event.getDivisions().get(1);
+		}
 		competitor.setDivision(division);
 		competitorRepository.saveAndFlush(competitor);
-//		event.getParticipants().add(user);
-//		eventRepository.saveAndFlush(event);
-			
 	}
 
 	@Override
@@ -97,15 +98,13 @@ public class EventServiceImpl implements EventService, DivisionService {
 		eventRepository.delete(event);
 	}
 	private void addModelAttributeIfEventIsCompetition(Model model, Event event) {
-			model.addAttribute("event", event);
+		eventRepository.saveAndFlush(event);	
+		model.addAttribute("event", event);
 	}
 
 	@Override
 	public String editEvent(long id, Model model) {
 		event = eventRepository.findOne(id);
-		for (Division d : event.getDivisions()) {
-			System.out.println(d.getId());
-		}
 		model.addAttribute("event", event);
 		return "createevent";
 	}
@@ -132,6 +131,7 @@ public class EventServiceImpl implements EventService, DivisionService {
 		for (Division d : listOfDivisions) {
 			divisionRepository.saveAndFlush(d);
 		}
+		listOfDivisions = new ArrayList<>();
 		return "redirect:events";
 	}
 	

@@ -72,14 +72,11 @@ public class EventController {
 	
 	@GetMapping(path="/addusertoevent/{id}")
 	public String addParticipant(Model model, @PathVariable long id) {		
-
 		return eventService.joinTypeOfEvent(model, id);
 	}
 	
 	@PostMapping(path="/addusertoevent")
 	public String addParticipantForm(@ModelAttribute("eventUsersDTO") EventUsersDTO eventUsersDTO, Model model) {
-		System.out.println(model.containsAttribute("eventUsersDTO"));
-		System.out.println(eventUsersDTO.getIdUsera());
 		eventService.addParticipant(eventUsersDTO);
 		return "redirect:events";
 	}

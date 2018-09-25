@@ -46,28 +46,31 @@
 	</br>
 	<div>----------------------------------------------</div>
 	</br>
-	<h2>divisions</h2>
-	<div>${event.divisions.size() }</div>
-	<c:forEach items="${event.divisions }" var="division">
-		<tr>
-			<td>${division.fullNameCategory }</td>
-			</br> List of competitors:
-			</br>
-			<c:forEach items="${division.competitors }" var="competitor">
-				<tr>
-					<td>${competitor.user.firstName }
-					<td>
-					<td>${competitor.user.lastName }
-					<td>
-				</tr>
-			</c:forEach>
+	<c:if test="${event.typeOfEvent=='COMPETITION'}">
+		<h2>divisions</h2>
+		<c:forEach items="${event.divisions }" var="division">
+			<tr>
+				<td>${division.fullNameCategory }
+				<td>
+			</tr></br>
 
-		</tr>
-		<form method="get" style="display: inline;"
-			action="/bjjinfoaustria/deletedivision/${division.id }">
-			<button type="submit">delete</button>
-		</form>
-	</c:forEach>
+		</c:forEach>
+
+	</c:if>
+
+	<c:if test="${event.typeOfEvent=='SEMINAR'}">
+		<h2>list of participants</h2>
+		<c:forEach items="${event.divisions.get(1).competitors }"
+			var="participant">
+			<tr>
+				<td>${participant.user.firstName }
+				<td>
+				<td>${participant.user.lastName }
+				<td>
+			</tr></br>
+		</c:forEach>
+</c:if>
+
 
 
 	<f:form action="/bjjinfoaustria/events" method="get">

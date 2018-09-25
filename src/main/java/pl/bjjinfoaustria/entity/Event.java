@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
 
 @Entity(name="Event")
 public class Event {
@@ -38,23 +39,27 @@ public class Event {
 	private String fee;
 	private String status;
 	@OneToMany(mappedBy="event", fetch = FetchType.EAGER,  cascade = CascadeType.ALL, orphanRemoval = true)
+	@OrderColumn(name = "id")
 	private List<Division> divisions;
 	@ElementCollection
 	private List<User> participants;
 //	@OneToOne(mappedBy="event", fetch = FetchType.LAZY,  cascade = CascadeType.ALL, orphanRemoval = true)
 //	private Competition competition;
 	
-	
+	public Event() {
+		super();
+	}
 	public List<User> getParticipants() {
 		if (this.typeOfEvent.equals("SEMINAR")) {
 			List<User> users = new ArrayList<>();
-			for(Competitor c : this.divisions.get(0).getCompetitors()) {
+			for(Competitor c : this.divisions.get(1).getCompetitors()) {
 				users.add(c.getUser());
 			}
 			return users;
 		}
 		return participants;
 	}
+
 	public void setParticipants(List<User> participants) {
 		this.participants = participants;
 	}
