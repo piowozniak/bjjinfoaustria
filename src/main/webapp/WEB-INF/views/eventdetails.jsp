@@ -49,11 +49,18 @@
 	<c:if test="${event.typeOfEvent=='COMPETITION'}">
 		<h2>divisions</h2>
 		<c:forEach items="${event.divisions }" var="division">
-			<tr>
-				<td>${division.fullNameCategory }
-				<td>
-			</tr></br>
-
+			<c:if test="${division != null }">
+				<tr>
+					<td>${division.fullNameCategory }
+					<td>
+				</tr>
+				</br>
+				<c:forEach items="${division.competitors }" var="competitor">
+					<td>${competitor.user.firstName }</td>
+					<td>${competitor.user.lastName }</td>
+					</br>
+				</c:forEach>
+			</c:if>
 		</c:forEach>
 
 	</c:if>
@@ -67,9 +74,10 @@
 				<td>
 				<td>${participant.user.lastName }
 				<td>
-			</tr></br>
+			</tr>
+			</br>
 		</c:forEach>
-</c:if>
+	</c:if>
 
 
 

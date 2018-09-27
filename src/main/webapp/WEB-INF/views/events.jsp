@@ -29,10 +29,7 @@
 				action="/bjjinfoaustria/addusertoevent/${event.id }">
 				<button type="submit">join the event</button>
 			</form>
-			<form  method="get" style="display: inline;"
-				action="/bjjinfoaustria/editevent/${event.id }">
-				<button type="submit">edit</button>
-			</form>
+	
 			<form  method="get" style="display: inline;"
 				action="/bjjinfoaustria/eventdetails/${event.id }">
 				<button type="submit">details</button>
@@ -47,19 +44,10 @@
 	<form method="get" action="/bjjinfoaustria/createevent">
 		<button type="submit">add event</button>
 	</form>
-	<c:forEach items="${users }" var="user">
-		<tr>
-			<td>${user.firstName }</td>
-			<td>${user.lastName }</td>
-			<td>${user.email }</td>
-			<td>${user.phoneNumber }</td>
-			<form method="get" style="display: inline;" action="/bjjinfoaustria/deleteuser/${user.id }">
-				<button type="submit">delete user</button>
-			</form>
-		</tr>
-		</br>
-	
-	</c:forEach>
+	<form method="get" action="/bjjinfoaustria/">
+		<button type="submit">back</button>
+	</form>
+
 
 
 </body>

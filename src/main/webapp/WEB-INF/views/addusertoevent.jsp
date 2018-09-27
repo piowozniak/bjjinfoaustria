@@ -29,7 +29,7 @@
 			<f:select path="idUsera" items="${participants}"
 				itemLabel="firstName" itemValue="id" />
 		</div>
-		<c:if test="${event.typeOfEvent != 'COMPETITION' }">
+		<c:if test="${event.typeOfEvent == 'COMPETITION' }">
 			<div>
 				Divisions:
 				<f:select path="division.id" items="${divisions}"

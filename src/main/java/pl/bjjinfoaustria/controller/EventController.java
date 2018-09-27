@@ -43,7 +43,6 @@ public class EventController {
 	@RequestMapping(path="/events")
 	public String allEvents(Model model) {
 		model.addAttribute("events", eventService.allEvents());
-		model.addAttribute("users", userRepository.findAll());
 		return "events";
 	}
 	
@@ -90,16 +89,26 @@ public class EventController {
 	@PostMapping(path="/deleteuser")
 	public String deleteUserConfirm(@ModelAttribute User user) {
 		userRepository.delete(user);
-		return "redirect:events";
+		return "redirect:/";
 	}
 	@GetMapping(path="/editevent/{id}")
-	public String editEvent(@PathVariable("id") long id, Model model) {
+	public String editEventForm(@PathVariable("id") long id, Model model) {
 		return eventService.editEvent(id, model);
+	}
+	@PostMapping(path="/editevent")
+	public String editEvent(@ModelAttribute("event") Event event, Model model) {
+		System.out.println(event.getTypeOfEvent());
+		
+		return eventService.saveEditEvent(event, model);
+	}
+	@RequestMapping(path="/removedivision/{id}")
+	public String editRemoveDivision(Model model, @PathVariable("id") long id) {
+		System.out.println(id);
+		return "redirect:editevent";
 	}
 	@GetMapping(path="/eventdetails/{id}")
 	public String showEventDetails(@PathVariable("id") long id, Model model) {
-		eventService.editEvent(id, model);
-		return "eventdetails";
+		return eventService.showEventDetails(id, model);
 	}
 	
 	@ModelAttribute("participants" )

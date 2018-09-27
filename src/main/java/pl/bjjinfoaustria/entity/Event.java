@@ -38,9 +38,9 @@ public class Event {
 	private String locationAddress;
 	private String fee;
 	private String status;
-	@OneToMany(mappedBy="event", fetch = FetchType.EAGER,  cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy="event", fetch = FetchType.EAGER, orphanRemoval = true)
 	@OrderColumn(name = "id")
-	private List<Division> divisions;
+	private List<Division> divisions = new ArrayList<>();
 	@ElementCollection
 	private List<User> participants;
 //	@OneToOne(mappedBy="event", fetch = FetchType.LAZY,  cascade = CascadeType.ALL, orphanRemoval = true)
@@ -71,7 +71,8 @@ public class Event {
 		return divisions;
 	}
 	public void setDivisions(List<Division> divisions) {
-		this.divisions = divisions;
+		this.divisions.clear();
+	    this.divisions.addAll(divisions);
 	}
 	public String getTypeOfEvent() {
 		return typeOfEvent;

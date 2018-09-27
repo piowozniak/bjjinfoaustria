@@ -39,6 +39,7 @@ public class EventServiceImpl implements EventService, DivisionService {
 	private CompetitorRepository competitorRepository;
 	private List<Division> listOfDivisions = new ArrayList<>();
 	private Event event;
+	private List<Division> temporaryListOfDivisions;
 	
 	
 	@Override
@@ -59,6 +60,7 @@ public class EventServiceImpl implements EventService, DivisionService {
 	public String joinTypeOfEvent(Model model, long id) {
 		event = eventRepository.findOne(id);
 		EventUsersDTO eventUsersDTO = new EventUsersDTO(event);
+		model.addAttribute("event", event);
 		model.addAttribute("eventUsersDTO", eventUsersDTO);
 		if(event.getTypeOfEvent().equals("COMPETITION")) {
 			List<Division> divisions = divisionRepository.findDivisionsFromCompetitionByEventId(id);
@@ -105,8 +107,16 @@ public class EventServiceImpl implements EventService, DivisionService {
 	@Override
 	public String editEvent(long id, Model model) {
 		event = eventRepository.findOne(id);
+		temporaryListOfDivisions = event.getDivisions();
 		model.addAttribute("event", event);
-		return "createevent";
+		model.addAttribute("temporaryListOfDivisions", temporaryListOfDivisions);
+		return "editevent";
+	}
+	@Override
+	public String saveEditEvent(Event event, Model model) {
+		event.setDivisions(temporaryListOfDivisions);	
+		eventRepository.saveAndFlush(event);
+		return "redirect:events";
 	}
 
 	@Override
@@ -134,7 +144,12 @@ public class EventServiceImpl implements EventService, DivisionService {
 		listOfDivisions = new ArrayList<>();
 		return "redirect:events";
 	}
-	
+	@Override
+	public String showEventDetails(long id, Model model) {
+		event = eventRepository.findOne(id);
+		model.addAttribute("event", event);
+		return "eventdetails";
+	}
 
 	@Override
 	public String deleteDivision(long id) {
@@ -157,6 +172,18 @@ public class EventServiceImpl implements EventService, DivisionService {
 	public void setEvent(Event event) {
 		this.event = event;
 	}
+
+	public List<Division> getTemporaryListOfDivisions() {
+		return temporaryListOfDivisions;
+	}
+
+	public void setTemporaryListOfDivisions(List<Division> temporaryListOfDivisions) {
+		this.temporaryListOfDivisions = temporaryListOfDivisions;
+	}
+
+
+
+
 
 
 
