@@ -1,3 +1,3 @@
-BJJ Info Austria Website
+competition platform
 Technologies:
 JavaEE, Spring MVC, Hibernate, Maven
