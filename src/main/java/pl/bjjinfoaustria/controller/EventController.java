@@ -96,16 +96,10 @@ public class EventController {
 		return eventService.editEvent(id, model);
 	}
 	@PostMapping(path="/editevent")
-	public String editEvent(@ModelAttribute("event") Event event, Model model) {
-		System.out.println(event.getTypeOfEvent());
-		
+	public String editEvent(@ModelAttribute("event") Event event, Model model) {		
 		return eventService.saveEditEvent(event, model);
 	}
-	@RequestMapping(path="/removedivision/{id}")
-	public String editRemoveDivision(Model model, @PathVariable("id") long id) {
-		System.out.println(id);
-		return "redirect:editevent";
-	}
+
 	@GetMapping(path="/eventdetails/{id}")
 	public String showEventDetails(@PathVariable("id") long id, Model model) {
 		return eventService.showEventDetails(id, model);

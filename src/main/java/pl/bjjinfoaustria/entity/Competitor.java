@@ -13,6 +13,8 @@ public class Competitor {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	private String round;
+	private String bracket;
 
 	
 	@ManyToOne(fetch=FetchType.EAGER)
@@ -39,6 +41,18 @@ public class Competitor {
 	}
 	public void setUser(User user) {
 		this.user = user;
+	}
+	public String getRound() {
+		return round;
+	}
+	public void setRound(String round) {
+		this.round = round;
+	}
+	public String getBracket() {
+		return bracket;
+	}
+	public void setBracket(String bracket) {
+		this.bracket = bracket;
 	}
 	
 

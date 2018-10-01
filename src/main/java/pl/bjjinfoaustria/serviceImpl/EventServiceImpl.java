@@ -1,7 +1,6 @@
 package pl.bjjinfoaustria.serviceImpl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,18 +9,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import pl.bjjinfoaustria.dto.EventUsersDTO;
-import pl.bjjinfoaustria.entity.Competition;
 import pl.bjjinfoaustria.entity.Competitor;
 import pl.bjjinfoaustria.entity.Division;
 import pl.bjjinfoaustria.entity.Event;
-import pl.bjjinfoaustria.entity.Participant;
 import pl.bjjinfoaustria.entity.User;
-import pl.bjjinfoaustria.enums.StatusE;
-import pl.bjjinfoaustria.repository.CompetitionRepository;
 import pl.bjjinfoaustria.repository.CompetitorRepository;
 import pl.bjjinfoaustria.repository.DivisionRepository;
 import pl.bjjinfoaustria.repository.EventRepository;
-import pl.bjjinfoaustria.repository.ParticipantRepository;
 import pl.bjjinfoaustria.repository.UserRepository;
 import pl.bjjinfoaustria.service.DivisionService;
 import pl.bjjinfoaustria.service.EventService;
@@ -36,17 +30,20 @@ public class EventServiceImpl implements EventService, DivisionService {
 	@Autowired
 	private DivisionRepository divisionRepository;
 	@Autowired
+	private static Optional<Division> divCheck; 
+	@Autowired
 	private CompetitorRepository competitorRepository;
 	private List<Division> listOfDivisions = new ArrayList<>();
 	private Event event;
 	private List<Division> temporaryListOfDivisions;
-	
-	
+	private List<Division> divisionsToRemove = new ArrayList<>();
+	private boolean editEvent;
+
 	@Override
-	public String addEvent(Event event, Model model) {		
-		if (event.getTypeOfEvent().equals("COMPETITION")) {			
+	public String addEvent(Event event, Model model) {
+		if (event.getTypeOfEvent().equals("COMPETITION")) {
 			addModelAttributeIfEventIsCompetition(model, event);
-			return  "competitionregistration";
+			return "competitionregistration";
 		}
 		event.setStatus("SUBMITTED");
 		eventRepository.saveAndFlush(event);
@@ -55,16 +52,16 @@ public class EventServiceImpl implements EventService, DivisionService {
 		divisionRepository.saveAndFlush(division);
 		return "redirect:events";
 	}
-	
+
 	@Override
 	public String joinTypeOfEvent(Model model, long id) {
 		event = eventRepository.findOne(id);
 		EventUsersDTO eventUsersDTO = new EventUsersDTO(event);
 		model.addAttribute("event", event);
 		model.addAttribute("eventUsersDTO", eventUsersDTO);
-		if(event.getTypeOfEvent().equals("COMPETITION")) {
+		if (event.getTypeOfEvent().equals("COMPETITION")) {
 			List<Division> divisions = divisionRepository.findDivisionsFromCompetitionByEventId(id);
-			model.addAttribute("divisions", divisions);			
+			model.addAttribute("divisions", divisions);
 		}
 		return "addusertoevent";
 	}
@@ -80,11 +77,12 @@ public class EventServiceImpl implements EventService, DivisionService {
 		Competitor competitor = new Competitor();
 		competitor.setUser(user);
 		Division division;
-		Optional<Division> div = Optional.ofNullable(eventUsersDTO.getDivision());
-		if (div.isPresent()) {
+		divCheck = Optional.ofNullable(eventUsersDTO.getDivision());
+		System.out.println(event.getDivisions().size());
+		if (divCheck.isPresent()) {
 			division = divisionRepository.findOne(eventUsersDTO.getDivision().getId());
-		} else {
-			division = event.getDivisions().get(1);
+		} else {			
+			division = divisionRepository.findOne(event.getDivisions().get(1).getId());
 		}
 		competitor.setDivision(division);
 		competitorRepository.saveAndFlush(competitor);
@@ -99,24 +97,47 @@ public class EventServiceImpl implements EventService, DivisionService {
 	public void deleteEvent(Event event) {
 		eventRepository.delete(event);
 	}
+
 	private void addModelAttributeIfEventIsCompetition(Model model, Event event) {
-		eventRepository.saveAndFlush(event);	
+		eventRepository.saveAndFlush(event);
 		model.addAttribute("event", event);
 	}
 
 	@Override
 	public String editEvent(long id, Model model) {
+		editEvent = true;
 		event = eventRepository.findOne(id);
 		temporaryListOfDivisions = event.getDivisions();
 		model.addAttribute("event", event);
 		model.addAttribute("temporaryListOfDivisions", temporaryListOfDivisions);
 		return "editevent";
 	}
+
+	@Override
+	public String removeDivisionFromCollection(int index, Model model) {
+		divisionsToRemove.add(listOfDivisions.get(index));
+		listOfDivisions.remove(index);
+		model.addAttribute("listOfDivisions", listOfDivisions);
+		model.addAttribute("event", event);
+		return editEvent ? "editdivisions" : "competitionregistration";
+	}
+
 	@Override
 	public String saveEditEvent(Event event, Model model) {
-		event.setDivisions(temporaryListOfDivisions);	
 		eventRepository.saveAndFlush(event);
+		editEvent = false;
 		return "redirect:events";
+	}
+
+	@Override
+	public String editDivisions(long id, Model model) {
+		editEvent = true;
+		event = eventRepository.findOne(id);
+		listOfDivisions.clear();
+		listOfDivisions = event.getDivisions();
+		model.addAttribute("event", event);
+		model.addAttribute("listOfDivisions", listOfDivisions);
+		return "editdivisions";
 	}
 
 	@Override
@@ -134,27 +155,38 @@ public class EventServiceImpl implements EventService, DivisionService {
 		event = eventRepository.findOne(division.getEvent().getId());
 		model.addAttribute("event", event);
 		model.addAttribute("listOfDivisions", listOfDivisions);
-		return "competitionregistration";
+		return editEvent ? "editdivisions" : "competitionregistration";
 	}
+
 	@Override
-	public String saveDivisionInCompetition(Event event) {
+	public String saveDivisionInCompetition(Event event, Model model) {		
 		for (Division d : listOfDivisions) {
-			divisionRepository.saveAndFlush(d);
+			divCheck = Optional.ofNullable(d);
+			if (divCheck.isPresent()) {
+				d.setEvent(event);
+				divisionRepository.saveAndFlush(d);
+				editEvent = false;
+			}
+			
 		}
-		listOfDivisions = new ArrayList<>();
+		for (Division d : divisionsToRemove) {
+			divCheck = Optional.ofNullable(d);
+			if (divCheck.isPresent()) {
+				divisionRepository.delete(d);;
+			}
+		}
+		listOfDivisions.clear();
+		divisionsToRemove.clear();
+		event = eventRepository.findOne(event.getId());
+		model.addAttribute("event", event);
 		return "redirect:events";
 	}
+
 	@Override
 	public String showEventDetails(long id, Model model) {
 		event = eventRepository.findOne(id);
 		model.addAttribute("event", event);
 		return "eventdetails";
-	}
-
-	@Override
-	public String deleteDivision(long id) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	public List<Division> getListOfDivisions() {
@@ -181,10 +213,20 @@ public class EventServiceImpl implements EventService, DivisionService {
 		this.temporaryListOfDivisions = temporaryListOfDivisions;
 	}
 
+	public boolean isEditEvent() {
+		return editEvent;
+	}
 
+	public void setEditEvent(boolean editEvent) {
+		this.editEvent = editEvent;
+	}
 
+	public List<Division> getDivisionsToRemove() {
+		return divisionsToRemove;
+	}
 
-
-
+	public void setDivisionsToRemove(List<Division> divisionsToRemove) {
+		this.divisionsToRemove = divisionsToRemove;
+	}
 
 }

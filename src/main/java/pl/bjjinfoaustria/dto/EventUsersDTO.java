@@ -1,5 +1,6 @@
 package pl.bjjinfoaustria.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import pl.bjjinfoaustria.entity.Division;
@@ -13,11 +14,20 @@ public class EventUsersDTO {
 	private Event event;
 	private long idUsera;
 	private Division division;
+	private List<Division> temporaryListOfDivisions = new ArrayList<>();
 	
 
 
 	public EventUsersDTO(Event event) {
 		super();
+	}
+
+	public List<Division> getTemporaryListOfDivisions() {
+		return temporaryListOfDivisions;
+	}
+
+	public void setTemporaryListOfDivisions(List<Division> temporaryListOfDivisions) {
+		this.temporaryListOfDivisions = temporaryListOfDivisions;
 	}
 
 	public Division getDivision() {

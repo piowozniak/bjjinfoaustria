@@ -26,37 +26,13 @@ public class CompetitionController {
 	
 	@Autowired
 	CompetitionService competitionService;
-	@Autowired
-	DivisionRepository divisionRepository;
-	@Autowired
-	CompetitionRepository competitionRepository;
 	
-//	@PostMapping(path="/createcompetition")
-//	public String createCompetition(@ModelAttribute("competition") Competition competition, Model model) {
-//		return "redirect:events";
-//	}
 	
-	@PostMapping(path="/addcompetitor")
-	public String addCompetitor(@ModelAttribute("eventUsers") EventUsersDTO eventUsers, Model model ) {
-		System.out.println(model.containsAttribute("eventUsers"));
-//		System.out.println(eventUsers.getIdEventu() + "   id eventu");
-		System.out.println(eventUsers.getIdUsera() + "   id usera");
-		System.out.println(eventUsers.getDivision().getId() + "   id division");
-		
-		return "";
+	@GetMapping(path="/createbrackets/{id}")
+	public String createBrackets(@PathVariable("id") long id, Model model) {
+		return competitionService.createbrackets(model, id);
 	}
 	
-	@ModelAttribute("beltCategories")
-	public List<String> getBeltCategories() {
-		List <String> beltCategories = Arrays.asList("WHITE", "BLUE", "PURPLE", "BROWN", "BLACK");
-		return beltCategories;
-	}
-	@ModelAttribute("weightCategories")
-	public List<String> getWeightCategories() {
-		List <String> beltCategories = 
-				Arrays.asList("-57kg", "-64kg", "-70kg", "-76kg", "-82,3kg", "-88,3kg", "-94,3kg", "-100,5 kg", "+100,5kg");
-		return beltCategories;
-	}
 	
 	
 

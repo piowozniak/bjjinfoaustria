@@ -43,9 +43,17 @@
 		action="/bjjinfoaustria/editevent/${event.id }">
 		<button type="submit">edit details</button>
 	</form>
+
 	</br>
 	<div>----------------------------------------------</div>
 	</br>
+	<f:form action="/bjjinfoaustria/editdivisions/${event.id }"
+		method="get">
+		<button type="submit">edit divisions</button>
+	</f:form>
+	<f:form action="/bjjinfoaustria/createbrackets/${event.id}" method="get">
+		<button type="submit">create brackets</button>
+	</f:form>
 	<c:if test="${event.typeOfEvent=='COMPETITION'}">
 		<h2>divisions</h2>
 		<c:forEach items="${event.divisions }" var="division">

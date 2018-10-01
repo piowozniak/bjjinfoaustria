@@ -77,13 +77,11 @@
 	</br>
 
 	<c:if test="${event.typeOfEvent == 'COMPETITION' }">
-		<c:forEach items="${event.divisions }" var="division">
+		<h3>list of divisions</h3>
+		<c:forEach items="${temporaryListOfDivisions }" var="division">
 			<c:if test="${division != null}">
 				<td>${division.fullNameCategory }</td>
-				<f:form action="/bjjinfoaustria/removedivision/${division.id }"
-					method="get">
-					<button type="submit">remove</button>
-				</f:form>
+
 			</c:if>
 		</c:forEach>
 	</c:if>

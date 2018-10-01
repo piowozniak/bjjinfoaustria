@@ -10,6 +10,7 @@ import pl.bjjinfoaustria.entity.Event;
 public interface DivisionService {
 	String addCategoryToModel(Model model, long id);
 	String addDivision(Division division, Model model);
-	String deleteDivision(long id);
-	String saveDivisionInCompetition(Event event);
+	String saveDivisionInCompetition(Event event, Model model);
+	String removeDivisionFromCollection(int index, Model model);
+	String editDivisions(long id, Model model);
 }
