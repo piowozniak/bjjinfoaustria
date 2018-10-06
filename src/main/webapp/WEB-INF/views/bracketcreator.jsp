@@ -25,7 +25,7 @@
 		<button type="submit">display</button>
 	</f:form>
 	<h2>${division.division.fullNameCategory }</h2>
-	<c:forEach items="${division.division.competitors}" var="competitor">
+	<c:forEach items="${division.ddivision.competitors}" var="competitor">
 		<td>${competitor.user.firstName }</td>
 		<td>${competitor.user.lastName }</td>
 		</br>
