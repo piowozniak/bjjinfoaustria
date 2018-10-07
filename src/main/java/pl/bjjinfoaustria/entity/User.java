@@ -20,8 +20,6 @@ public class User {
 	private String lastName;
 	private String email;
 	private String phoneNumber;
-//	@ManyToMany(mappedBy = "participants",fetch = FetchType.LAZY)
-//	private List<Event> events;
 	@OneToMany(mappedBy="user", fetch = FetchType.EAGER,  cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Competitor> competitors;
 	

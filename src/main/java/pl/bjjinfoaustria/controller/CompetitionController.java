@@ -36,9 +36,18 @@ public class CompetitionController {
 	}
 	@RequestMapping(path="/displaydivision")
 	public String displayDivision(@RequestParam("divisionId") long divisionId ,Model model) {
-		System.out.println(divisionId);
-		
+		System.out.println(divisionId);		
 		return bracketService.displayDivision(model, divisionId);
+	}
+	@RequestMapping(path="/addcompetitortobracket/{index}")
+	public String addCompetitor(@PathVariable("index") int index, Model model ) {
+		System.out.println(index);			
+		return bracketService.addCompetitor(model, index);
+	}
+	@RequestMapping(path="/removecompetitorfrombracket/{id}")
+	public String removeCompetitor(@PathVariable("id") long id, Model model ) {
+		System.out.println(id);			
+		return bracketService.removeCompetitor(model, id);
 	}
 	
 	

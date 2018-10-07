@@ -7,4 +7,6 @@ import org.springframework.ui.Model;
 public interface BracketService {
 	String createBrackets(Model model, long id);
 	String displayDivision(Model model, long id);
+	String addCompetitor(Model model, int index);
+	String removeCompetitor(Model model, long id);
 }
