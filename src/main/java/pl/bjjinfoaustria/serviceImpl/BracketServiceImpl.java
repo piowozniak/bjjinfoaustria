@@ -13,6 +13,7 @@ import pl.bjjinfoaustria.bean.BracketMB;
 import pl.bjjinfoaustria.entity.Competitor;
 import pl.bjjinfoaustria.entity.Division;
 import pl.bjjinfoaustria.entity.Event;
+import pl.bjjinfoaustria.repository.CompetitorRepository;
 import pl.bjjinfoaustria.repository.DivisionRepository;
 import pl.bjjinfoaustria.repository.EventRepository;
 import pl.bjjinfoaustria.service.BracketService;
@@ -22,6 +23,8 @@ public class BracketServiceImpl implements BracketService {
 	private EventRepository eventRepository;
 	@Autowired
 	private DivisionRepository divisionRepository;
+	@Autowired
+	private CompetitorRepository competitorRepository;
 	private Event event;
 	private BracketMB bracket;
 	private List<Division> allDivisions = new ArrayList<>();
@@ -65,10 +68,18 @@ public class BracketServiceImpl implements BracketService {
 		return "bracketcreator";
 	}
 	@Override
-	public String removeCompetitor(Model model, long id) {
-		bracket.removeCompetitorFromFight(id);
+	public String removeCompetitor(Model model, int fightIndex, int competitorIndex) {
+		bracket.removeCompetitorFromFight(fightIndex, competitorIndex);
 		model.addAttribute("bracket", bracket);
 		model.addAttribute("divisions", divisions);
 		return "bracketcreator";
 	}
+	@Override
+	public String saveBrackets(Model model) {
+		bracket.saveBrackets(competitorRepository);
+		model.addAttribute("bracket", bracket);
+		model.addAttribute("divisions", divisions);
+		return "bracketcreator";
+	}
+
 }

@@ -3,17 +3,20 @@ package pl.bjjinfoaustria.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import pl.bjjinfoaustria.entity.Competitor;
+import pl.bjjinfoaustria.repository.CompetitorRepository;
 
 public class Bracket {
 	
-	private Competitor[] competitors = new Competitor[2];
+	private List<Competitor> competitors = new ArrayList<>();
 
-	public Competitor[] getCompetitors() {
+	public List<Competitor> getCompetitors() {
 		return competitors;
 	}
 
-	public void setCompetitors(Competitor[] competitors) {
+	public void setCompetitors(List<Competitor> competitors) {
 		this.competitors = competitors;
 	}
 	

@@ -3,19 +3,23 @@ package pl.bjjinfoaustria.bean;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
+import java.lang.Object;
 import pl.bjjinfoaustria.dto.Bracket;
 import pl.bjjinfoaustria.entity.Competitor;
 import pl.bjjinfoaustria.entity.Division;
 import pl.bjjinfoaustria.entity.Event;
+import pl.bjjinfoaustria.repository.CompetitorRepository;
 
 public class BracketMB {
-	
 	private Event event;
 	private Division division;
 	private int numberOfFightsInRound;
 	private boolean addCompetitor;
 	private boolean removeCompetitor;
-
 
 	private List<Bracket> fights = new ArrayList<>();
 	private List<Competitor> allCompetitorsInDivision = new ArrayList<>();
@@ -35,42 +39,31 @@ public class BracketMB {
 		}
 	}
 	public void addCompetitorToFight(int index) {
-		addCompetitor = true;
 		Competitor competitor = temporaryListOfCompetitors.get(index);
 		temporaryListOfCompetitors.remove(index);
-		for (Bracket bracket : fights) {
-			if (addCompetitor) {
-				checkFightIfEmpty(bracket, competitor);
-			}
-		}
-	}
-	private void checkFightIfEmpty(Bracket b, Competitor competitor) {
-		for (int i = 0; i<b.getCompetitors().length; i++) {
-			if (b.getCompetitors()[i] == null) {
-				b.getCompetitors()[i] = competitor;
-				addCompetitor = false;
+		for (Bracket bracket : fights) {			
+			if (bracket.getCompetitors().size()<2) {
+				bracket.getCompetitors().add(competitor);
 				break;
 			}
 		}
 	}
 	
-	public void removeCompetitorFromFight(long id) {		
-		removeCompetitor = true;
-		Competitor competitor = allCompetitorsInDivision.stream().filter(c -> c.getId() == id).findAny().get();
+	public void removeCompetitorFromFight(int fightIndex, int competitorIndex) {		
+		Competitor competitor = fights.get(fightIndex).getCompetitors().get(competitorIndex);
 		temporaryListOfCompetitors.add(competitor);
-		for (Bracket b : fights) {
-			if (removeCompetitor) {
-				removeCheck(b, id );
-			}
+		fights.get(fightIndex).getCompetitors().remove(competitorIndex);
+	}
+	public void saveBrackets(CompetitorRepository competitorRepository) {
+		for (int i = 1; i<fights.size()+1; i++) {
+			saveCompetitor(fights.get(i-1), i, 0, competitorRepository);
 		}
 	}
-	private void removeCheck(Bracket b, long id ) {
-		for (int i = 0; i<b.getCompetitors().length; i++) {
-			if (b.getCompetitors()[i].getId() == id ) {
-				b.getCompetitors()[i] = null;
-				removeCompetitor = false;
-				break;
-			}
+	private void saveCompetitor(Bracket b, int fight, int round  , CompetitorRepository competitorRepository) {
+		for (Competitor c : b.getCompetitors()) {
+			c.setBracket(Integer.toString(fight));
+			c.setRound(Integer.toString(round));
+			competitorRepository.saveAndFlush(c);
 		}
 	}
 

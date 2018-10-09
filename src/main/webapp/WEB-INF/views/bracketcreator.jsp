@@ -41,24 +41,30 @@
 	</div>
 	<div>
 
-		<c:forEach items="${bracket.fights }" var="fight" varStatus="count">
-			<h3>fight ${count.count }</h3>
-			<c:forEach items="${fight.competitors }" var="competitor">
+		<c:forEach items="${bracket.fights }" var="fight"
+			varStatus="fightIndex">
+			<h3>fight ${fightIndex.count }</h3>
+			<c:forEach items="${fight.competitors }" var="competitor"
+				varStatus="competitorIndex">
 				<c:if test="${competitor != null }">
-				<td>${competitor.user.firstName }</td>
-				<td>${competitor.user.lastName }</td>
-				<f:form style="display: inline"
-					action="/bjjinfoaustria/removecompetitorfrombracket/${competitor.id }"
-					method="get">
-					<button type="submit">remove</button>
-				</f:form>
+					<td>${competitor.user.firstName }</td>
+					<td>${competitor.user.lastName }</td>
+					<f:form style="display: inline"
+						action="/bjjinfoaustria/removecompetitorfrombracket/${fightIndex.index }/${competitorIndex.index }"
+						method="get">
+						<button type="submit">remove</button>
+					</f:form>
 				</c:if>
 				</br>
 			</c:forEach>
 			<div>----------------------</div>
 			<div>----------------------</div>
 		</c:forEach>
+
 	</div>
+	<f:form action="/bjjinfoaustria/submitbrackets" method="get">
+		<button type="submit">submit</button>
+	</f:form>
 
 
 </body>

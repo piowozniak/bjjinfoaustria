@@ -19,6 +19,7 @@ import pl.bjjinfoaustria.dto.EventUsersDTO;
 import pl.bjjinfoaustria.entity.Competition;
 import pl.bjjinfoaustria.entity.Division;
 import pl.bjjinfoaustria.repository.CompetitionRepository;
+import pl.bjjinfoaustria.repository.CompetitorRepository;
 import pl.bjjinfoaustria.repository.DivisionRepository;
 import pl.bjjinfoaustria.service.BracketService;
 import pl.bjjinfoaustria.service.CompetitionService;
@@ -44,10 +45,15 @@ public class CompetitionController {
 		System.out.println(index);			
 		return bracketService.addCompetitor(model, index);
 	}
-	@RequestMapping(path="/removecompetitorfrombracket/{id}")
-	public String removeCompetitor(@PathVariable("id") long id, Model model ) {
-		System.out.println(id);			
-		return bracketService.removeCompetitor(model, id);
+	@RequestMapping(path="/removecompetitorfrombracket/{fightIndex}/{competitorIndex}")
+	public String removeCompetitor(@PathVariable("fightIndex") int fightIndex, @PathVariable("competitorIndex") int competitorIndex, Model model ) {
+		System.out.println(fightIndex);		System.out.println(competitorIndex);		
+		return bracketService.removeCompetitor(model, fightIndex, competitorIndex);
+	}
+	@GetMapping(path="/submitbrackets")
+	public String saveBrackets(Model model) {
+		
+		return bracketService.saveBrackets(model);
 	}
 	
 	

@@ -81,7 +81,7 @@ public class EventServiceImpl implements EventService, DivisionService {
 		System.out.println(event.getDivisions().size());
 		if (divCheck.isPresent()) {
 			division = divisionRepository.findOne(eventUsersDTO.getDivision().getId());
-		} else {			
+		} else {	
 			division = divisionRepository.findOne(event.getDivisions().get(1).getId());
 		}
 		competitor.setDivision(division);
