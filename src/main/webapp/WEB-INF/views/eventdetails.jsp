@@ -75,7 +75,7 @@
 
 	<c:if test="${event.typeOfEvent=='SEMINAR'}">
 		<h2>list of participants</h2>
-		<c:forEach items="${event.divisions.get(1).competitors }"
+		<c:forEach items="${division.competitors }"
 			var="participant">
 			<tr>
 				<td>${participant.user.firstName }

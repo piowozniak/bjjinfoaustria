@@ -36,7 +36,7 @@ public class Event {
 	private String locationAddress;
 	private String fee;
 	private String status;
-	@OneToMany(mappedBy="event", fetch = FetchType.EAGER, orphanRemoval = true)
+	@OneToMany(mappedBy="event", fetch = FetchType.LAZY, orphanRemoval = true)
 	@OrderColumn(name = "id")
 	private List<Division> divisions = new ArrayList<>();
 	@ElementCollection

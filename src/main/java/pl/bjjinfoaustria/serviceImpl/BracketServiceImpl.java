@@ -76,10 +76,13 @@ public class BracketServiceImpl implements BracketService {
 	}
 	@Override
 	public String saveBrackets(Model model) {
-		bracket.saveBrackets(competitorRepository);
+		saveAllBrackets();
 		model.addAttribute("bracket", bracket);
 		model.addAttribute("divisions", divisions);
 		return "bracketcreator";
+	}
+	private void saveAllBrackets() {
+		divisions.forEach(b->b.saveBrackets(competitorRepository));
 	}
 
 }

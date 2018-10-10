@@ -2,6 +2,7 @@ package pl.bjjinfoaustria.serviceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +56,8 @@ public class EventServiceImpl implements EventService, DivisionService {
 
 	@Override
 	public String joinTypeOfEvent(Model model, long id) {
-		event = eventRepository.findOne(id);
+		//event = eventRepository.findOne(id);
+		event = eventRepository.findEventById(id);
 		EventUsersDTO eventUsersDTO = new EventUsersDTO(event);
 		model.addAttribute("event", event);
 		model.addAttribute("eventUsersDTO", eventUsersDTO);
@@ -72,7 +74,7 @@ public class EventServiceImpl implements EventService, DivisionService {
 	}
 
 	@Override
-	public void addParticipant(EventUsersDTO eventUsersDTO) {
+	public void addParticipant(EventUsersDTO eventUsersDTO, Model model) {
 		User user = userRepository.findOne(eventUsersDTO.getIdUsera());
 		Competitor competitor = new Competitor();
 		competitor.setUser(user);
@@ -82,8 +84,9 @@ public class EventServiceImpl implements EventService, DivisionService {
 		if (divCheck.isPresent()) {
 			division = divisionRepository.findOne(eventUsersDTO.getDivision().getId());
 		} else {	
-			division = divisionRepository.findOne(event.getDivisions().get(1).getId());
-		}
+			division = event.getDivisions().stream().filter(Objects::nonNull).findFirst().get();
+		}	
+		model.addAttribute("division", division);
 		competitor.setDivision(division);
 		competitorRepository.saveAndFlush(competitor);
 	}

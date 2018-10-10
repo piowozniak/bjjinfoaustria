@@ -76,7 +76,7 @@ public class EventController {
 	
 	@PostMapping(path="/addusertoevent")
 	public String addParticipantForm(@ModelAttribute("eventUsersDTO") EventUsersDTO eventUsersDTO, Model model) {
-		eventService.addParticipant(eventUsersDTO);
+		eventService.addParticipant(eventUsersDTO, model);
 		return "redirect:events";
 	}
 	
