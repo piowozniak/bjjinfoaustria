@@ -7,6 +7,6 @@ import pl.bjjinfoaustria.entity.Division;
 
 @Service
 public interface CompetitionService {
-	String createBrackets(Model model, long id);
+	String displayBrackets(Model model, long id);
 	String displayDivision(Model model, long id);
 }

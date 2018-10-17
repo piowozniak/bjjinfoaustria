@@ -44,9 +44,7 @@ public class BracketServiceImpl implements BracketService {
 		}
 		divisions.forEach(d -> d.initializeBracketTree());
 		bracket = divisions.get(0);
-		model.addAttribute("event", event);
-		model.addAttribute("divisions", divisions);
-		model.addAttribute("bracket", bracket);
+		addToModelAttribute(model);
 	}
 	@Override
 	public String displayDivision(Model model, long id) {
@@ -55,34 +53,34 @@ public class BracketServiceImpl implements BracketService {
 				bracket = d;
 			}
 		}
-		model.addAttribute("bracket", bracket);
-		model.addAttribute("event", event);
-		model.addAttribute("divisions", divisions);
+		addToModelAttribute(model);
 		return "bracketcreator";
 	}
 	@Override
 	public String addCompetitor(Model model, int index) {
 		bracket.addCompetitorToFight(index);
-		model.addAttribute("bracket", bracket);
-		model.addAttribute("divisions", divisions);
+		addToModelAttribute(model);
 		return "bracketcreator";
 	}
 	@Override
 	public String removeCompetitor(Model model, int fightIndex, int competitorIndex) {
 		bracket.removeCompetitorFromFight(fightIndex, competitorIndex);
-		model.addAttribute("bracket", bracket);
-		model.addAttribute("divisions", divisions);
+		addToModelAttribute(model);
 		return "bracketcreator";
 	}
 	@Override
 	public String saveBrackets(Model model) {
 		saveAllBrackets();
-		model.addAttribute("bracket", bracket);
-		model.addAttribute("divisions", divisions);
+		addToModelAttribute(model);
 		return "bracketcreator";
 	}
 	private void saveAllBrackets() {
 		divisions.forEach(b->b.saveBrackets(competitorRepository));
+	}
+	private void addToModelAttribute(Model model) {
+		model.addAttribute("bracket", bracket);
+		model.addAttribute("event", event);
+		model.addAttribute("divisions", divisions);
 	}
 
 }

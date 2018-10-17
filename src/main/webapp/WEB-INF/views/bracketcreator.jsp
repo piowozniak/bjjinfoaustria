@@ -65,7 +65,9 @@
 	<f:form action="/bjjinfoaustria/submitbrackets" method="get">
 		<button type="submit">submit</button>
 	</f:form>
-
+	<f:form action="/bjjinfoaustria/eventdetails/${event.id }" method="get">
+		<button type="submit">back</button>
+	</f:form>
 
 </body>
 </html>

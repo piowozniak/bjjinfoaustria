@@ -30,6 +30,8 @@ public class CompetitionController {
 	
 	@Autowired
 	BracketService bracketService;
+	@Autowired
+	CompetitionService competitionService;
 	
 	@GetMapping(path="/createbrackets/{id}")
 	public String createBrackets(@PathVariable("id") long id, Model model) {
@@ -54,6 +56,11 @@ public class CompetitionController {
 	public String saveBrackets(Model model) {
 		
 		return bracketService.saveBrackets(model);
+	}
+	@GetMapping(path="/displaybrackets/{id}")
+	public String displayCompetitionBrackets(@PathVariable("id") long id, Model model) {
+		
+		return "";
 	}
 	
 	

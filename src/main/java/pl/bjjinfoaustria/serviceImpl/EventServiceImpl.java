@@ -30,7 +30,6 @@ public class EventServiceImpl implements EventService, DivisionService {
 	private UserRepository userRepository;
 	@Autowired
 	private DivisionRepository divisionRepository;
-	@Autowired
 	private static Optional<Division> divCheck; 
 	@Autowired
 	private CompetitorRepository competitorRepository;

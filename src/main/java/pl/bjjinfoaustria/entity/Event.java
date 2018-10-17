@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +18,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderColumn;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+
+import pl.bjjinfoaustria.utils.JPAUtils;
 
 @Entity(name="Event")
 public class Event {
@@ -38,11 +43,9 @@ public class Event {
 	private String status;
 	@OneToMany(mappedBy="event", fetch = FetchType.LAZY, orphanRemoval = true)
 	@OrderColumn(name = "id")
-	private List<Division> divisions = new ArrayList<>();
+	private List<Division> divisions = new ArrayList<>(); 
 	@ElementCollection
 	private List<User> participants;
-//	@OneToOne(mappedBy="event", fetch = FetchType.LAZY,  cascade = CascadeType.ALL, orphanRemoval = true)
-//	private Competition competition;
 	
 	public Event() {
 		super();

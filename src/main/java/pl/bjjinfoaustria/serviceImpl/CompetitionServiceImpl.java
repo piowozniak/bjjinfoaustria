@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import pl.bjjinfoaustria.bean.DivisionMB;
 import pl.bjjinfoaustria.entity.Division;
 import pl.bjjinfoaustria.entity.Event;
 import pl.bjjinfoaustria.repository.DivisionRepository;
@@ -21,34 +22,39 @@ public class CompetitionServiceImpl implements CompetitionService {
 	@Autowired
 	private DivisionRepository divisionRepository;
 	private Event event;
-	private Division division;
+	private DivisionMB division;
 	private List<Division> divisions = new ArrayList<>();
-//	private List<BracketMB> alldivisions = new ArrayList<>();
+	private List<DivisionMB> listOfDivisions = new ArrayList<>();
 	
 	@Override
-	public String createBrackets(Model model, long id) {
+	public String displayBrackets(Model model, long id) {
 		initEvent(model, id);
 		return "bracketcreator";
 	}
 	private void initEvent(Model model, long id) {
 		event = eventRepository.findOne(id);
 		divisions = event.getDivisions().stream().filter(Objects::nonNull).collect(Collectors.toList());
-		division = divisions.get(0);
-		model.addAttribute("event", event);
-		model.addAttribute("divisions", divisions);
-		model.addAttribute("division", division);
+		divisions.forEach(d-> listOfDivisions.add(new DivisionMB(event, d.getCompetitors())));
+		
+		division = listOfDivisions.get(0);
+		addToModelAttribute(model);
 	}
 	@Override
 	public String displayDivision(Model model, long id) {
-		for (Division d :divisions) {
-			if (d.getId() == id) {
-				division = d;
-			}
-		}
-		model.addAttribute("division", division);
-		model.addAttribute("event", event);
-		model.addAttribute("divisions", divisions);
+//		for (Division d :divisions) {
+//			if (d.getId() == id) {
+//				division = d;
+//			}
+//		}
+//		model.addAttribute("division", division);
+//		model.addAttribute("event", event);
+//		model.addAttribute("divisions", divisions);
 		return "bracketcreator";
+	}
+	private void addToModelAttribute(Model model) {
+		model.addAttribute("event", event);
+		model.addAttribute("listOfDivisions", listOfDivisions);
+		model.addAttribute("division", division);;
 	}
 	
 
