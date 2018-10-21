@@ -58,9 +58,13 @@ public class CompetitionController {
 		return bracketService.saveBrackets(model);
 	}
 	@GetMapping(path="/displaybrackets/{id}")
-	public String displayCompetitionBrackets(@PathVariable("id") long id, Model model) {
-		
-		return "";
+	public String displayCompetitionBrackets(@PathVariable("id") long id, Model model) {		
+		return competitionService.displayBrackets(model, id);
+	}
+	@RequestMapping(path="/displaydivisionincompetition")
+	public String displayCompetitionDivision(@RequestParam("divisionId") long divisionId ,Model model) {
+		System.out.println(divisionId);		
+		return competitionService.displayDivision(model, divisionId);
 	}
 	
 	

@@ -29,32 +29,29 @@ public class CompetitionServiceImpl implements CompetitionService {
 	@Override
 	public String displayBrackets(Model model, long id) {
 		initEvent(model, id);
-		return "bracketcreator";
+		return "displaycompetitionbrackets";
 	}
 	private void initEvent(Model model, long id) {
 		event = eventRepository.findOne(id);
 		divisions = event.getDivisions().stream().filter(Objects::nonNull).collect(Collectors.toList());
-		divisions.forEach(d-> listOfDivisions.add(new DivisionMB(event, d.getCompetitors())));
-		
+		divisions.forEach(d-> listOfDivisions.add(new DivisionMB(event, d, d.getCompetitors())));		
+		initializeDivisions(model, id );
 		division = listOfDivisions.get(0);
 		addToModelAttribute(model);
 	}
 	@Override
 	public String displayDivision(Model model, long id) {
-//		for (Division d :divisions) {
-//			if (d.getId() == id) {
-//				division = d;
-//			}
-//		}
-//		model.addAttribute("division", division);
-//		model.addAttribute("event", event);
-//		model.addAttribute("divisions", divisions);
-		return "bracketcreator";
+		listOfDivisions.forEach(d-> {if (d.getDivision().getId() == id) {division = d;};});
+		addToModelAttribute(model);
+		return "displaycompetitionbrackets";
+	}
+	private void initializeDivisions(Model model, long id ) {
+		listOfDivisions.forEach(d->d.initializeFights());
 	}
 	private void addToModelAttribute(Model model) {
 		model.addAttribute("event", event);
 		model.addAttribute("listOfDivisions", listOfDivisions);
-		model.addAttribute("division", division);;
+		model.addAttribute("division", division);
 	}
 	
 
