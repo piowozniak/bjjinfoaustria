@@ -26,7 +26,7 @@
 		<button type="submit">display</button>
 	</f:form>
 	<c:forEach items="${division.rounds }"  var="round" varStatus="roundIndex">
-		<div style="">
+		<div style="display:inline-block;">
 		<h3>round ${roundIndex.index }</h3>
 			<c:forEach items="${round.fightsInRound }" var="fight"
 				varStatus="fightIndex">
@@ -37,6 +37,7 @@
 					<td>${competitor.user.lastName }</td>
 					</br>
 				</c:forEach>
+
 				<div>----------------------</div>
 				<div>----------------------</div>
 			</c:forEach>

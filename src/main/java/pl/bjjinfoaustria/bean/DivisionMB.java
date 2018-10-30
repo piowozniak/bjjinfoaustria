@@ -22,9 +22,8 @@ public class DivisionMB {
 	private Event event;
 	private List<Competitor> competitors = new ArrayList<>();
 	private Division division;
-	
+	private int amountOfRoundsToFinal;
 	private int currentRound;
-//	private List<Bracket> fights = new ArrayList<>();
 	private List<Round> rounds = new ArrayList<>();
 	
 	public DivisionMB(Event event, Division division, List<Competitor> competitors) {
@@ -39,27 +38,27 @@ public class DivisionMB {
 	}
 	private void initializeRounds() {
 		Competitor competitor = competitors.size()!=0 ? Collections.max(competitors, Comparator.comparing(c -> Integer.valueOf(c.getRound()))) : null;
-		if (competitor!=null) {
-			currentRound = Integer.valueOf( competitor.getRound());
-			for (int round = 0; round<=currentRound; round++) {
-				rounds.add(new Round());
-				addFights(round);
-				addFighters(round);
-			}	
+		currentRound = Integer.valueOf( competitor.getRound());
+		long competitorsInCurrentRound = competitors.stream().filter(c-> Integer.valueOf(c.getRound()) == 0).count();
+		int round = 0;
+		while(competitorsInCurrentRound>1) {								
+			rounds.add(new Round(competitorsInCurrentRound));
+			addFights(round, competitorsInCurrentRound);
+			addFighters(round);
+			competitorsInCurrentRound = competitorsInCurrentRound/2;
+			round++;					
 		}
-	
+		rounds.get(currentRound).setActiveRound(true);
 	}
-	private void addFights(int round) {
-		long competitorsInRound = competitors.stream().filter(c->Integer.valueOf(c.getRound()) == round).count();
+
+	private void addFights(int round, long competitorsInRound) {
 		int numberOfFightsInRound = (int) (competitorsInRound/2);
 		for (int i = 0; i<numberOfFightsInRound; i++) {
 			rounds.get(round).getFightsInRound().add(new Bracket(i+1));
 		}
 	}
 	private void addFighters(int round) {
-		for (Bracket b : rounds.get(round).getFightsInRound() ) {
-			findMatchingCompetitors(b, round);
-		}
+		rounds.get(round).getFightsInRound().stream().forEach(b->findMatchingCompetitors(b, round));
 	}
 	private void findMatchingCompetitors(Bracket b, int round) {
 		for (Competitor c : competitors) {
@@ -86,20 +85,20 @@ public class DivisionMB {
 		this.division = division;
 	}
 
-//	public List<Bracket> getFights() {
-//		return fights;
-//	}
-//
-//	public void setFights(List<Bracket> fights) {
-//		this.fights = fights;
-//	}
-
 	public List<Round> getRounds() {
 		return rounds;
 	}
 
 	public void setRounds(List<Round> rounds) {
 		this.rounds = rounds;
+	}
+
+	public int getAmountOfRoundsToFinal() {
+		return amountOfRoundsToFinal;
+	}
+
+	public void setAmountOfRoundsToFinal(int amountOfRoundsToFinal) {
+		this.amountOfRoundsToFinal = amountOfRoundsToFinal;
 	}
 
 }
