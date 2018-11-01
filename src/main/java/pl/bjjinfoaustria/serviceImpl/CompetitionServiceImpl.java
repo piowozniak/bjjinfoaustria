@@ -3,6 +3,7 @@ package pl.bjjinfoaustria.serviceImpl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import pl.bjjinfoaustria.bean.DivisionMB;
+import pl.bjjinfoaustria.entity.Competitor;
 import pl.bjjinfoaustria.entity.Division;
 import pl.bjjinfoaustria.entity.Event;
 import pl.bjjinfoaustria.repository.DivisionRepository;
@@ -52,6 +54,14 @@ public class CompetitionServiceImpl implements CompetitionService {
 		model.addAttribute("event", event);
 		model.addAttribute("listOfDivisions", listOfDivisions);
 		model.addAttribute("division", division);
+	}
+	@Override
+	public String addWinnerToTheNextRound(Model model, long id, int fightIndex, int roundIndex) {
+		Competitor competitor = division.getCompetitors().stream().filter(c-> c.getId()==id).findFirst().get();
+//		division.addWinnerToNextRound(competitor, fightIndex, roundIndex);
+		division.getRounds().get(roundIndex+1).getListOfWinners()[fightIndex]= competitor;
+		addToModelAttribute(model);
+		return "displaycompetitionbrackets";
 	}
 	
 

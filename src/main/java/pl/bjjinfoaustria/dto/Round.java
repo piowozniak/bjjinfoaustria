@@ -3,10 +3,15 @@ package pl.bjjinfoaustria.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.bjjinfoaustria.entity.Competitor;
+
 public class Round {
 	
-	private boolean activeRound;
-	private long numberOfCompetitorsInRound;	
+	private boolean activeRound = false;
+	private boolean nextRound = false;
+	private long numberOfCompetitorsInRound;
+	private List<Competitor> listOfCompetitorsInRound = new ArrayList<>();
+	private Competitor[] listOfWinners;
 	private List<Bracket> fightsInRound = new ArrayList<>();
 	
 	public Round() {
@@ -14,6 +19,7 @@ public class Round {
 	}
 	public Round(long numberOfCompetitorsInRound) {
 		this.numberOfCompetitorsInRound = numberOfCompetitorsInRound;
+		this.listOfWinners = new Competitor[(int) (numberOfCompetitorsInRound)];
 	}
 
 	public List<Bracket> getFightsInRound() {
@@ -34,6 +40,24 @@ public class Round {
 	}
 	public void setActiveRound(boolean activeRound) {
 		this.activeRound = activeRound;
+	}
+	public boolean isNextRound() {
+		return nextRound;
+	}
+	public void setNextRound(boolean nextRound) {
+		this.nextRound = nextRound;
+	}
+	public Competitor[] getListOfWinners() {
+		return listOfWinners;
+	}
+	public void setListOfWinners(Competitor[] listOfWinners) {
+		this.listOfWinners = listOfWinners;
+	}
+	public List<Competitor> getListOfCompetitorsInRound() {
+		return listOfCompetitorsInRound;
+	}
+	public void setListOfCompetitorsInRound(List<Competitor> listOfCompetitorsInRound) {
+		this.listOfCompetitorsInRound = listOfCompetitorsInRound;
 	}
 
 }

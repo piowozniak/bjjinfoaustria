@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -38,17 +39,23 @@ public class DivisionMB {
 	}
 	private void initializeRounds() {
 		Competitor competitor = competitors.size()!=0 ? Collections.max(competitors, Comparator.comparing(c -> Integer.valueOf(c.getRound()))) : null;
-		currentRound = Integer.valueOf( competitor.getRound());
-		long competitorsInCurrentRound = competitors.stream().filter(c-> Integer.valueOf(c.getRound()) == 0).count();
-		int round = 0;
-		while(competitorsInCurrentRound>1) {								
-			rounds.add(new Round(competitorsInCurrentRound));
-			addFights(round, competitorsInCurrentRound);
-			addFighters(round);
-			competitorsInCurrentRound = competitorsInCurrentRound/2;
-			round++;					
+		if (competitor!=null) {
+			currentRound = Integer.valueOf( competitor.getRound());
+			long competitorsInCurrentRound = competitors.stream().filter(c-> Integer.valueOf(c.getRound()) == 0).count();
+			int round = 0;
+			List<Competitor> listOfCompetitorsInRound = new ArrayList<>();
+			while(competitorsInCurrentRound>1) {
+	//			listOfCompetitorsInRound.clear();
+	//			listOfCompetitorsInRound = competitors.stream().filter(c->Integer.valueOf(c.getRound()).equals(round) ).collect(Collectors.toList());
+				rounds.add(new Round(competitorsInCurrentRound));
+				addFights(round, competitorsInCurrentRound);
+				addFighters(round);
+				competitorsInCurrentRound = competitorsInCurrentRound/2;
+				round++;					
+			}
+			rounds.get(currentRound).setActiveRound(true);
+			rounds.get(currentRound+1).setNextRound(true);
 		}
-		rounds.get(currentRound).setActiveRound(true);
 	}
 
 	private void addFights(int round, long competitorsInRound) {
@@ -67,6 +74,9 @@ public class DivisionMB {
 				b.getCompetitors().add(c);
 			}
 		}
+	}
+	public void addWinnerToNextRound(Competitor competitor, int fightIndex, int roundIndex ) {
+		
 	}
 
 	public List<Competitor> getCompetitors() {

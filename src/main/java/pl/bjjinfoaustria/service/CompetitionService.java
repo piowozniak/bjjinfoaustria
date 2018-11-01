@@ -9,4 +9,5 @@ import pl.bjjinfoaustria.entity.Division;
 public interface CompetitionService {
 	String displayBrackets(Model model, long id);
 	String displayDivision(Model model, long id);
+	String addWinnerToTheNextRound(Model model, long id, int fightIndex, int roundIndex);
 }

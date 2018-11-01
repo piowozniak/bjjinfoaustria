@@ -66,6 +66,14 @@ public class CompetitionController {
 		System.out.println(divisionId);		
 		return competitionService.displayDivision(model, divisionId);
 	}
+	@RequestMapping(path="/addwinnertonextround/{competitorId}/{fightIndex}/{roundIndex}")
+	public String addWinnerOfTheFight(@PathVariable("competitorId") long competitorId, @PathVariable("fightIndex") int fightIndex,
+			@PathVariable("roundIndex") int roundIndex, Model model) {
+		System.out.println(competitorId);
+		System.out.println(fightIndex);
+		System.out.println(roundIndex);
+		return competitionService.addWinnerToTheNextRound(model, competitorId, fightIndex, roundIndex);
+	}
 	
 	
 
