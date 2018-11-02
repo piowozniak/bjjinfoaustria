@@ -23,8 +23,16 @@ INSERT INTO User (id, firstName, lastName, email, phoneNumber) VALUES (1,'John',
 INSERT INTO User (id, firstName, lastName, email, phoneNumber) VALUES (2,'Dupa','Dupa', 'dupa@dup.dup', '65465465');
 INSERT INTO User (id, firstName, lastName, email, phoneNumber) VALUES (3,'Ble','Ble', 'Ble', '65465465');
 INSERT INTO User (id, firstName, lastName, email, phoneNumber) VALUES (4,'Gre','Gre', 'Gre', '65465465');
+INSERT INTO User (id, firstName, lastName, email, phoneNumber) VALUES (5,'Justyna','Pardon', 'dupa@dup.dup', '65465465');
+INSERT INTO User (id, firstName, lastName, email, phoneNumber) VALUES (6,'Marek','ZAustrii', 'dupa@dup.dup', '65465465');
+INSERT INTO User (id, firstName, lastName, email, phoneNumber) VALUES (7,'Pyjotr','Pyjotr', 'Ble', '65465465');
+INSERT INTO User (id, firstName, lastName, email, phoneNumber) VALUES (8,'Buraczany','Grzesiu', 'Gre', '65465465');
 
 INSERT INTO Competitor (id, division_id, user_id) VALUES (1, 1, 1);
 INSERT INTO Competitor (id, division_id, user_id) VALUES (2, 1, 2);
 INSERT INTO Competitor (id, division_id, user_id) VALUES (3, 1, 3);
 INSERT INTO Competitor (id, division_id, user_id) VALUES (4, 1, 4);
+INSERT INTO Competitor (id, division_id, user_id) VALUES (5, 1, 5);
+INSERT INTO Competitor (id, division_id, user_id) VALUES (6, 1, 6);
+INSERT INTO Competitor (id, division_id, user_id) VALUES (7, 1, 7);
+INSERT INTO Competitor (id, division_id, user_id) VALUES (8, 1, 8);

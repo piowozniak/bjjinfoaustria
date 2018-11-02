@@ -28,9 +28,7 @@
 	<c:forEach items="${division.rounds }" var="round"
 		varStatus="roundIndex">
 		<div style="display: inline-block;">
-			
 			<h3>round ${roundIndex.index }</h3>
-			<c:if test="${!round.nextRound }">
 			<c:forEach items="${round.fightsInRound }" var="fight"
 				varStatus="fightIndex">
 				<h3>fight ${fightIndex.count }</h3>
@@ -38,23 +36,36 @@
 					varStatus="competitorIndex">
 					<td>${competitor.user.firstName }</td>
 					<td>${competitor.user.lastName }</td>
-					<f:form action="/bjjinfoaustria/addwinnertonextround/${competitor.id }/${fightIndex.index }/${roundIndex.index }"
-						method="get">
-						<button style="display:inline;"  type="submit">add winner</button>
-					</f:form>
+					
+					<c:if test="${fight.activeButtonToAddWinner && round.activeRound }" >
+						<f:form action="/bjjinfoaustria/addwinnertonextround/${competitor.id }/${fightIndex.index }/${roundIndex.index }"
+							method="get">
+							<button style="display:inline;"  type="submit">add winner</button>
+						</f:form>
+					</c:if>
+					</br>
 				</c:forEach>
 				
 				<div>----------------------</div>
 				<div>----------------------</div>
 			</c:forEach>
-			</c:if>
-			<c:if test="${round.nextRound }">
-					<c:forEach items="${round.listOfWinners }" var="winner">
-						 <td>${winner.user.firstName }</td>
-						<td>${winner.user.lastName }</td>
+			<c:if test="${round.winners }">
+			<h3>winners of the round</h3>
+			<div style="display: inline-block;">
+					<c:forEach items="${round.fightsInRound }" var="winner" varStatus="winnerIndex">
+						 <td>${winnerIndex.count} ${winner.winner.user.firstName }</td>
+						<td>${winner.winner.user.lastName }</td>
+						<c:if test="${winner.winner!=null }" >
+							<f:form action="/bjjinfoaustria/removewinnerfromarray/${winner.winner.id }/${winnerIndex.index }/${roundIndex.index }"
+								method="get">
+								<button style="display:inline-block;"  type="submit">remove</button>
+							</f:form>
+						</c:if>
 						</br>
 						<div>----------------------</div>
 					</c:forEach>
+								</div>
+					
 			</c:if>
 		</div>
 	</c:forEach>

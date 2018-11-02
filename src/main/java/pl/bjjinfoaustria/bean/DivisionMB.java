@@ -1,6 +1,7 @@
 package pl.bjjinfoaustria.bean;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -54,7 +55,7 @@ public class DivisionMB {
 				round++;					
 			}
 			rounds.get(currentRound).setActiveRound(true);
-			rounds.get(currentRound+1).setNextRound(true);
+//			rounds.get(currentRound).setWinners(true);
 		}
 	}
 
@@ -77,6 +78,12 @@ public class DivisionMB {
 	}
 	public void addWinnerToNextRound(Competitor competitor, int fightIndex, int roundIndex ) {
 		
+	}
+	public void removeWinnerFromArray(long id, int roundIndex) {
+		getRounds().get(roundIndex).getFightsInRound().stream().filter(w -> w.getWinner()!=null&&w.getWinner().getId()==id).findFirst().map(w -> { w.setWinner(null);return w;});
+	}
+	private void checkWinnersToSubmit() {
+		//TODO
 	}
 
 	public List<Competitor> getCompetitors() {

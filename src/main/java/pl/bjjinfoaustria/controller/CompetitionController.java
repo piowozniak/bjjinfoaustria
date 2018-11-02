@@ -74,6 +74,14 @@ public class CompetitionController {
 		System.out.println(roundIndex);
 		return competitionService.addWinnerToTheNextRound(model, competitorId, fightIndex, roundIndex);
 	}
+	@RequestMapping(path="/removewinnerfromarray/{competitorId}/{fightIndex}/{roundIndex}")
+	public String removeWinnerOfTheFight(@PathVariable("competitorId")long competitorId, @PathVariable("fightIndex") int fightIndex,
+			@PathVariable("roundIndex") int roundIndex, Model model) {
+		System.out.println(competitorId);
+		System.out.println(fightIndex);
+		System.out.println(roundIndex);
+		return competitionService.removeCompetitorFromWinnerArray(model, competitorId,fightIndex, roundIndex);
+	}
 	
 	
 

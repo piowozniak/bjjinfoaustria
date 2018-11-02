@@ -8,7 +8,8 @@ import pl.bjjinfoaustria.entity.Competitor;
 public class Round {
 	
 	private boolean activeRound = false;
-	private boolean nextRound = false;
+	private boolean winners = false;
+	private boolean submitButton = false;
 	private long numberOfCompetitorsInRound;
 	private List<Competitor> listOfCompetitorsInRound = new ArrayList<>();
 	private Competitor[] listOfWinners;
@@ -41,11 +42,11 @@ public class Round {
 	public void setActiveRound(boolean activeRound) {
 		this.activeRound = activeRound;
 	}
-	public boolean isNextRound() {
-		return nextRound;
+	public boolean isWinners() {
+		return winners;
 	}
-	public void setNextRound(boolean nextRound) {
-		this.nextRound = nextRound;
+	public void setWinners(boolean winners) {
+		this.winners = winners;
 	}
 	public Competitor[] getListOfWinners() {
 		return listOfWinners;

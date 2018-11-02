@@ -9,7 +9,9 @@ import pl.bjjinfoaustria.entity.Competitor;
 import pl.bjjinfoaustria.repository.CompetitorRepository;
 
 public class Bracket {
-	
+	private boolean activeButtonToRemoveWinner = false;
+	private Competitor winner;
+	private boolean activeButtonToAddWinner = true;
 	private int numberOfFightInDivision;
 	
 	public Bracket() {
@@ -34,6 +36,24 @@ public class Bracket {
 	}
 	public void setNumberOfFightInDivision(int numberOfFightInDivision) {
 		this.numberOfFightInDivision = numberOfFightInDivision;
+	}
+	public boolean isActiveButtonToAddWinner() {
+		return activeButtonToAddWinner;
+	}
+	public void setActiveButtonToAddWinner(boolean activeButtonToAddWinner) {
+		this.activeButtonToAddWinner = activeButtonToAddWinner;
+	}
+	public boolean isActiveButtonToRemoveWinner() {
+		return activeButtonToRemoveWinner;
+	}
+	public void setActiveButtonToRemoveWinner(boolean activeButtonToRemoveWinner) {
+		this.activeButtonToRemoveWinner = activeButtonToRemoveWinner;
+	}
+	public Competitor getWinner() {
+		return winner;
+	}
+	public void setWinner(Competitor winner) {
+		this.winner = winner;
 	}
 	
 	

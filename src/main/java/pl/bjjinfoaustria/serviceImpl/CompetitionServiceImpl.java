@@ -59,7 +59,17 @@ public class CompetitionServiceImpl implements CompetitionService {
 	public String addWinnerToTheNextRound(Model model, long id, int fightIndex, int roundIndex) {
 		Competitor competitor = division.getCompetitors().stream().filter(c-> c.getId()==id).findFirst().get();
 //		division.addWinnerToNextRound(competitor, fightIndex, roundIndex);
-		division.getRounds().get(roundIndex+1).getListOfWinners()[fightIndex]= competitor;
+		division.getRounds().get(roundIndex).getFightsInRound().get(fightIndex).setWinner(competitor);
+		division.getRounds().get(roundIndex).getFightsInRound().get(fightIndex).setActiveButtonToAddWinner(false);
+		division.getRounds().get(roundIndex).setWinners(true);
+		addToModelAttribute(model);
+		return "displaycompetitionbrackets";
+	}
+
+	@Override
+	public String removeCompetitorFromWinnerArray(Model model, long id, int fightIndex, int roundIndex) {
+		division.removeWinnerFromArray(id, roundIndex);
+		division.getRounds().get(roundIndex).getFightsInRound().get(fightIndex).setActiveButtonToAddWinner(true);
 		addToModelAttribute(model);
 		return "displaycompetitionbrackets";
 	}
