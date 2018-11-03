@@ -76,14 +76,25 @@ public class DivisionMB {
 			}
 		}
 	}
-	public void addWinnerToNextRound(Competitor competitor, int fightIndex, int roundIndex ) {
+	public void addWinnerToNextRound(Competitor competitor, int fightIndex, Round round ) {
+		round.getFightsInRound().get(fightIndex).setWinner(competitor);
+		round.getFightsInRound().get(fightIndex).setActiveButtonToAddWinner(false);
+		round.setWinners(true);
+		round.setSubmitButtonActive(!checkWinnersToSubmit(round));
+
 		
 	}
-	public void removeWinnerFromArray(long id, int roundIndex) {
-		getRounds().get(roundIndex).getFightsInRound().stream().filter(w -> w.getWinner()!=null&&w.getWinner().getId()==id).findFirst().map(w -> { w.setWinner(null);return w;});
+	public void removeWinnerFromArray(long id, Round round, int fightIndex) {
+		round.getFightsInRound().stream().filter(w -> w.getWinner()!=null&&w.getWinner().getId()==id).findFirst().map(w -> { w.setWinner(null);return w;});
+		round.getFightsInRound().get(fightIndex).setActiveButtonToAddWinner(true);
+		round.setWinners(round.getFightsInRound().stream().anyMatch(w -> w.getWinner()!=null));
+		round.setSubmitButtonActive(!checkWinnersToSubmit(round));
 	}
-	private void checkWinnersToSubmit() {
-		//TODO
+	private boolean checkWinnersToSubmit(Round round) {
+		return round.getFightsInRound().stream().anyMatch(w -> w.getWinner()==null);
+	}
+	public void saveCompetitorsToTheNextRound() {
+		
 	}
 
 	public List<Competitor> getCompetitors() {
@@ -117,5 +128,6 @@ public class DivisionMB {
 	public void setAmountOfRoundsToFinal(int amountOfRoundsToFinal) {
 		this.amountOfRoundsToFinal = amountOfRoundsToFinal;
 	}
+
 
 }

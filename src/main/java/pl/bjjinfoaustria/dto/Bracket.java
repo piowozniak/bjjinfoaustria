@@ -13,6 +13,7 @@ public class Bracket {
 	private Competitor winner;
 	private boolean activeButtonToAddWinner = true;
 	private int numberOfFightInDivision;
+	private List<Competitor> competitors = new ArrayList<>();
 	
 	public Bracket() {
 		super();
@@ -21,8 +22,6 @@ public class Bracket {
 		super();
 		this.numberOfFightInDivision = numberOfFightInDivision;
 	}
-
-	private List<Competitor> competitors = new ArrayList<>();
 
 	public List<Competitor> getCompetitors() {
 		return competitors;

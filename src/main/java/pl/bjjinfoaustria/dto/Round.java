@@ -9,18 +9,39 @@ public class Round {
 	
 	private boolean activeRound = false;
 	private boolean winners = false;
-	private boolean submitButton = false;
+	private boolean submitButtonActive = false;
 	private long numberOfCompetitorsInRound;
 	private List<Competitor> listOfCompetitorsInRound = new ArrayList<>();
-	private Competitor[] listOfWinners;
+	private List<Bracket> fightsForNextRound = new ArrayList<>();
 	private List<Bracket> fightsInRound = new ArrayList<>();
 	
 	public Round() {
 		super();
 	}
+	
+	public void initializeBracketsForNextRound() {
+		int numberOfFightsNextRound = fightsInRound.size()/2;
+		for(int i = 1; i<=numberOfFightsNextRound; i++) {
+			fightsForNextRound.add(new Bracket(i));
+		}
+	}
+	private void addFightersToNextRoundBrackets( ) {
+		for (Bracket b : getFightsInRound()) {
+			addFighter(b.getWinner());
+		}
+	}
+	private void addFighter(Competitor competitor ) {
+		for ( Bracket b : getFightsForNextRound()) {
+			if (b.getCompetitors().size()>2) {
+				competitor.setRound(competitor.getRound()+1);
+				competitor.setBracket(Integer.toString(b.getNumberOfFightInDivision()));
+				b.getCompetitors().add(competitor);
+			}
+		}
+	}
+	
 	public Round(long numberOfCompetitorsInRound) {
 		this.numberOfCompetitorsInRound = numberOfCompetitorsInRound;
-		this.listOfWinners = new Competitor[(int) (numberOfCompetitorsInRound)];
 	}
 
 	public List<Bracket> getFightsInRound() {
@@ -48,17 +69,26 @@ public class Round {
 	public void setWinners(boolean winners) {
 		this.winners = winners;
 	}
-	public Competitor[] getListOfWinners() {
-		return listOfWinners;
-	}
-	public void setListOfWinners(Competitor[] listOfWinners) {
-		this.listOfWinners = listOfWinners;
-	}
 	public List<Competitor> getListOfCompetitorsInRound() {
 		return listOfCompetitorsInRound;
 	}
 	public void setListOfCompetitorsInRound(List<Competitor> listOfCompetitorsInRound) {
 		this.listOfCompetitorsInRound = listOfCompetitorsInRound;
 	}
+	public boolean isSubmitButtonActive() {
+		return submitButtonActive;
+	}
+	public void setSubmitButtonActive(boolean submitButtonActive) {
+		this.submitButtonActive = submitButtonActive;
+	}
+
+	public List<Bracket> getFightsForNextRound() {
+		return fightsForNextRound;
+	}
+
+	public void setFightsForNextRound(List<Bracket> fightsForNextRound) {
+		this.fightsForNextRound = fightsForNextRound;
+	}
+
 
 }

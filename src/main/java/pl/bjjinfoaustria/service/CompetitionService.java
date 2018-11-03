@@ -11,4 +11,5 @@ public interface CompetitionService {
 	String displayDivision(Model model, long id);
 	String addWinnerToTheNextRound(Model model, long id, int fightIndex, int roundIndex);
 	String removeCompetitorFromWinnerArray(Model model, long id, int fightIndex, int roundIndex);
+	String submitCompetitorsToTheNextRound(Model model, int roundIndex);
 }

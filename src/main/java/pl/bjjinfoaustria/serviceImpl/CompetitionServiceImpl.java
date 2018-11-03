@@ -11,9 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import pl.bjjinfoaustria.bean.DivisionMB;
+import pl.bjjinfoaustria.dto.Round;
 import pl.bjjinfoaustria.entity.Competitor;
 import pl.bjjinfoaustria.entity.Division;
 import pl.bjjinfoaustria.entity.Event;
+import pl.bjjinfoaustria.repository.CompetitorRepository;
 import pl.bjjinfoaustria.repository.DivisionRepository;
 import pl.bjjinfoaustria.repository.EventRepository;
 import pl.bjjinfoaustria.service.CompetitionService;
@@ -23,6 +25,8 @@ public class CompetitionServiceImpl implements CompetitionService {
 	private EventRepository eventRepository;
 	@Autowired
 	private DivisionRepository divisionRepository;
+	@Autowired
+	private CompetitorRepository competitorRepository;
 	private Event event;
 	private DivisionMB division;
 	private List<Division> divisions = new ArrayList<>();
@@ -58,21 +62,26 @@ public class CompetitionServiceImpl implements CompetitionService {
 	@Override
 	public String addWinnerToTheNextRound(Model model, long id, int fightIndex, int roundIndex) {
 		Competitor competitor = division.getCompetitors().stream().filter(c-> c.getId()==id).findFirst().get();
-//		division.addWinnerToNextRound(competitor, fightIndex, roundIndex);
-		division.getRounds().get(roundIndex).getFightsInRound().get(fightIndex).setWinner(competitor);
-		division.getRounds().get(roundIndex).getFightsInRound().get(fightIndex).setActiveButtonToAddWinner(false);
-		division.getRounds().get(roundIndex).setWinners(true);
+		division.addWinnerToNextRound(competitor, fightIndex, division.getRounds().get(roundIndex));		
 		addToModelAttribute(model);
 		return "displaycompetitionbrackets";
 	}
 
 	@Override
 	public String removeCompetitorFromWinnerArray(Model model, long id, int fightIndex, int roundIndex) {
-		division.removeWinnerFromArray(id, roundIndex);
-		division.getRounds().get(roundIndex).getFightsInRound().get(fightIndex).setActiveButtonToAddWinner(true);
+		Round round = division.getRounds().get(roundIndex);
+		division.removeWinnerFromArray(id, round, fightIndex);
 		addToModelAttribute(model);
 		return "displaycompetitionbrackets";
 	}
+	@Override
+	public String submitCompetitorsToTheNextRound(Model model, int roundIndex) {
+		Round round = division.getRounds().get(roundIndex);
+		round.initializeBracketsForNextRound();
+		
+		return "displaycompetitionbrackets";
+	}
+
 	
 
 }

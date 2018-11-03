@@ -39,7 +39,7 @@
 			</br>
 		</c:forEach>
 	</div>
-	<div>
+	<div style="display: inline-block;">
 
 		<c:forEach items="${bracket.fights }" var="fight"
 			varStatus="fightIndex">

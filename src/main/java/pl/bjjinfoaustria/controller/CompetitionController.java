@@ -39,17 +39,14 @@ public class CompetitionController {
 	}
 	@RequestMapping(path="/displaydivision")
 	public String displayDivision(@RequestParam("divisionId") long divisionId ,Model model) {
-		System.out.println(divisionId);		
 		return bracketService.displayDivision(model, divisionId);
 	}
 	@RequestMapping(path="/addcompetitortobracket/{index}")
 	public String addCompetitor(@PathVariable("index") int index, Model model ) {
-		System.out.println(index);			
 		return bracketService.addCompetitor(model, index);
 	}
 	@RequestMapping(path="/removecompetitorfrombracket/{fightIndex}/{competitorIndex}")
-	public String removeCompetitor(@PathVariable("fightIndex") int fightIndex, @PathVariable("competitorIndex") int competitorIndex, Model model ) {
-		System.out.println(fightIndex);		System.out.println(competitorIndex);		
+	public String removeCompetitor(@PathVariable("fightIndex") int fightIndex, @PathVariable("competitorIndex") int competitorIndex, Model model ) {		
 		return bracketService.removeCompetitor(model, fightIndex, competitorIndex);
 	}
 	@GetMapping(path="/submitbrackets")
@@ -63,26 +60,22 @@ public class CompetitionController {
 	}
 	@RequestMapping(path="/displaydivisionincompetition")
 	public String displayCompetitionDivision(@RequestParam("divisionId") long divisionId ,Model model) {
-		System.out.println(divisionId);		
 		return competitionService.displayDivision(model, divisionId);
 	}
 	@RequestMapping(path="/addwinnertonextround/{competitorId}/{fightIndex}/{roundIndex}")
 	public String addWinnerOfTheFight(@PathVariable("competitorId") long competitorId, @PathVariable("fightIndex") int fightIndex,
 			@PathVariable("roundIndex") int roundIndex, Model model) {
-		System.out.println(competitorId);
-		System.out.println(fightIndex);
-		System.out.println(roundIndex);
 		return competitionService.addWinnerToTheNextRound(model, competitorId, fightIndex, roundIndex);
 	}
 	@RequestMapping(path="/removewinnerfromarray/{competitorId}/{fightIndex}/{roundIndex}")
 	public String removeWinnerOfTheFight(@PathVariable("competitorId")long competitorId, @PathVariable("fightIndex") int fightIndex,
 			@PathVariable("roundIndex") int roundIndex, Model model) {
-		System.out.println(competitorId);
-		System.out.println(fightIndex);
-		System.out.println(roundIndex);
 		return competitionService.removeCompetitorFromWinnerArray(model, competitorId,fightIndex, roundIndex);
 	}
-	
-	
+	@PostMapping(path="/submitwinnerstonextround/{roundIndex}")
+	public String saveWinnersOfTheRound(Model model, @PathVariable("roundIndex") int roundIndex) {
+		System.out.println(roundIndex);
+		return competitionService.submitCompetitorsToTheNextRound(model, roundIndex);
+	}
 
 }

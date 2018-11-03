@@ -65,7 +65,12 @@
 						<div>----------------------</div>
 					</c:forEach>
 								</div>
-					
+					<c:if test="${round.submitButtonActive }" >
+							<f:form action="/bjjinfoaustria/submitwinnerstonextround/${roundIndex.index }"
+								method="get">
+								<button style="display:inline-block;"  type="submit">submit</button>
+							</f:form>
+						</c:if>
 			</c:if>
 		</div>
 	</c:forEach>
