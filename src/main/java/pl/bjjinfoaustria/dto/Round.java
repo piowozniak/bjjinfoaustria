@@ -21,21 +21,21 @@ public class Round {
 	
 	public void initializeBracketsForNextRound() {
 		int numberOfFightsNextRound = fightsInRound.size()/2;
+		List<Competitor> temporaryListOfWinners = new ArrayList<>();
+		fightsInRound.forEach(c-> temporaryListOfWinners.add(c.getWinner()));
 		for(int i = 1; i<=numberOfFightsNextRound; i++) {
 			fightsForNextRound.add(new Bracket(i));
+			addFightersToNextRoundBrackets(fightsForNextRound.get(i-1), temporaryListOfWinners);
 		}
+		
 	}
-	private void addFightersToNextRoundBrackets( ) {
-		for (Bracket b : getFightsInRound()) {
-			addFighter(b.getWinner());
-		}
-	}
-	private void addFighter(Competitor competitor ) {
-		for ( Bracket b : getFightsForNextRound()) {
-			if (b.getCompetitors().size()>2) {
-				competitor.setRound(competitor.getRound()+1);
-				competitor.setBracket(Integer.toString(b.getNumberOfFightInDivision()));
-				b.getCompetitors().add(competitor);
+	private void addFightersToNextRoundBrackets( Bracket b, List<Competitor> temporaryListOfWinners) {
+		for (Competitor winner : temporaryListOfWinners) {
+			if (b.getCompetitors().size()<2 && winner.getId()!=null) {		
+				winner.setId((Long) null);
+				winner.setRound(Integer.toString((Integer.valueOf(winner.getRound())+1)));
+				winner.setBracket(Integer.toString(b.getNumberOfFightInDivision()));
+				b.getCompetitors().add(winner);		
 			}
 		}
 	}

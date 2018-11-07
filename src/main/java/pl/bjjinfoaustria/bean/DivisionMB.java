@@ -18,9 +18,6 @@ import pl.bjjinfoaustria.repository.CompetitorRepository;
 
 public class DivisionMB {
 	
-	@Autowired
-	CompetitorRepository competitorRepository;
-	
 	private Event event;
 	private List<Competitor> competitors = new ArrayList<>();
 	private Division division;
@@ -93,8 +90,15 @@ public class DivisionMB {
 	private boolean checkWinnersToSubmit(Round round) {
 		return round.getFightsInRound().stream().anyMatch(w -> w.getWinner()==null);
 	}
-	public void saveCompetitorsToTheNextRound() {
-		
+	public void saveCompetitorsToTheNextRound(Round round, CompetitorRepository competitorRepository) {
+		round.getFightsForNextRound().forEach(b->saveCompetitors(b,competitorRepository));
+		initializeRounds();
+	}
+	private void saveCompetitors(Bracket b, CompetitorRepository competitorRepository) {
+		for ( Competitor c : b.getCompetitors()) {
+			competitorRepository.saveAndFlush(c);
+		}
+//		b.getCompetitors().forEach(c -> competitorRepository.saveAndFlush(c));
 	}
 
 	public List<Competitor> getCompetitors() {

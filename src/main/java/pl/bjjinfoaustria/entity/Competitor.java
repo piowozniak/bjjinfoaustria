@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 public class Competitor {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	private String round;
 	private String bracket;
 
@@ -24,10 +24,10 @@ public class Competitor {
 	@JoinColumn(name="user_id")
 	private User user;
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public Division getDivision() {
@@ -54,6 +54,7 @@ public class Competitor {
 	public void setBracket(String bracket) {
 		this.bracket = bracket;
 	}
+
 	
 
 }

@@ -67,7 +67,7 @@
 								</div>
 					<c:if test="${round.submitButtonActive }" >
 							<f:form action="/bjjinfoaustria/submitwinnerstonextround/${roundIndex.index }"
-								method="get">
+								method="post">
 								<button style="display:inline-block;"  type="submit">submit</button>
 							</f:form>
 						</c:if>

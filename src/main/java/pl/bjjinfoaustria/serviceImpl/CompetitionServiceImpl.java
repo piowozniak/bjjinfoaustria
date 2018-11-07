@@ -38,6 +38,7 @@ public class CompetitionServiceImpl implements CompetitionService {
 		return "displaycompetitionbrackets";
 	}
 	private void initEvent(Model model, long id) {
+		divisions.clear();
 		event = eventRepository.findOne(id);
 		divisions = event.getDivisions().stream().filter(Objects::nonNull).collect(Collectors.toList());
 		divisions.forEach(d-> listOfDivisions.add(new DivisionMB(event, d, d.getCompetitors())));		
@@ -78,7 +79,9 @@ public class CompetitionServiceImpl implements CompetitionService {
 	public String submitCompetitorsToTheNextRound(Model model, int roundIndex) {
 		Round round = division.getRounds().get(roundIndex);
 		round.initializeBracketsForNextRound();
-		
+		division.saveCompetitorsToTheNextRound(round, competitorRepository);
+		initEvent(model, event.getId());
+		addToModelAttribute(model);
 		return "displaycompetitionbrackets";
 	}
 
