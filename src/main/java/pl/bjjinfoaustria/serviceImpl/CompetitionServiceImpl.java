@@ -80,7 +80,6 @@ public class CompetitionServiceImpl implements CompetitionService {
 		Round round = division.getRounds().get(roundIndex);
 		round.initializeBracketsForNextRound();
 		division.saveCompetitorsToTheNextRound(round, competitorRepository);
-		initEvent(model, event.getId());
 		addToModelAttribute(model);
 		return "displaycompetitionbrackets";
 	}

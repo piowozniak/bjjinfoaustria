@@ -49,7 +49,7 @@
 				<div>----------------------</div>
 				<div>----------------------</div>
 			</c:forEach>
-			<c:if test="${round.winners }">
+			<c:if test="${round.winners && round.activeRound}">
 			<h3>winners of the round</h3>
 			<div style="display: inline-block;">
 					<c:forEach items="${round.fightsInRound }" var="winner" varStatus="winnerIndex">

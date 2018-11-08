@@ -92,13 +92,23 @@ public class DivisionMB {
 	}
 	public void saveCompetitorsToTheNextRound(Round round, CompetitorRepository competitorRepository) {
 		round.getFightsForNextRound().forEach(b->saveCompetitors(b,competitorRepository));
-		initializeRounds();
+		round.setActiveRound(false);
+		round.setSubmitButtonActive(false);
+		initializeNextRound(round);
+		
 	}
 	private void saveCompetitors(Bracket b, CompetitorRepository competitorRepository) {
 		for ( Competitor c : b.getCompetitors()) {
 			competitorRepository.saveAndFlush(c);
 		}
 //		b.getCompetitors().forEach(c -> competitorRepository.saveAndFlush(c));
+	}
+	private void initializeNextRound(Round round) {
+		List<Bracket> listOfFightsInNextRound = new ArrayList<>(round.getFightsForNextRound());
+		Round nextRound = rounds.get(currentRound+1);
+		nextRound.setFightsInRound(listOfFightsInNextRound);
+		nextRound.setActiveRound(true);
+		currentRound = currentRound+1;
 	}
 
 	public List<Competitor> getCompetitors() {

@@ -38,6 +38,7 @@ public class Round {
 				b.getCompetitors().add(winner);		
 			}
 		}
+
 	}
 	
 	public Round(long numberOfCompetitorsInRound) {
