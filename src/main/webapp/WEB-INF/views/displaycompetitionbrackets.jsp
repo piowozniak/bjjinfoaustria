@@ -37,7 +37,7 @@
 					<td>${competitor.user.firstName }</td>
 					<td>${competitor.user.lastName }</td>
 					
-					<c:if test="${fight.activeButtonToAddWinner && round.activeRound }" >
+					<c:if test="${fight.activeButtonToAddWinner && round.activeRound && division.winnerOfDivision == null }" >
 						<f:form action="/bjjinfoaustria/addwinnertonextround/${competitor.id }/${fightIndex.index }/${roundIndex.index }"
 							method="get">
 							<button style="display:inline;"  type="submit">add winner</button>
@@ -73,7 +73,14 @@
 						</c:if>
 			</c:if>
 		</div>
+		
 	</c:forEach>
+	<c:if test="${division.winnerOfDivision != null }"> 
+			<h2>winner</h2>
+			<td> ${division.winnerOfDivision.user.firstName} </td>
+			<td> ${division.winnerOfDivision.user.lastName} </td>
+	</c:if>
+	
 
 
 

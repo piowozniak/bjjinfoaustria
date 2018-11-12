@@ -15,6 +15,7 @@ public class Competitor {
 	private Long id;
 	private String round;
 	private String bracket;
+	private String place;
 
 	
 	@ManyToOne(fetch=FetchType.EAGER)
@@ -53,6 +54,12 @@ public class Competitor {
 	}
 	public void setBracket(String bracket) {
 		this.bracket = bracket;
+	}
+	public String getPlace() {
+		return place;
+	}
+	public void setPlace(String place) {
+		this.place = place;
 	}
 
 	

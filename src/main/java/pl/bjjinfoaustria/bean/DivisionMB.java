@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ public class DivisionMB {
 	private Division division;
 	private int amountOfRoundsToFinal;
 	private int currentRound;
+	private Competitor winnerOfDivision;
 	private List<Round> rounds = new ArrayList<>();
 	
 	public DivisionMB(Event event, Division division, List<Competitor> competitors) {
@@ -33,10 +35,13 @@ public class DivisionMB {
 	}
 	
 	public void initializeFights() {
+		rounds.clear();
 		initializeRounds();			
 	}
+
 	private void initializeRounds() {
 		Competitor competitor = competitors.size()!=0 ? Collections.max(competitors, Comparator.comparing(c -> Integer.valueOf(c.getRound()))) : null;
+		checkIfWinnerOfDivision( );
 		if (competitor!=null) {
 			currentRound = Integer.valueOf( competitor.getRound());
 			long competitorsInCurrentRound = competitors.stream().filter(c-> Integer.valueOf(c.getRound()) == 0).count();
@@ -54,6 +59,9 @@ public class DivisionMB {
 			rounds.get(currentRound).setActiveRound(true);
 //			rounds.get(currentRound).setWinners(true);
 		}
+	}
+	private void checkIfWinnerOfDivision( ) {
+		winnerOfDivision = competitors.stream().filter(c -> c.getPlace().equals("1") ).findAny().orElse(null);
 	}
 
 	private void addFights(int round, long competitorsInRound) {
@@ -95,6 +103,11 @@ public class DivisionMB {
 		round.setActiveRound(false);
 		round.setSubmitButtonActive(false);
 		initializeNextRound(round);
+		if (round.getFightsInRound().size()==1) {
+			winnerOfDivision = round.getFightsInRound().get(0).getWinner();
+			winnerOfDivision.setPlace("1");
+			competitorRepository.saveAndFlush(winnerOfDivision);
+		}
 		
 	}
 	private void saveCompetitors(Bracket b, CompetitorRepository competitorRepository) {
@@ -105,10 +118,12 @@ public class DivisionMB {
 	}
 	private void initializeNextRound(Round round) {
 		List<Bracket> listOfFightsInNextRound = new ArrayList<>(round.getFightsForNextRound());
-		Round nextRound = rounds.get(currentRound+1);
-		nextRound.setFightsInRound(listOfFightsInNextRound);
-		nextRound.setActiveRound(true);
-		currentRound = currentRound+1;
+		if (!listOfFightsInNextRound.isEmpty()) {
+			Round nextRound = rounds.get(currentRound+1);
+			nextRound.setFightsInRound(listOfFightsInNextRound);
+			nextRound.setActiveRound(true);
+			currentRound = currentRound+1;
+		}		
 	}
 
 	public List<Competitor> getCompetitors() {
@@ -141,6 +156,14 @@ public class DivisionMB {
 
 	public void setAmountOfRoundsToFinal(int amountOfRoundsToFinal) {
 		this.amountOfRoundsToFinal = amountOfRoundsToFinal;
+	}
+
+	public Competitor getWinnerOfDivision() {
+		return winnerOfDivision;
+	}
+
+	public void setWinnerOfDivision(Competitor winnerOfDivision) {
+		this.winnerOfDivision = winnerOfDivision;
 	}
 
 

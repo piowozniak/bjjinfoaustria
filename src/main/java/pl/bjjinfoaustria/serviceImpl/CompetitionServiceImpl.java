@@ -39,6 +39,7 @@ public class CompetitionServiceImpl implements CompetitionService {
 	}
 	private void initEvent(Model model, long id) {
 		divisions.clear();
+		listOfDivisions.clear();
 		event = eventRepository.findOne(id);
 		divisions = event.getDivisions().stream().filter(Objects::nonNull).collect(Collectors.toList());
 		divisions.forEach(d-> listOfDivisions.add(new DivisionMB(event, d, d.getCompetitors())));		
