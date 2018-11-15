@@ -162,6 +162,13 @@ public class EventServiceImpl implements EventService, DivisionService {
 
 	@Override
 	public String saveDivisionInCompetition(Event event, Model model) {		
+//		listOfDivisions.forEach(d -> { divCheck = Optional.ofNullable(d);
+//			if (divCheck.isPresent()) {
+//				d.setEvent(event);
+//				divisionRepository.saveAndFlush(d);
+//				editEvent = false;
+//		};});
+		
 		for (Division d : listOfDivisions) {
 			divCheck = Optional.ofNullable(d);
 			if (divCheck.isPresent()) {

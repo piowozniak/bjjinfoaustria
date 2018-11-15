@@ -15,7 +15,7 @@ public class Competitor {
 	private Long id;
 	private String round;
 	private String bracket;
-	private String place;
+	private String place = "0";
 
 	
 	@ManyToOne(fetch=FetchType.EAGER)

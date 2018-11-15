@@ -14,6 +14,7 @@ public class Bracket {
 	private boolean activeButtonToAddWinner = true;
 	private int numberOfFightInDivision;
 	private List<Competitor> competitors = new ArrayList<>();
+	private boolean full = false;
 	
 	public Bracket() {
 		super();
@@ -54,7 +55,11 @@ public class Bracket {
 	public void setWinner(Competitor winner) {
 		this.winner = winner;
 	}
-	
-	
+	public boolean isFull() {
+		return full;
+	}
+	public void setFull(boolean full) {
+		this.full = full;
+	}	
 
 }

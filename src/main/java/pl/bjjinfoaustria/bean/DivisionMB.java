@@ -48,8 +48,6 @@ public class DivisionMB {
 			int round = 0;
 			List<Competitor> listOfCompetitorsInRound = new ArrayList<>();
 			while(competitorsInCurrentRound>1) {
-	//			listOfCompetitorsInRound.clear();
-	//			listOfCompetitorsInRound = competitors.stream().filter(c->Integer.valueOf(c.getRound()).equals(round) ).collect(Collectors.toList());
 				rounds.add(new Round(competitorsInCurrentRound));
 				addFights(round, competitorsInCurrentRound);
 				addFighters(round);
@@ -57,7 +55,6 @@ public class DivisionMB {
 				round++;					
 			}
 			rounds.get(currentRound).setActiveRound(true);
-//			rounds.get(currentRound).setWinners(true);
 		}
 	}
 	private void checkIfWinnerOfDivision( ) {
@@ -111,10 +108,7 @@ public class DivisionMB {
 		
 	}
 	private void saveCompetitors(Bracket b, CompetitorRepository competitorRepository) {
-		for ( Competitor c : b.getCompetitors()) {
-			competitorRepository.saveAndFlush(c);
-		}
-//		b.getCompetitors().forEach(c -> competitorRepository.saveAndFlush(c));
+		b.getCompetitors().forEach(c -> competitorRepository.saveAndFlush(c));
 	}
 	private void initializeNextRound(Round round) {
 		List<Bracket> listOfFightsInNextRound = new ArrayList<>(round.getFightsForNextRound());

@@ -32,6 +32,9 @@ public class BracketMB {
 		this.allCompetitorsInDivision = new ArrayList<>(division.getCompetitors());
 		this.temporaryListOfCompetitors = new ArrayList<>(division.getCompetitors());
 	}
+	public BracketMB() {
+		
+	}
 	public void initializeBracketTree() {
 		numberOfFightsInRound = allCompetitorsInDivision.size()%2 == 0 ? allCompetitorsInDivision.size()/2 : null;
 		for (int i = 0; i<numberOfFightsInRound; i++) {
