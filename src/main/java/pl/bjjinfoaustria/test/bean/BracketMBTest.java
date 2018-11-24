@@ -8,8 +8,10 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import junit.framework.Assert;
 import pl.bjjinfoaustria.bean.BracketMB;
 import pl.bjjinfoaustria.entity.Competitor;
+import pl.bjjinfoaustria.repository.CompetitorRepository;
 
 class BracketMBTest {
 
@@ -20,6 +22,7 @@ class BracketMBTest {
 	
 	@Test
 	void testInitializeBracketTree() {
+		bracket.setAllCompetitorsInDivision(competitors);
 		bracket.initializeBracketTree();
 		assertEquals(3, bracket.getFights().size());
 	}
@@ -27,17 +30,24 @@ class BracketMBTest {
 	@Test
 	void testAddCompetitorToFight() {
 		bracket.setTemporaryListOfCompetitors(new ArrayList<>(competitors));
-		
+		assertEquals(bracket.getTemporaryListOfCompetitors().size(), 6);
+		bracket.addCompetitorToFight(index);
+		assertEquals(bracket.getTemporaryListOfCompetitors().size(), 5);
+//		assertEquals(bracket.getFights().get(0).getCompetitors().size(), 1);
 	}
 
 	@Test
 	void testRemoveCompetitorFromFight() {
-		fail("Not yet implemented");
+		bracket.removeCompetitorFromFight(index, index);
+		assertEquals(bracket.getFights().get(index).getCompetitors().size(), 1);
 	}
 
 	@Test
 	void testSaveBrackets() {
-		fail("Not yet implemented");
+		CompetitorRepository competitorRepository = null;
+		bracket.saveBrackets(competitorRepository);
+		assertEquals(bracket.getFights().get(0).getCompetitors().get(0).getRound(), 0);
+		fail("what what what");
 	}
 
 }
