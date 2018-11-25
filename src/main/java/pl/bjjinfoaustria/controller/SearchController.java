@@ -29,7 +29,7 @@ public class SearchController {
 	@Autowired
 	UserRepository userRepository;
 	
-	@RequestMapping("/")
+	@RequestMapping("/homepage")
 	public String getAllGyms(Model model) {
 		List<Gym> gyms = searchService.findAll();
 		model.addAttribute("users", userRepository.findAll());

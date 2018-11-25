@@ -8,6 +8,7 @@ import javax.validation.Validator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -27,6 +28,7 @@ import org.springframework.web.servlet.view.JstlView;
 @EnableTransactionManagement // umozliwia transakcje transactional
 @EnableWebMvc
 @EnableJpaRepositories(basePackages="pl.bjjinfoaustria.repository")
+@Import(value = {SecurityConfig.class})
 public class AppConfig extends WebMvcConfigurerAdapter {
 
 	@Bean("entityManagerFactory")
