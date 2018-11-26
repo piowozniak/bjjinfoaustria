@@ -63,6 +63,8 @@
 
 	</div>
 	<f:form action="/bjjinfoaustria/submitbrackets" method="get">
+	<input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}" />
 		<button type="submit">submit</button>
 	</f:form>
 	<f:form action="/bjjinfoaustria/eventdetails/${event.id }" method="get">

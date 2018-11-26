@@ -10,10 +10,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class LoginController {
 	
 	@RequestMapping(path="/") 
-	public ModelAndView welcomePage() {
-		ModelAndView model = new ModelAndView();
-		model.setViewName("loginpage");
-		return model;
+	public String welcomePage() {
+		return "loginpage";
 	} 
 	@RequestMapping(value = "/loginPage", method = RequestMethod.GET)
 	public ModelAndView loginPage(@RequestParam(value = "error",required = false) String error,
@@ -25,10 +23,10 @@ public class LoginController {
 		}
 
 		if (logout != null) {
-			model.addObject("message", "Logged out from JournalDEV successfully.");
+			model.addObject("message", "Logged out successfully");
 		}
 
-		model.setViewName("homepage");
+		model.setViewName("loginpage");
 		return model;
 	}
 

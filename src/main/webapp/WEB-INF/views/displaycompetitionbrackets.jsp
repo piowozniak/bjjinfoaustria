@@ -36,51 +36,59 @@
 					varStatus="competitorIndex">
 					<td>${competitor.user.firstName }</td>
 					<td>${competitor.user.lastName }</td>
-					
-					<c:if test="${fight.activeButtonToAddWinner && round.activeRound && division.winnerOfDivision == null }" >
-						<f:form action="/bjjinfoaustria/addwinnertonextround/${competitor.id }/${fightIndex.index }/${roundIndex.index }"
+
+					<c:if
+						test="${fight.activeButtonToAddWinner && round.activeRound && division.winnerOfDivision == null }">
+						<f:form
+							action="/bjjinfoaustria/addwinnertonextround/${competitor.id }/${fightIndex.index }/${roundIndex.index }"
 							method="get">
-							<button style="display:inline;"  type="submit">add winner</button>
+							<button style="display: inline;" type="submit">add
+								winner</button>
 						</f:form>
 					</c:if>
 					</br>
 				</c:forEach>
-				
+
 				<div>----------------------</div>
 				<div>----------------------</div>
 			</c:forEach>
 			<c:if test="${round.winners && round.activeRound}">
-			<h3>winners of the round</h3>
-			<div style="display: inline-block;">
-					<c:forEach items="${round.fightsInRound }" var="winner" varStatus="winnerIndex">
-						 <td>${winnerIndex.count} ${winner.winner.user.firstName }</td>
+				<h3>winners of the round</h3>
+				<div style="display: inline-block;">
+					<c:forEach items="${round.fightsInRound }" var="winner"
+						varStatus="winnerIndex">
+						<td>${winnerIndex.count}${winner.winner.user.firstName }</td>
 						<td>${winner.winner.user.lastName }</td>
-						<c:if test="${winner.winner!=null }" >
-							<f:form action="/bjjinfoaustria/removewinnerfromarray/${winner.winner.id }/${winnerIndex.index }/${roundIndex.index }"
+						<c:if test="${winner.winner!=null }">
+							<f:form
+								action="/bjjinfoaustria/removewinnerfromarray/${winner.winner.id }/${winnerIndex.index }/${roundIndex.index }"
 								method="get">
-								<button style="display:inline-block;"  type="submit">remove</button>
+								<button style="display: inline-block;" type="submit">remove</button>
 							</f:form>
 						</c:if>
 						</br>
 						<div>----------------------</div>
 					</c:forEach>
-								</div>
-					<c:if test="${round.submitButtonActive }" >
-							<f:form action="/bjjinfoaustria/submitwinnerstonextround/${roundIndex.index }"
-								method="post">
-								<button style="display:inline-block;"  type="submit">submit</button>
-							</f:form>
-						</c:if>
+				</div>
+				<c:if test="${round.submitButtonActive }">
+					<f:form
+						action="/bjjinfoaustria/submitwinnerstonextround/${roundIndex.index }"
+						method="post">
+						<input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}" />
+						<button style="display: inline-block;" type="submit">submit</button>
+					</f:form>
+				</c:if>
 			</c:if>
 		</div>
-		
+
 	</c:forEach>
-	<c:if test="${division.winnerOfDivision != null }"> 
-			<h2>winner</h2>
-			<td> ${division.winnerOfDivision.user.firstName} </td>
-			<td> ${division.winnerOfDivision.user.lastName} </td>
+	<c:if test="${division.winnerOfDivision != null }">
+		<h2>winner</h2>
+		<td>${division.winnerOfDivision.user.firstName}</td>
+		<td>${division.winnerOfDivision.user.lastName}</td>
 	</c:if>
-	
+
 
 
 

@@ -14,7 +14,22 @@
 </style>
 </head>
 <body>
-	<h2>hello</h2>
+<h2>${_csrf.parameterName}</h2><h2>${_csrf.token}</h2>
+	<h2>hello ${pageContext.request.userPrincipal.name}</h2>
+	<c:url value="/logout" var="logoutUrl" />
+	<form id="logout" action="${logoutUrl}" method="post">
+		<input type="hidden" name="${_csrf.parameterName}"
+			value="${_csrf.token}" />
+	</form>
+	<c:if test="${pageContext.request.userPrincipal.name != null}">
+		<form method="get"
+			action="javascript:document.getElementById('logout').submit()">
+			<button type="submit">Log out</button>
+		</form>
+		<!--  <a class="button"
+			href="javascript:document.getElementById('logout').submit()">Logout</a>-->
+	</c:if>
+	</br>
 	<!-- lista wszystkich -->
 	<f:form method="delete" action="/bjjinfoaustria/delete">
 		<c:forEach items="${gyms}" var="gym">

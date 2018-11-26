@@ -24,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 			.antMatchers("/homepage").access("hasRole('ROLE_USER')")
 			.and()
-				.formLogin().loginPage("/loginPage")
+				.formLogin().loginPage("/loginpage")
 				.defaultSuccessUrl("/homepage")
 				.failureUrl("/loginPage?error")
 				.usernameParameter("username").passwordParameter("password")				
