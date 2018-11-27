@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +36,11 @@ public class SearchController {
 		List<Gym> gyms = searchService.findAll();
 		model.addAttribute("users", userRepository.findAll());
 		model.addAttribute("gyms", gyms);
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		System.out.println(authentication.getName());
+		System.out.println(authentication.getAuthorities());
+		System.out.println(authentication.getDetails());
+		System.out.println(authentication.getCredentials());
 		return "homepage";
 	}
 	@RequestMapping("/search")

@@ -34,7 +34,11 @@
 
 		<button type="submit">Search</button>
 	</f:form>
-	<h2>gyms</h2>
+	
+	<h2 style="display:inline;">gyms</h2><f:form style="display: inline;" action="/bjjinfoaustria/add" method="get">
+			<button type="submit">add gym</button>
+		</f:form>
+		</br>
 	<c:forEach items="${gyms}" var="gym">
 		<tr>
 			<td>${gym.name}</td>
@@ -45,8 +49,10 @@
 			<td>${gym.headCoach}</td>
 			<a href="/bjjinfoaustria/edit/${gym.id }">edit</a>
 			<a href="/bjjinfoaustria/delete/${gym.id }">delete</a>
+			</br>
+				<div>--------------------</div>
 		</tr></br>
 	</c:forEach>
-<div><a href="/bjjinfoaustria/">back</a></div>
+<div><a href="/bjjinfoaustria/homepage">back</a></div>
 </body>
 </html>

@@ -25,7 +25,6 @@ public class LoginController {
 		if (logout != null) {
 			model.addObject("message", "Logged out successfully");
 		}
-
 		model.setViewName("loginpage");
 		return model;
 	}

@@ -15,9 +15,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder authenticationMgr) throws Exception {
 		authenticationMgr.inMemoryAuthentication()
-			.withUser("john")
-			.password("john123")
-			.authorities("ROLE_USER");
+			.withUser("admin")
+			.password("admin")
+			.authorities("ROLE_ADMIN", "ROLE_USER")
+			.and().withUser("user").password("user").authorities("ROLE_USER");
 	}
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
