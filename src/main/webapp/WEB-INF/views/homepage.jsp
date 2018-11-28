@@ -47,7 +47,12 @@
 		<f:form style="display: inline;" action="/bjjinfoaustria/events" method="get">
 			<button type="submit">events</button>
 		</f:form>
+		<f:form style="display: inline;" action="/bjjinfoaustria/adminpage" method="get">
+			<button type="submit">admin page</button>
+		</f:form>
 	</br>
+	
+	<h2>news</h2>
 	<!-- lista wszystkich -->
 	<f:form method="delete" action="/bjjinfoaustria/delete">
 		<c:forEach items="${gyms}" var="gym">
