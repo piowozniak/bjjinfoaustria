@@ -11,15 +11,19 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import org.springframework.data.annotation.Transient;
+
 @Entity(name="User")
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	private String userName;
 	private String firstName;
 	private String lastName;
 	private String email;
 	private String phoneNumber;
+	private String status;
 	@OneToMany(mappedBy="user", fetch = FetchType.EAGER,  cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Competitor> competitors;
 	
@@ -59,11 +63,18 @@ public class User {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-//	public List<Event> getEvents() {
-//		return events;
-//	}
-//	public void setEvents(List<Event> events) {
-//		this.events = events;
-//	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 
 }

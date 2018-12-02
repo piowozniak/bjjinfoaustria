@@ -19,14 +19,14 @@ INSERT INTO Division (id, beltCategory, weightCategory, event_id) VALUES (2, 'WH
 INSERT INTO Division (id, beltCategory, weightCategory, event_id) VALUES (3, 'WHITE', '-70kg', 5); 
 INSERT INTO Division (id, beltCategory, weightCategory, event_id) VALUES (4, 'WHITE', '-76kg', 5); 
 
-INSERT INTO User (id, firstName, lastName, email, phoneNumber) VALUES (1,'John','Kebab', 'dupa@dup.dup', '65465465');
-INSERT INTO User (id, firstName, lastName, email, phoneNumber) VALUES (2,'Dupa','Dupa', 'dupa@dup.dup', '65465465');
-INSERT INTO User (id, firstName, lastName, email, phoneNumber) VALUES (3,'Ble','Ble', 'Ble', '65465465');
-INSERT INTO User (id, firstName, lastName, email, phoneNumber) VALUES (4,'Gre','Gre', 'Gre', '65465465');
-INSERT INTO User (id, firstName, lastName, email, phoneNumber) VALUES (5,'Justyna','Pardon', 'dupa@dup.dup', '65465465');
-INSERT INTO User (id, firstName, lastName, email, phoneNumber) VALUES (6,'Marek','ZAustrii', 'dupa@dup.dup', '65465465');
-INSERT INTO User (id, firstName, lastName, email, phoneNumber) VALUES (7,'Pyjotr','Pyjotr', 'Ble', '65465465');
-INSERT INTO User (id, firstName, lastName, email, phoneNumber) VALUES (8,'Buraczany','Grzesiu', 'Gre', '65465465');
+INSERT INTO User (id, userName, status, firstName, lastName, email, phoneNumber) VALUES (1,'JohnUser', 'N' ,'John','Kebab', 'dupa@dup.dup', '65465465');
+INSERT INTO User (id, userName, status, firstName, lastName, email, phoneNumber) VALUES (2,'DupaUser', 'N','Dupa','Dupa', 'dupa@dup.dup', '65465465');
+INSERT INTO User (id, userName, status, firstName, lastName, email, phoneNumber) VALUES (3,'BleUser', 'T','Ble','Ble', 'Ble', '65465465');
+INSERT INTO User (id, userName, status, firstName, lastName, email, phoneNumber) VALUES (4,'GreUser', 'T','Gre','Gre', 'Gre', '65465465');
+INSERT INTO User (id, userName, status, firstName, lastName, email, phoneNumber) VALUES (5,'JustynaUser', 'N','Justyna','Pardon', 'dupa@dup.dup', '65465465');
+INSERT INTO User (id, userName, status, firstName, lastName, email, phoneNumber) VALUES (6,'MarekUser', 'N','Marek','ZAustrii', 'dupa@dup.dup', '65465465');
+INSERT INTO User (id, userName, status, firstName, lastName, email, phoneNumber) VALUES (7,'PyjotrUser', 'N','Pyjotr','Pyjotr', 'Ble', '65465465');
+INSERT INTO User (id, userName, status, firstName, lastName, email, phoneNumber) VALUES (8,'BuraczanyUser', 'N','Buraczany','Grzesiu', 'Gre', '65465465');
 
 INSERT INTO Competitor (id, division_id, user_id, place) VALUES (1, 1, 1, '0');
 INSERT INTO Competitor (id, division_id, user_id, place) VALUES (2, 1, 2, '0');
