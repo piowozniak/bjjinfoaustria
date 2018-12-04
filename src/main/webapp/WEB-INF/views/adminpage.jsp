@@ -66,14 +66,20 @@
 		<td>${user.userName }</td>
 		<td>${user.firstName }</td>
 		<td>${user.lastName }</td>
+		<td>${user.status }</td>
 
 		<f:form style="display: inline;"
 			action="/bjjinfoaustria/activateuser/${user.id }" method="get">
 			<button type="submit">
 				<c:if test="${user.status == 'N' }">activate user</c:if>
-				<c:if test="${user.status == 'T' }">deactivate user</c:if>
+				<c:if test="${user.status == 'A' }">deactivate user</c:if>
 			</button>
-
+		</f:form>
+		
+		<f:form style="display: inline;"
+			action="/bjjinfoaustria/edituser/${user.id}" method="get">
+			
+			<button type="submit">edit user</button>
 		</f:form>
 		</br>
 

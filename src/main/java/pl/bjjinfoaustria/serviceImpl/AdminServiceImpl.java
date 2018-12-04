@@ -18,8 +18,8 @@ public class AdminServiceImpl implements AdminService {
 	private List<User> allUsers = new ArrayList<>();
 	private User user;
 	private boolean displayUserConfirmation=false;
-	final private String TAK = "T";
-	final private String NIE = "N";
+	final private String ACTIVE = "A";
+	final private String NONACTIVE = "N";
 	
 	
 	@Autowired
@@ -49,16 +49,30 @@ public class AdminServiceImpl implements AdminService {
 	public String confirmUser(Model model, User user) {
 		//TO DO refactor
 		User userFromAllUsers = allUsers.stream().filter(u -> u.getId() == user.getId()).findFirst().get();
-		if (TAK.equals(userFromAllUsers.getStatus())) {
-			userFromAllUsers.setStatus(NIE);
-		} else if (NIE.equals(userFromAllUsers.getStatus())) {
-			userFromAllUsers.setStatus(TAK);
+		if (ACTIVE.equals(userFromAllUsers.getStatus())) {
+			userFromAllUsers.setStatus(NONACTIVE);
+		} else if (NONACTIVE.equals(userFromAllUsers.getStatus())) {
+			userFromAllUsers.setStatus(ACTIVE);
 		}
 		userRepository.saveAndFlush(userFromAllUsers);
 		displayUserConfirmation = false;
 		addToModel(model);
 		return "adminpage";
 	}
+	@Override
+	public String editUser(Model model, long id) {
+		user = userRepository.findOne(id);
+		addToModel(model);
+		return "edituser";
+	}
+	
+	@Override
+	public String editUserConfirmation(Model model, User user) {
+		userRepository.saveAndFlush(user);
+		addToModel(model);
+		return "adminpage";
+	}
+
 	
 	private void addToModel(Model model ) {
 		model.addAttribute("allUsers", allUsers);
@@ -94,6 +108,11 @@ public class AdminServiceImpl implements AdminService {
 	public void setDisplayUserConfirmation(boolean displayUserConfirmation) {
 		this.displayUserConfirmation = displayUserConfirmation;
 	}
+
+
+	
+
+
 
 
 

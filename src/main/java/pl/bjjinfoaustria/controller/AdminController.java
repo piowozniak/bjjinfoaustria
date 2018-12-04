@@ -38,9 +38,17 @@ public class AdminController {
 	}
 	@PostMapping(path="/confirmuseractivation")
 	public String confirmUser(Model model, @ModelAttribute("user") User user ) {
-		System.out.println(user.getUserName());
-		System.out.println(user.getId());
 		return adminService.confirmUser(model, user);
+	}
+	@RequestMapping(path="/edituser/{id}", method = RequestMethod.GET)
+	public String editUserDetails(@PathVariable("id") long id, Model model) {
+		System.out.println(id);
+		return adminService.editUser(model, id);		 
+	}
+	@PostMapping(path="/edituserconfirmation")
+	public String editUserConfirmation(@ModelAttribute("user") User user, Model model) {
+		System.out.println(model.containsAttribute("user"));
+		return adminService.editUserConfirmation(model, user);
 	}
 	
 
