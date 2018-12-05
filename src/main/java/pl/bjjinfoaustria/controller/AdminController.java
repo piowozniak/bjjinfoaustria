@@ -1,5 +1,7 @@
 package pl.bjjinfoaustria.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import pl.bjjinfoaustria.entity.Competitor;
 import pl.bjjinfoaustria.entity.User;
 import pl.bjjinfoaustria.service.AdminService;
 
@@ -46,7 +49,7 @@ public class AdminController {
 		return adminService.editUser(model, id);		 
 	}
 	@PostMapping(path="/edituserconfirmation")
-	public String editUserConfirmation(@ModelAttribute("user") User user, Model model) {
+	public String editUserConfirmation(@ModelAttribute("user") User user,  Model model) {
 		System.out.println(model.containsAttribute("user"));
 		return adminService.editUserConfirmation(model, user);
 	}

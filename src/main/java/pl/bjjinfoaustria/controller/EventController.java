@@ -80,17 +80,6 @@ public class EventController {
 		return "redirect:events";
 	}
 	
-	@GetMapping(path="/deleteuser/{id}")
-	public String deleteUser(Model model, @PathVariable long id) {
-		User user = userRepository.findOne(id);
-		model.addAttribute("user", user);
-		return "deleteuser";
-	}
-	@PostMapping(path="/deleteuser")
-	public String deleteUserConfirm(@ModelAttribute User user) {
-		userRepository.delete(user);
-		return "redirect:/";
-	}
 	@GetMapping(path="/editevent/{id}")
 	public String editEventForm(@PathVariable("id") long id, Model model) {
 		return eventService.editEvent(id, model);

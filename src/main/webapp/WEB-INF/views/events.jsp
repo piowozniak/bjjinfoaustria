@@ -23,7 +23,7 @@
 
 
 			<form method="get" style="display: inline;" action="/bjjinfoaustria/deleteevent/${event.id }">
-				<button type="submit">delete event</button>
+				<button type="submit">activate event</button>
 			</form>
 			<form  method="get" style="display: inline;"
 				action="/bjjinfoaustria/addusertoevent/${event.id }">

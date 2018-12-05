@@ -61,14 +61,21 @@ public class AdminServiceImpl implements AdminService {
 	}
 	@Override
 	public String editUser(Model model, long id) {
-		user = userRepository.findOne(id);
+		this.user = userRepository.findOne(id);
 		addToModel(model);
 		return "edituser";
 	}
 	
 	@Override
 	public String editUserConfirmation(Model model, User user) {
-		userRepository.saveAndFlush(user);
+		this.user.setEmail(user.getEmail());
+		this.user.setUserName(user.getUserName());
+		this.user.setFirstName(user.getFirstName());
+		this.user.setLastName(user.getLastName());
+		this.user.setPhoneNumber(user.getPhoneNumber());
+		userRepository.saveAndFlush(this.user);
+		allUsers.clear();
+		allUsers = userRepository.findAll();		
 		addToModel(model);
 		return "adminpage";
 	}
