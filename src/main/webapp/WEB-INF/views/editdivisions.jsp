@@ -28,7 +28,8 @@
 			<f:hidden path="id" />
 		</div>
 		<button type="submit">submit</button>
-
+		<input type="hidden" name="${_csrf.parameterName}"
+			value="${_csrf.token}" />
 	</f:form>
 	<f:form action="/bjjinfoaustria/adddivision/${event.id}" method="get">
 		<button type="submit">add division</button>
@@ -37,8 +38,8 @@
 		<c:if test="${division!=null }">
 			<tr>
 				<td>${division.fullNameCategory }</td>
-				<f:form style="display:inline;" action="/bjjinfoaustria/removedivision/${division.id}"
-					method="get">
+				<f:form style="display:inline;"
+					action="/bjjinfoaustria/removedivision/${division.id}" method="get">
 					<button type="submit">remove</button>
 				</f:form>
 			</tr>

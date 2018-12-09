@@ -20,17 +20,32 @@
 		<tr>
 			<td>${event.nameOfEvent }</td>
 			<td>${event.typeOfEvent }</td>
+			<td>${event.status }</td>
 
+			<c:if test="${event.status != 'DRAFT' }">
+				<form method="post" style="display: inline;"
+					action="/bjjinfoaustria/activateordeactivateevent/${event.id }">
+					<button type="submit">
+						<c:if
+							test="${event.status == 'SUBMITTED' || event.status == 'NONACTIVE'}">						
+						activate event
+					</c:if>
+						<c:if test="${event.status == 'ACTIVE' }">
+						deactivate event
+					</c:if>
+						<input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}" />
+					</button>
+				</form>
+			</c:if>
+			<c:if test="${event.status == 'ACTIVE'}">
+				<form method="get" style="display: inline;"
+					action="/bjjinfoaustria/addusertoevent/${event.id }">
+					<button type="submit">join the event</button>
+				</form>
+			</c:if>
 
-			<form method="get" style="display: inline;" action="/bjjinfoaustria/deleteevent/${event.id }">
-				<button type="submit">activate event</button>
-			</form>
-			<form  method="get" style="display: inline;"
-				action="/bjjinfoaustria/addusertoevent/${event.id }">
-				<button type="submit">join the event</button>
-			</form>
-	
-			<form  method="get" style="display: inline;"
+			<form method="get" style="display: inline;"
 				action="/bjjinfoaustria/eventdetails/${event.id }">
 				<button type="submit">details</button>
 			</form>

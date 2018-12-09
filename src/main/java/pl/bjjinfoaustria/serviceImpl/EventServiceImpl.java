@@ -30,7 +30,7 @@ public class EventServiceImpl implements EventService, DivisionService {
 	private UserRepository userRepository;
 	@Autowired
 	private DivisionRepository divisionRepository;
-	private static Optional<Division> divCheck; 
+	private static Optional<Division> divCheck;
 	@Autowired
 	private CompetitorRepository competitorRepository;
 	private List<Division> listOfDivisions = new ArrayList<>();
@@ -38,14 +38,20 @@ public class EventServiceImpl implements EventService, DivisionService {
 	private List<Division> temporaryListOfDivisions;
 	private List<Division> divisionsToRemove = new ArrayList<>();
 	private boolean editEvent;
+	private boolean displayDraftOrSubmitField = false;
+	final private String SUBMIT = "SUBMITTED";
+	final private String DRAFT = "DRAFT";
+	final private String ACTIVE = "ACTIVE";
+	final private String NONACTIVE = "NONACTIVE";
 
 	@Override
 	public String addEvent(Event event, Model model) {
-		if (event.getTypeOfEvent().equals("COMPETITION")) {
+		if ("COMPETITION".equals(event.getTypeOfEvent())) {
+			event.setStatus("DRAFT");
 			addModelAttributeIfEventIsCompetition(model, event);
 			return "competitionregistration";
 		}
-		event.setStatus("SUBMITTED");
+		event.setStatus("DRAFT");
 		eventRepository.saveAndFlush(event);
 		Division division = new Division();
 		division.setEvent(event);
@@ -55,7 +61,7 @@ public class EventServiceImpl implements EventService, DivisionService {
 
 	@Override
 	public String joinTypeOfEvent(Model model, long id) {
-		//event = eventRepository.findOne(id);
+		// event = eventRepository.findOne(id);
 		event = eventRepository.findEventById(id);
 		EventUsersDTO eventUsersDTO = new EventUsersDTO(event);
 		model.addAttribute("event", event);
@@ -69,6 +75,7 @@ public class EventServiceImpl implements EventService, DivisionService {
 
 	@Override
 	public List<Event> allEvents() {
+		displayDraftOrSubmitField = false;
 		return eventRepository.findAll();
 	}
 
@@ -82,9 +89,9 @@ public class EventServiceImpl implements EventService, DivisionService {
 		System.out.println(event.getDivisions().size());
 		if (divCheck.isPresent()) {
 			division = divisionRepository.findOne(eventUsersDTO.getDivision().getId());
-		} else {	
+		} else {
 			division = event.getDivisions().stream().filter(Objects::nonNull).findFirst().get();
-		}	
+		}
 		model.addAttribute("division", division);
 		competitor.setDivision(division);
 		competitorRepository.saveAndFlush(competitor);
@@ -95,9 +102,19 @@ public class EventServiceImpl implements EventService, DivisionService {
 		return eventRepository.findOne(id);
 	}
 
-	@Override
+	
 	public void deleteEvent(Event event) {
-		eventRepository.delete(event);
+		
+	}
+
+	@Override
+	public String activateOrDeactivateEvent(Model model, long id) {
+		Event event = eventRepository.findOne(id);
+		String status = event.getStatus().equals(SUBMIT) || event.getStatus().equals(NONACTIVE) ? ACTIVE : NONACTIVE;
+		event.setStatus(status);
+		eventRepository.saveAndFlush(event);
+		model.addAttribute("events", eventRepository.findAll());
+		return "";
 	}
 
 	private void addModelAttributeIfEventIsCompetition(Model model, Event event) {
@@ -110,25 +127,40 @@ public class EventServiceImpl implements EventService, DivisionService {
 		editEvent = true;
 		event = eventRepository.findOne(id);
 		temporaryListOfDivisions = event.getDivisions();
+		addAttributesToModel(model);
+		return "editevent";
+	}
+
+	@Override
+	public String saveEditEvent(Event event, Model model) {
+		this.event = event;
+//		eventRepository.saveAndFlush(this.event);
+		editEvent = false;
+		displayDraftOrSubmitField = true;
+		model.addAttribute("displayDraftOrSubmitField", displayDraftOrSubmitField);
+		model.addAttribute("event", event);
+		return "editevent";
+	}
+	@Override
+	public String confirmDraftOrSubmit(Event event, String status, Model model) {
+		this.event.setStatus(status);
+		eventRepository.saveAndFlush(this.event);
+		displayDraftOrSubmitField = false;
+		return "";
+	}
+
+	public void addAttributesToModel(Model model) {
 		model.addAttribute("event", event);
 		model.addAttribute("temporaryListOfDivisions", temporaryListOfDivisions);
-		return "editevent";
+		model.addAttribute("listOfDivisions", listOfDivisions);
 	}
 
 	@Override
 	public String removeDivisionFromCollection(int index, Model model) {
 		divisionsToRemove.add(listOfDivisions.get(index));
 		listOfDivisions.remove(index);
-		model.addAttribute("listOfDivisions", listOfDivisions);
-		model.addAttribute("event", event);
+		addAttributesToModel(model);
 		return editEvent ? "editdivisions" : "competitionregistration";
-	}
-
-	@Override
-	public String saveEditEvent(Event event, Model model) {
-		eventRepository.saveAndFlush(event);
-		editEvent = false;
-		return "redirect:events";
 	}
 
 	@Override
@@ -137,8 +169,7 @@ public class EventServiceImpl implements EventService, DivisionService {
 		event = eventRepository.findOne(id);
 		listOfDivisions.clear();
 		listOfDivisions = event.getDivisions();
-		model.addAttribute("event", event);
-		model.addAttribute("listOfDivisions", listOfDivisions);
+		addAttributesToModel(model);
 		return "editdivisions";
 	}
 
@@ -155,20 +186,19 @@ public class EventServiceImpl implements EventService, DivisionService {
 	public String addDivision(Division division, Model model) {
 		listOfDivisions.add(division);
 		event = eventRepository.findOne(division.getEvent().getId());
-		model.addAttribute("event", event);
-		model.addAttribute("listOfDivisions", listOfDivisions);
+		addAttributesToModel(model);
 		return editEvent ? "editdivisions" : "competitionregistration";
 	}
 
 	@Override
-	public String saveDivisionInCompetition(Event event, Model model) {		
-//		listOfDivisions.forEach(d -> { divCheck = Optional.ofNullable(d);
-//			if (divCheck.isPresent()) {
-//				d.setEvent(event);
-//				divisionRepository.saveAndFlush(d);
-//				editEvent = false;
-//		};});
-		
+	public String saveDivisionInCompetition(Event event, Model model) {
+		// listOfDivisions.forEach(d -> { divCheck = Optional.ofNullable(d);
+		// if (divCheck.isPresent()) {
+		// d.setEvent(event);
+		// divisionRepository.saveAndFlush(d);
+		// editEvent = false;
+		// };});
+//TO DO
 		for (Division d : listOfDivisions) {
 			divCheck = Optional.ofNullable(d);
 			if (divCheck.isPresent()) {
@@ -176,12 +206,13 @@ public class EventServiceImpl implements EventService, DivisionService {
 				divisionRepository.saveAndFlush(d);
 				editEvent = false;
 			}
-			
+
 		}
 		for (Division d : divisionsToRemove) {
 			divCheck = Optional.ofNullable(d);
 			if (divCheck.isPresent()) {
-				divisionRepository.delete(d);;
+				divisionRepository.delete(d);
+				;
 			}
 		}
 		listOfDivisions.clear();
@@ -236,6 +267,14 @@ public class EventServiceImpl implements EventService, DivisionService {
 
 	public void setDivisionsToRemove(List<Division> divisionsToRemove) {
 		this.divisionsToRemove = divisionsToRemove;
+	}
+
+	public boolean isDisplayDraftOrSubmitField() {
+		return displayDraftOrSubmitField;
+	}
+
+	public void setDisplayDraftOrSubmitField(boolean displayDraftOrSubmitField) {
+		this.displayDraftOrSubmitField = displayDraftOrSubmitField;
 	}
 
 }

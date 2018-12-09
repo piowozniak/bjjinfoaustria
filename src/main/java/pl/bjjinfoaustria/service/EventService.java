@@ -19,10 +19,11 @@ public interface EventService {
 	List<Event> allEvents();
 	void addParticipant(EventUsersDTO eventUsersDTO, Model model);
 	Event findEventById(long id);
-	void deleteEvent(Event event);
+	String activateOrDeactivateEvent(Model model, long id);
 	String editEvent(long id , Model model);
 	String showEventDetails(long id, Model model);
 	String saveEditEvent(Event event, Model model);
+	String confirmDraftOrSubmit(Event event, String status, Model model);
 	
 
 }

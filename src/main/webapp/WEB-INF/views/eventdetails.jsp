@@ -15,6 +15,7 @@
 </head>
 <body>
 	<h2>event details</h2>
+	<h3>${event.status }</h3>
 	Name:
 	<div>${event.nameOfEvent }</div>
 	Type:
@@ -38,23 +39,30 @@
 	Fee:
 	<div>${event.fee }</div>
 
-
-	<form method="get" style="display: inline;"
-		action="/bjjinfoaustria/editevent/${event.id }">
-		<button type="submit">edit details</button>
-	</form>
-
+	<c:if test="${event.status == 'DRAFT' }">
+		<form method="get" style="display: inline;"
+			action="/bjjinfoaustria/editevent/${event.id }">
+			<button type="submit">edit details</button>
+		</form>
+	</c:if>
 	</br>
 	<div>----------------------------------------------</div>
 	</br>
-	<f:form action="/bjjinfoaustria/editdivisions/${event.id }"
+	<c:if test="${event.status == 'DRAFT' }">
+		<f:form action="/bjjinfoaustria/editdivisions/${event.id }"
+			method="get">
+			<button type="submit">edit divisions</button>
+
+		</f:form>
+	</c:if>
+	<c:if test="${event.status == 'SUBMITTED' }">
+		<f:form action="/bjjinfoaustria/createbrackets/${event.id}"
+			method="get">
+			<button type="submit">create brackets</button>
+		</f:form>
+	</c:if>
+	<f:form action="/bjjinfoaustria/displaybrackets/${event.id}"
 		method="get">
-		<button type="submit">edit divisions</button>
-	</f:form>
-	<f:form action="/bjjinfoaustria/createbrackets/${event.id}" method="get">
-		<button type="submit">create brackets</button>
-	</f:form>
-	<f:form action="/bjjinfoaustria/displaybrackets/${event.id}" method="get">
 		<button type="submit">display brackets</button>
 	</f:form>
 	<c:if test="${event.typeOfEvent=='COMPETITION'}">
@@ -78,18 +86,17 @@
 
 	<c:if test="${event.typeOfEvent=='SEMINAR'}">
 		<h2>list of participants</h2>
-		<c:forEach items="${event.divisions }"
-			var="division">
+		<c:forEach items="${event.divisions }" var="division">
 			<c:forEach items="${division.competitors }" var="participant">
 				<c:if test="${participant != null }">
-			<tr>
-				<td>${participant.user.firstName }
-				<td>
-				<td>${participant.user.lastName }
-				<td>
-			</tr>
-			</c:if>
-			</br>
+					<tr>
+						<td>${participant.user.firstName }
+						<td>
+						<td>${participant.user.lastName }
+						<td>
+					</tr>
+				</c:if>
+				</br>
 			</c:forEach>
 		</c:forEach>
 	</c:if>

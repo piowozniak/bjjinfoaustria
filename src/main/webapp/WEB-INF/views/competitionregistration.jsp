@@ -28,7 +28,8 @@
 			<f:hidden path="id" />
 		</div>
 		<button type="submit">submit</button>
-
+		<input type="hidden" name="${_csrf.parameterName}"
+			value="${_csrf.token}" />
 	</f:form>
 	<f:form action="/bjjinfoaustria/adddivision/${event.id}" method="get">
 		<button type="submit">add division</button>
@@ -36,7 +37,8 @@
 	<c:forEach items="${listOfDivisions }" var="division" varStatus="index">
 		<tr>
 			<td>${division.fullNameCategory }</td>
-			<f:form action="/bjjinfoaustria/removediv/${index.index}" method="get" >
+			<f:form action="/bjjinfoaustria/removediv/${index.index}"
+				method="get">
 				<button type="submit">remove</button>
 			</f:form>
 		</tr>
@@ -45,9 +47,9 @@
 
 
 
-	<f:form action="/bjjinfoaustria/events" method="get">
+	<!--<f:form action="/bjjinfoaustria/events" method="get">
 		<button type="submit">back</button>
-	</f:form>
+	</f:form>-->
 
 
 

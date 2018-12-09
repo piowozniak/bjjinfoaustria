@@ -57,17 +57,16 @@ public class EventController {
 		return eventService.addEvent(event, model);
 	}
 	
-	@GetMapping(path="/deleteevent/{id}")
-	public String deleteEvent(Model model, @PathVariable long id) {
-		Event event = eventService.findEventById(id);
-		model.addAttribute("event", event);
-		return "deleteevent";
+	@RequestMapping(path="/activateordeactivateevent/{id}")
+	public String activateOrDeactivateEvent(Model model, @PathVariable long id) {
+		eventService.activateOrDeactivateEvent(model, id);
+		return allEvents(model);
 	}
-	@PostMapping(path="/deleteevent")
-	public String deleteEventConfirm(@ModelAttribute Event event) {
-		eventService.deleteEvent(event);
-		return "redirect:events";
-	}
+//	@PostMapping(path="/deleteevent")
+//	public String deleteEventConfirm(@ModelAttribute Event event) {
+//		eventService.deleteEvent(event);
+//		return "redirect:events";
+//	}
 	
 	@GetMapping(path="/addusertoevent/{id}")
 	public String addParticipant(Model model, @PathVariable long id) {		
@@ -87,6 +86,11 @@ public class EventController {
 	@PostMapping(path="/editevent")
 	public String editEvent(@ModelAttribute("event") Event event, Model model) {		
 		return eventService.saveEditEvent(event, model);
+	}
+	@RequestMapping(path="/editconfirmation/{status}")
+	public String confirmDraftOrSubmit(@ModelAttribute("event") Event event,@PathVariable("status") String status, Model model) {
+		eventService.confirmDraftOrSubmit(event, status, model);
+		return allEvents(model);
 	}
 
 	@GetMapping(path="/eventdetails/{id}")
