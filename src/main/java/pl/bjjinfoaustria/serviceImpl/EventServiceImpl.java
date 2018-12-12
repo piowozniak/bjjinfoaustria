@@ -43,6 +43,10 @@ public class EventServiceImpl implements EventService, DivisionService {
 	final private String DRAFT = "DRAFT";
 	final private String ACTIVE = "ACTIVE";
 	final private String NONACTIVE = "NONACTIVE";
+	private boolean displayCamps = false;
+	private boolean displaySeminars = false;
+	private boolean displayCompetitions = false;
+	private final String[] displayEvents = {"Camps", "Seminars", "Competitions"};
 
 	@Override
 	public String addEvent(Event event, Model model) {
@@ -74,8 +78,9 @@ public class EventServiceImpl implements EventService, DivisionService {
 	}
 
 	@Override
-	public List<Event> allEvents() {
+	public List<Event> allEvents(Model model) {
 		displayDraftOrSubmitField = false;
+		addAttributesToModel(model);
 		return eventRepository.findAll();
 	}
 
@@ -100,11 +105,6 @@ public class EventServiceImpl implements EventService, DivisionService {
 	@Override
 	public Event findEventById(long id) {
 		return eventRepository.findOne(id);
-	}
-
-	
-	public void deleteEvent(Event event) {
-		
 	}
 
 	@Override
@@ -153,6 +153,10 @@ public class EventServiceImpl implements EventService, DivisionService {
 		model.addAttribute("event", event);
 		model.addAttribute("temporaryListOfDivisions", temporaryListOfDivisions);
 		model.addAttribute("listOfDivisions", listOfDivisions);
+		model.addAttribute("displayCamps", displayCamps);
+		model.addAttribute("displaySeminars", displaySeminars);
+		model.addAttribute("displayCompetitions", displayCompetitions);
+		model.addAttribute("displayEvents", displayEvents);
 	}
 
 	@Override
@@ -275,6 +279,30 @@ public class EventServiceImpl implements EventService, DivisionService {
 
 	public void setDisplayDraftOrSubmitField(boolean displayDraftOrSubmitField) {
 		this.displayDraftOrSubmitField = displayDraftOrSubmitField;
+	}
+
+	public boolean isDisplayCamps() {
+		return displayCamps;
+	}
+
+	public void setDisplayCamps(boolean displayCamps) {
+		this.displayCamps = displayCamps;
+	}
+
+	public boolean isDisplaySeminars() {
+		return displaySeminars;
+	}
+
+	public void setDisplaySeminars(boolean displaySeminars) {
+		this.displaySeminars = displaySeminars;
+	}
+
+	public boolean isDisplayCompetitions() {
+		return displayCompetitions;
+	}
+
+	public void setDisplayCompetitions(boolean displayCompetitions) {
+		this.displayCompetitions = displayCompetitions;
 	}
 
 }

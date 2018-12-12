@@ -42,8 +42,26 @@ public class EventController {
 	
 	@RequestMapping(path="/events")
 	public String allEvents(Model model) {
-		model.addAttribute("events", eventService.allEvents());
+		model.addAttribute("events", eventService.allEvents(model));
 		return "events";
+	}
+	
+//	@RequestMapping(path="/displayevents")
+//	public String displaySpecificEvents(Model model, @RequestParam(value="displayCamps", required=false) boolean displayCamps, 
+//			@RequestParam (value="displaySeminars", required=false) boolean displaySeminars, @RequestParam(value="displayCompetitions", required=false)boolean displayCompetitions) {
+//		System.out.println(displayCamps);
+//		System.out.println(displaySeminars);
+//		System.out.println(displayCompetitions);
+//		return "";
+//	}
+	
+	@RequestMapping(path="/displayevents")
+	public String displaySpecificEvents(Model model, @RequestParam(value="Camps", required=false) String Camps, 
+			@RequestParam (value="Seminars", required=false) String Seminars, @RequestParam(value="Competitions", required=false)String Competitions) {
+		System.out.println(Camps);
+		System.out.println(Seminars);
+		System.out.println(Competitions);
+		return "";
 	}
 	
 	@RequestMapping(path="/createevent") 
@@ -62,11 +80,6 @@ public class EventController {
 		eventService.activateOrDeactivateEvent(model, id);
 		return allEvents(model);
 	}
-//	@PostMapping(path="/deleteevent")
-//	public String deleteEventConfirm(@ModelAttribute Event event) {
-//		eventService.deleteEvent(event);
-//		return "redirect:events";
-//	}
 	
 	@GetMapping(path="/addusertoevent/{id}")
 	public String addParticipant(Model model, @PathVariable long id) {		
