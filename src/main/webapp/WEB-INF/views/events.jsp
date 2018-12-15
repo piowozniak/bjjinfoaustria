@@ -22,7 +22,7 @@
 		<input type="checkbox" name="displayCompetitions" />-->
 		 <c:forEach items="${displayEvents}" var="displayEvent" varStatus="count">
 		 <label for="${count.count }">${displayEvent }</label>
-		 	<input id="${count.count }" type="checkbox" value="${displayEvent }" name="${displayEvent }" />
+		 	<input id="${count.count }" type="checkbox" value="${displayEvent }" name="${displayEvent }s" />
 		 </c:forEach>
 		
 		<button type="submit">display</button>

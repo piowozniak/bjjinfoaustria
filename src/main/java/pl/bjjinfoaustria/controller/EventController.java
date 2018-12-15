@@ -17,16 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import pl.bjjinfoaustria.dto.EventUsersDTO;
-import pl.bjjinfoaustria.entity.Competition;
-import pl.bjjinfoaustria.entity.Division;
 import pl.bjjinfoaustria.entity.Event;
-import pl.bjjinfoaustria.entity.Participant;
 import pl.bjjinfoaustria.entity.User;
-import pl.bjjinfoaustria.repository.CompetitionRepository;
 import pl.bjjinfoaustria.repository.UserRepository;
-import pl.bjjinfoaustria.service.DivisionService;
 import pl.bjjinfoaustria.service.EventService;
-import pl.bjjinfoaustria.serviceImpl.EventServiceImpl;
 
 @Controller
 @ComponentScan(basePackages="pl.bjjinfoaustria")
@@ -36,32 +30,17 @@ public class EventController {
 	EventService eventService;
 	@Autowired
 	UserRepository userRepository;
-	@Autowired
-	DivisionService divisionService;
 	
 	
 	@RequestMapping(path="/events")
 	public String allEvents(Model model) {
-		model.addAttribute("events", eventService.allEvents(model));
-		return "events";
+		return eventService.allEvents(model);
 	}
 	
-//	@RequestMapping(path="/displayevents")
-//	public String displaySpecificEvents(Model model, @RequestParam(value="displayCamps", required=false) boolean displayCamps, 
-//			@RequestParam (value="displaySeminars", required=false) boolean displaySeminars, @RequestParam(value="displayCompetitions", required=false)boolean displayCompetitions) {
-//		System.out.println(displayCamps);
-//		System.out.println(displaySeminars);
-//		System.out.println(displayCompetitions);
-//		return "";
-//	}
-	
 	@RequestMapping(path="/displayevents")
-	public String displaySpecificEvents(Model model, @RequestParam(value="Camps", required=false) String Camps, 
-			@RequestParam (value="Seminars", required=false) String Seminars, @RequestParam(value="Competitions", required=false)String Competitions) {
-		System.out.println(Camps);
-		System.out.println(Seminars);
-		System.out.println(Competitions);
-		return "";
+	public String displaySpecificEvents(Model model, @RequestParam(value="Camps", required=false) String camp, 
+			@RequestParam (value="Seminars", required=false) String seminar, @RequestParam(value="Competitions", required=false)String competition) {
+		return eventService.displayEventsByType(model, camp, seminar, competition);
 	}
 	
 	@RequestMapping(path="/createevent") 

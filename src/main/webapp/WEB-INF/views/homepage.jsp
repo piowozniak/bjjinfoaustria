@@ -47,6 +47,11 @@
 		<f:form style="display: inline;" action="/bjjinfoaustria/events" method="get">
 			<button type="submit">events</button>
 		</f:form>
+		<f:form style="display: inline;" action="/bjjinfoaustria/displayuserpage" method="get" >
+			<input type="hidden" name="${_csrf.parameterName}"
+			value="${_csrf.token}" />
+			<button type="submit">user page</button>
+		</f:form>
 		<f:form style="display: inline;" action="/bjjinfoaustria/adminpage" method="get">
 			<button type="submit">admin page</button>
 		</f:form>

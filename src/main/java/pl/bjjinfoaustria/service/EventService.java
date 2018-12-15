@@ -16,9 +16,10 @@ public interface EventService {
 	
 	String joinTypeOfEvent(Model model, long id);
 	String addEvent(Event event, Model model);
-	List<Event> allEvents(Model model);
+	String allEvents(Model model);
 	void addParticipant(EventUsersDTO eventUsersDTO, Model model);
 	Event findEventById(long id);
+	String displayEventsByType(Model model, String camp, String seminar, String competition);
 	String activateOrDeactivateEvent(Model model, long id);
 	String editEvent(long id , Model model);
 	String showEventDetails(long id, Model model);

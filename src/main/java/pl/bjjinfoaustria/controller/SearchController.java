@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import pl.bjjinfoaustria.entity.Gym;
+import pl.bjjinfoaustria.entity.User;
 import pl.bjjinfoaustria.repository.GymRepository;
 import pl.bjjinfoaustria.repository.UserRepository;
 import pl.bjjinfoaustria.service.SearchService;
@@ -41,6 +42,7 @@ public class SearchController {
 		System.out.println(authentication.getAuthorities());
 		System.out.println(authentication.getDetails());
 		System.out.println(authentication.getCredentials());
+		System.out.println(authentication.getPrincipal());	
 		return "homepage";
 	}
 	@RequestMapping("/search")
