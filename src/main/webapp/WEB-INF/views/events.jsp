@@ -20,11 +20,13 @@
 		<input id="camps_id" type="checkbox" name="displayCamps" />
 		<input type="checkbox" name="displaySeminars" />
 		<input type="checkbox" name="displayCompetitions" />-->
-		 <c:forEach items="${displayEvents}" var="displayEvent" varStatus="count">
-		 <label for="${count.count }">${displayEvent }</label>
-		 	<input id="${count.count }" type="checkbox" value="${displayEvent }" name="${displayEvent }s" />
-		 </c:forEach>
-		
+		<c:forEach items="${displayEvents}" var="displayEvent"
+			varStatus="count">
+			<label for="${count.count }">${displayEvent }</label>
+			<input id="${count.count }" type="checkbox" value="${displayEvent }"
+				name="${displayEvent }s" />
+		</c:forEach>
+
 		<button type="submit">display</button>
 	</f:form>
 	<c:forEach items="${events }" var="event">
@@ -70,7 +72,7 @@
 	<form method="get" action="/bjjinfoaustria/createevent">
 		<button type="submit">add event</button>
 	</form>
-	<form method="get" action="/bjjinfoaustria/">
+	<form method="get" action="/bjjinfoaustria/homepage">
 		<button type="submit">back</button>
 	</form>
 

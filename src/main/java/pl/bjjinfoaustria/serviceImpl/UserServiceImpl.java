@@ -21,10 +21,13 @@ public class UserServiceImpl implements UserService, ModelService {
 	@Autowired
 	private EventRepository eventRepository;
 	@Autowired
-	private UserRepository userRepository;
-//	private final 
+	private UserRepository userRepository; 
 	private User user;
 	private List<Event> listOfEventsUserSignedUp = new ArrayList<>();
+	private List<Event> listOfCreatedEvents = new ArrayList<>();
+	private boolean displayedEventsList = false;
+	private boolean displayedUserDetails = false;
+	private boolean displayedCreatedEvents = false;
 	
 	@Override
 	public String initUserPage(Model model) {
@@ -32,16 +35,54 @@ public class UserServiceImpl implements UserService, ModelService {
 		String userName = authentication.getName();
 		user = userRepository.findUserByUserName(userName);
 		listOfEventsUserSignedUp.clear();
-//		listOfEventsUserSignedUp = eventRepository.findEventsUserJoined(user.getId());
+		listOfEventsUserSignedUp = eventRepository.findEventsUserJoined(user.getId());
+		listOfCreatedEvents.clear();
+		listOfCreatedEvents = eventRepository.findEventsByOrganiser(user.getUserName());
+		addAttributesToModel(model);
+		return "userpage";
+	}
+	
+	@Override
+	public String displayEvents(Model model) {
+		displayedEventsList = checkIfDiplayEvents();
+		checkIfDiplayEvents();
 		addAttributesToModel(model);
 		return "userpage";
 	}
 
 	@Override
+	public String displayUserDetails(Model model) {
+		displayedUserDetails = checkIfDisplayDetails();
+		addAttributesToModel(model);
+		return "userpage";
+	}	
+	
+	@Override
+	public String displayCreatedEvents(Model model) {
+		displayedCreatedEvents = checkIfDiplayCreatedEvents();
+		addAttributesToModel(model);
+		return "userpage";
+	}
+	
+	private boolean checkIfDisplayDetails() {
+		return displayedUserDetails ? false : true;
+	}
+	
+	private boolean checkIfDiplayEvents() {
+		return displayedEventsList ? false : true;
+	}
+	
+	private boolean checkIfDiplayCreatedEvents() {
+		return displayedCreatedEvents ? false : true;
+	}
+	
+	@Override
 	public void addAttributesToModel(Model model) {
 		model.addAttribute("user", user);
 		model.addAttribute("listOfEventsUserSignedUp", listOfEventsUserSignedUp);
-		
+		model.addAttribute("listOfCreatedEvents", listOfCreatedEvents);
+		model.addAttribute("displayedEventsList", displayedEventsList);
+		model.addAttribute("displayedUserDetails", displayedUserDetails);
+		model.addAttribute("displayedCreatedEvents", displayedCreatedEvents);
 	}
-
 }

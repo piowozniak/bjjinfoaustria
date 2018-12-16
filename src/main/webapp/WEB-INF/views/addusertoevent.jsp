@@ -46,6 +46,8 @@
 		<div>
 			<f:hidden path="event.typeOfEvent" />
 		</div>
+		<input type="hidden" name="${_csrf.parameterName}"
+			value="${_csrf.token}" />
 		<button type="submit">submit</button>
 	</f:form>
 	<f:form action="/bjjinfoaustria/events" method="get">
