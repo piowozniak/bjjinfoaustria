@@ -28,11 +28,11 @@ INSERT INTO User (id, userName, status, firstName, lastName, email, phoneNumber)
 INSERT INTO User (id, userName, status, firstName, lastName, email, phoneNumber) VALUES (7,'PyjotrUser', 'N','Pyjotr','Pyjotr', 'Ble', '65465465');
 INSERT INTO User (id, userName, status, firstName, lastName, email, phoneNumber) VALUES (8,'BuraczanyUser', 'N','Buraczany','Grzesiu', 'Gre', '65465465');
 
-INSERT INTO Competitor (id, division_id, user_id, place) VALUES (1, 1, 1, '0');
-INSERT INTO Competitor (id, division_id, user_id, place) VALUES (2, 1, 2, '0');
-INSERT INTO Competitor (id, division_id, user_id, place) VALUES (3, 1, 3, '0');
-INSERT INTO Competitor (id, division_id, user_id, place) VALUES (4, 1, 4, '0');
-INSERT INTO Competitor (id, division_id, user_id, place) VALUES (5, 1, 5, '0');
-INSERT INTO Competitor (id, division_id, user_id, place) VALUES (6, 1, 6, '0');
-INSERT INTO Competitor (id, division_id, user_id, place) VALUES (7, 1, 7, '0');
-INSERT INTO Competitor (id, division_id, user_id, place) VALUES (8, 1, 8, '0');
+INSERT INTO Competitor (id, division_id, user_id, place, status) VALUES (1, 1, 1, '0', 'A');
+INSERT INTO Competitor (id, division_id, user_id, place, status) VALUES (2, 1, 2, '0', 'A');
+INSERT INTO Competitor (id, division_id, user_id, place, status) VALUES (3, 1, 3, '0', 'A');
+INSERT INTO Competitor (id, division_id, user_id, place, status) VALUES (4, 1, 4, '0', 'A');
+INSERT INTO Competitor (id, division_id, user_id, place, status) VALUES (5, 1, 5, '0', 'A');
+INSERT INTO Competitor (id, division_id, user_id, place, status) VALUES (6, 1, 6, '0', 'A');
+INSERT INTO Competitor (id, division_id, user_id, place, status) VALUES (7, 1, 7, '0', 'A');
+INSERT INTO Competitor (id, division_id, user_id, place, status) VALUES (8, 1, 8, '0', 'A');

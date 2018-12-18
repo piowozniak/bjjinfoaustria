@@ -16,6 +16,7 @@ public class Competitor {
 	private String round;
 	private String bracket;
 	private String place = "0";
+	private String status;
 
 	
 	@ManyToOne(fetch=FetchType.EAGER)
@@ -61,7 +62,11 @@ public class Competitor {
 	public void setPlace(String place) {
 		this.place = place;
 	}
-
-	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 }

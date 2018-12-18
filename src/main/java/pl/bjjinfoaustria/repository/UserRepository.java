@@ -8,8 +8,6 @@ import pl.bjjinfoaustria.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Long>{
 	
-	@Query(value ="select * from User where userName = :userName", nativeQuery = true)
-	public User findUserByUserName(@Param("userName") String userName ) ;
-		
+	public User findByUserName(String username);		
 
 }

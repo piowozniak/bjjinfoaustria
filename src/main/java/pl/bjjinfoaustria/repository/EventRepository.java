@@ -35,5 +35,7 @@ public interface EventRepository extends JpaRepository<Event, Long>{
 	@Query(value="select e.id, e.deadline, e.endDate, e.fee, e.host, e.locationAddress, e.locationCity, e.nameOfEvent, e.organizer, e.startDate, e.startHour, e.status, e.typeOfEvent from Event e "
 			+ "where e.organizer = :organizer", nativeQuery = true)
 	public List<Event> findEventsByOrganiser(@Param("organizer") String organizer);
+	
+	public List<Event> findByOrganizer(String organizer);
 
 }

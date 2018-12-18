@@ -88,6 +88,7 @@ public class EventServiceImpl implements EventService, DivisionService {
 		User user = userRepository.findOne(eventUsersDTO.getIdUsera());
 		Competitor competitor = new Competitor();
 		competitor.setUser(user);
+		competitor.setStatus(SUBMIT);
 		Division division;
 		divCheck = Optional.ofNullable(eventUsersDTO.getDivision());
 		System.out.println(event.getDivisions().size());
