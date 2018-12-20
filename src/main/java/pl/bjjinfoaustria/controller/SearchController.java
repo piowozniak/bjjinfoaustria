@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import pl.bjjinfoaustria.entity.Gym;
 import pl.bjjinfoaustria.entity.User;
+import pl.bjjinfoaustria.enums.StatusE;
 import pl.bjjinfoaustria.repository.GymRepository;
 import pl.bjjinfoaustria.repository.UserRepository;
 import pl.bjjinfoaustria.service.SearchService;
+import pl.bjjinfoaustria.service.SecurityContextService;
 import pl.bjjinfoaustria.serviceImpl.SearchServiceImpl;
 
 @Controller
@@ -31,12 +33,15 @@ public class SearchController {
 	SearchService searchService;
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	SecurityContextService securityContextService;
 	
 	@RequestMapping("/homepage")
 	public String getAllGyms(Model model) {
 		List<Gym> gyms = searchService.findAll();
 		model.addAttribute("users", userRepository.findAll());
 		model.addAttribute("gyms", gyms);
+		String test = securityContextService.getUserName();
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		System.out.println(authentication.getName());
 		System.out.println(authentication.getAuthorities());

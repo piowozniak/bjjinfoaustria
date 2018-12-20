@@ -90,10 +90,14 @@
 			<c:forEach items="${division.competitors }" var="participant">
 				<c:if test="${participant != null }">
 					<tr>
-						<td>${participant.user.firstName }
-						<td>
-						<td>${participant.user.lastName }
-						<td>
+						<td>${participant.user.firstName }</td>
+						<td>${participant.user.lastName }</td>
+						<td>${participant.user.email }</td>
+						<td>${participant.status }</td>					
+						<f:form action="/bjjinfoaustria/activateuserinevent/${participant.id }"
+							method="get">
+							<button type="submit">accept participant</button>
+						</f:form>
 					</tr>
 				</c:if>
 				</br>

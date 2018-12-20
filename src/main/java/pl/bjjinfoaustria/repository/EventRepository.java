@@ -32,10 +32,6 @@ public interface EventRepository extends JpaRepository<Event, Long>{
 			"inner join Division d on e.id = d.event_id inner join Competitor c on d.id = c.division_id	where c.user_id = :id",nativeQuery = true)
 	public List<Event> findEventsUserJoined(@Param("id") long id);
 	
-	@Query(value="select e.id, e.deadline, e.endDate, e.fee, e.host, e.locationAddress, e.locationCity, e.nameOfEvent, e.organizer, e.startDate, e.startHour, e.status, e.typeOfEvent from Event e "
-			+ "where e.organizer = :organizer", nativeQuery = true)
-	public List<Event> findEventsByOrganiser(@Param("organizer") String organizer);
-	
 	public List<Event> findByOrganizer(String organizer);
 
 }

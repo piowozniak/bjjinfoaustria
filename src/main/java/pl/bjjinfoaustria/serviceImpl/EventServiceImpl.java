@@ -14,15 +14,18 @@ import pl.bjjinfoaustria.entity.Competitor;
 import pl.bjjinfoaustria.entity.Division;
 import pl.bjjinfoaustria.entity.Event;
 import pl.bjjinfoaustria.entity.User;
+import pl.bjjinfoaustria.enums.EventE;
+import pl.bjjinfoaustria.enums.StatusE;
 import pl.bjjinfoaustria.repository.CompetitorRepository;
 import pl.bjjinfoaustria.repository.DivisionRepository;
 import pl.bjjinfoaustria.repository.EventRepository;
 import pl.bjjinfoaustria.repository.UserRepository;
 import pl.bjjinfoaustria.service.DivisionService;
 import pl.bjjinfoaustria.service.EventService;
+import pl.bjjinfoaustria.service.ModelService;
 
 @Service
-public class EventServiceImpl implements EventService, DivisionService {
+public class EventServiceImpl implements EventService, DivisionService, ModelService {
 
 	@Autowired
 	private EventRepository eventRepository;
@@ -40,20 +43,23 @@ public class EventServiceImpl implements EventService, DivisionService {
 	private List<Division> divisionsToRemove = new ArrayList<>();
 	private boolean editEvent;
 	private boolean displayDraftOrSubmitField = false;
-	final private String SUBMIT = "SUBMITTED";
-	final private String DRAFT = "DRAFT";
-	final private String ACTIVE = "ACTIVE";
-	final private String NONACTIVE = "NONACTIVE";
 	private final String[] displayEvents = {"Camp", "Seminar", "Competition"};
 
 	@Override
+	public String initializeAddEventForm(Model model) {
+		
+		Event event = new Event();
+		return "createevent";
+	}
+	
+	@Override
 	public String addEvent(Event event, Model model) {
-		if ("COMPETITION".equals(event.getTypeOfEvent())) {
-			event.setStatus("DRAFT");
+		if (EventE.COMPETITION.getValue().equals(event.getTypeOfEvent())) {
+			event.setStatus(StatusE.DRAFT.getValue());
 			addModelAttributeIfEventIsCompetition(model, event);
 			return "competitionregistration";
 		}
-		event.setStatus("DRAFT");
+		event.setStatus(StatusE.DRAFT.getValue());
 		eventRepository.saveAndFlush(event);
 		Division division = new Division();
 		division.setEvent(event);
@@ -67,7 +73,7 @@ public class EventServiceImpl implements EventService, DivisionService {
 		EventUsersDTO eventUsersDTO = new EventUsersDTO(event);
 		model.addAttribute("event", event);
 		model.addAttribute("eventUsersDTO", eventUsersDTO);
-		if (event.getTypeOfEvent().equals("COMPETITION")) {
+		if (event.getTypeOfEvent().equals(EventE.COMPETITION.getValue())) {
 			List<Division> divisions = divisionRepository.findDivisionsFromCompetitionByEventId(id);
 			model.addAttribute("divisions", divisions);
 		}
@@ -88,10 +94,9 @@ public class EventServiceImpl implements EventService, DivisionService {
 		User user = userRepository.findOne(eventUsersDTO.getIdUsera());
 		Competitor competitor = new Competitor();
 		competitor.setUser(user);
-		competitor.setStatus(SUBMIT);
+		competitor.setStatus(StatusE.SUBMITTED.getValue());
 		Division division;
 		divCheck = Optional.ofNullable(eventUsersDTO.getDivision());
-		System.out.println(event.getDivisions().size());
 		if (divCheck.isPresent()) {
 			division = divisionRepository.findOne(eventUsersDTO.getDivision().getId());
 		} else {
@@ -118,7 +123,8 @@ public class EventServiceImpl implements EventService, DivisionService {
 	@Override
 	public String activateOrDeactivateEvent(Model model, long id) {
 		Event event = eventRepository.findOne(id);
-		String status = event.getStatus().equals(SUBMIT) || event.getStatus().equals(NONACTIVE) ? ACTIVE : NONACTIVE;
+		String status = event.getStatus().equals(StatusE.SUBMITTED.getValue()) 
+				|| event.getStatus().equals(StatusE.NONACTIVE.getValue()) ? StatusE.ACTIVE.getValue() : StatusE.NONACTIVE.getValue();
 		event.setStatus(status);
 		eventRepository.saveAndFlush(event);
 		model.addAttribute("events", eventRepository.findAll());
@@ -157,6 +163,7 @@ public class EventServiceImpl implements EventService, DivisionService {
 		return "";
 	}
 
+	@Override
 	public void addAttributesToModel(Model model) {
 		model.addAttribute("event", event);
 		model.addAttribute("temporaryListOfDivisions", temporaryListOfDivisions);

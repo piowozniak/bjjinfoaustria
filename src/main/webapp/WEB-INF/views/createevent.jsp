@@ -28,7 +28,7 @@
 		</div>
 		<div>
 			Organizer:
-			<f:input path="organizer" />
+			<f:input path="organizer" disabled="true"/>
 		</div>
 		<div>
 			Host:

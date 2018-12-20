@@ -7,13 +7,13 @@ import org.springframework.ui.Model;
 
 import pl.bjjinfoaustria.dto.EventUsersDTO;
 import pl.bjjinfoaustria.entity.Event;
-import pl.bjjinfoaustria.entity.Participant;
 import pl.bjjinfoaustria.entity.User;
 import pl.bjjinfoaustria.utils.JPAUtils;
 
 @Service
 public interface EventService {
 	
+	String initializeAddEventForm(Model model);
 	String joinTypeOfEvent(Model model, long id);
 	String addEvent(Event event, Model model);
 	String allEvents(Model model);

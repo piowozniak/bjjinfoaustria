@@ -36,9 +36,12 @@ public class UserController {
 		return userService.displayCreatedEvents(model);
 	}
 	
-	@RequestMapping(path="/edituserdetails?id= {id}")
+	@RequestMapping(path="/edituserdetails")
 	public String editUserDetails(Model model, @RequestParam("id")String id) {
 		return "";
 	}
+	
+//	@RequestMapping(path="/activateuserinevent")
+//	public
 
 }
