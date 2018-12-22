@@ -1,8 +1,9 @@
-package pl.bjjinfoaustria.dto;
+package pl.bjjinfoaustria.bean;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.bjjinfoaustria.dto.Bracket;
 import pl.bjjinfoaustria.entity.Competitor;
 
 public class Round {

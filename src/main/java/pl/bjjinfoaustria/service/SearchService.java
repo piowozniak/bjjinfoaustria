@@ -10,5 +10,6 @@ public interface SearchService {
 	
 	List<Gym> getGymsByAttributes(String name, String city, String region);
 	List<Gym> findAll();
+	String getTestUserName();
 
 }

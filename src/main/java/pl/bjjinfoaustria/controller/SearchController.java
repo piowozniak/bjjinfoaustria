@@ -33,21 +33,16 @@ public class SearchController {
 	SearchService searchService;
 	@Autowired
 	UserRepository userRepository;
-	@Autowired
-	SecurityContextService securityContextService;
 	
 	@RequestMapping("/homepage")
 	public String getAllGyms(Model model) {
-		List<Gym> gyms = searchService.findAll();
-		model.addAttribute("users", userRepository.findAll());
-		model.addAttribute("gyms", gyms);
-		String test = securityContextService.getUserName();
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		System.out.println(authentication.getName());
-		System.out.println(authentication.getAuthorities());
-		System.out.println(authentication.getDetails());
-		System.out.println(authentication.getCredentials());
-		System.out.println(authentication.getPrincipal());	
+		String test = searchService.getTestUserName();
+//		Authentication atuthentication = SecurityContextHolder.getContext().getAuthentication();
+//		System.out.println(authentication.getName());
+//		System.out.println(authentication.getAuthorities());
+//		System.out.println(authentication.getDetails());
+//		System.out.println(authentication.getCredentials());
+//		System.out.println(authentication.getPrincipal());	
 		return "homepage";
 	}
 	@RequestMapping("/search")

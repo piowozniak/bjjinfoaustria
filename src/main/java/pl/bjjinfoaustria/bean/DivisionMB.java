@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import pl.bjjinfoaustria.dto.Bracket;
-import pl.bjjinfoaustria.dto.Round;
 import pl.bjjinfoaustria.entity.Competitor;
 import pl.bjjinfoaustria.entity.Division;
 import pl.bjjinfoaustria.entity.Event;

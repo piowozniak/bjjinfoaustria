@@ -8,7 +8,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.EntityManager;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,8 +19,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderColumn;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-
-import pl.bjjinfoaustria.utils.JPAUtils;
 
 @Entity(name="Event")
 public class Event {
@@ -150,14 +147,6 @@ public class Event {
 	public void setStatus(String string) {
 		this.status = string;
 	}
-//	public Competition getCompetition() {
-//		return competition;
-//	}
-//	public void setCompetition(Competition competition) {
-//		this.competition = competition;
-//	}
-
-	
 	
 
 }

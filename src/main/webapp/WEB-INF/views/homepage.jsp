@@ -58,41 +58,6 @@
 	</br>
 	
 	<h2>news</h2>
-	<!-- lista wszystkich -->
-	<f:form method="delete" action="/bjjinfoaustria/delete">
-		<c:forEach items="${gyms}" var="gym">
-			<div>
-				<tr>
-					<td>${gym.name}</td>
-					<td>${gym.city}</td>
-					<td>${gym.region}</td>
-					<td>${gym.address}</td>
-					<td>${gym.phoneNumber}</td>
-					<td>${gym.headCoach}</td>
 
-				</tr>
-				</br>
-				<div>--------------------</div>
-		</c:forEach>
-	</f:form>
-
-
-	<sec:authorize access="hasRole('ROLE_ADMIN')">
-		<h2>users</h2>
-		<c:forEach items="${users }" var="user">
-			<tr>
-				<td>${user.firstName }</td>
-				<td>${user.lastName }</td>
-				<td>${user.email }</td>
-				<td>${user.phoneNumber }</td>
-				<form method="get" style="display: inline;"
-					action="/bjjinfoaustria/deleteuser/${user.id }">
-					<button type="submit">delete user</button>
-				</form>
-			</tr>
-			</br>
-
-		</c:forEach>
-	</sec:authorize>
 </body>
 </html>

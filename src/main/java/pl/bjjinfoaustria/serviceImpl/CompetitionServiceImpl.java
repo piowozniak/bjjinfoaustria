@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import pl.bjjinfoaustria.bean.DivisionMB;
-import pl.bjjinfoaustria.dto.Round;
+import pl.bjjinfoaustria.bean.Round;
 import pl.bjjinfoaustria.entity.Competitor;
 import pl.bjjinfoaustria.entity.Division;
 import pl.bjjinfoaustria.entity.Event;

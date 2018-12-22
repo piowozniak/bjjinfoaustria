@@ -7,33 +7,33 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import pl.bjjinfoaustria.service.UserService;
+import pl.bjjinfoaustria.service.UserPageService;
 
 @Controller
 @ComponentScan(basePackages="pl.bjjinfoaustria")
 public class UserController {
 	
 	@Autowired
-	private UserService userService;
+	private UserPageService userPageService;
 	
 	@RequestMapping(path="/displayuserpage")
 	public String displayUserPage(Model model ) {		
-		return userService.initUserPage(model);
+		return userPageService.initUserPage(model);
 	}
 	
 	@RequestMapping(path="/displayuserdetails")
 	public String displayUserDetails(Model model) {
-		return userService.displayUserDetails(model);
+		return userPageService.displayUserDetails(model);
 	}
 	
 	@RequestMapping(path="/displayusersevents")
 	public String displayUserEvents(Model model) {
-		return userService.displayEvents(model);
+		return userPageService.displayEvents(model);
 	}
 	
 	@RequestMapping(path="/displaycreatedevents")
 	public String displayCreatedEvents(Model model) {
-		return userService.displayCreatedEvents(model);
+		return userPageService.displayCreatedEvents(model);
 	}
 	
 	@RequestMapping(path="/edituserdetails")
