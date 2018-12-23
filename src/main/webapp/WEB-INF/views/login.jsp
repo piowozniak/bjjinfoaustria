@@ -11,29 +11,59 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <meta name="description" content="">
 <meta name="author" content="">
-<title>Insert title here</title>
+    <title>Log in with your account</title>
+
+    <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${contextPath}/resources/css/common.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
+
 <body>
-	<form method="POST" action="${contextPath}/login" class="form-signin">
-		<h2 class="form-heading">Log in</h2>
 
-		<div class="form-group ${error != null ? 'has-error' : ''}">
-			<span>${message}</span> <input name="userName" type="text"
-				class="form-control" placeholder="Username" autofocus="true" /> <input
-				name="password" type="password" class="form-control"
-				placeholder="Password" /> <span>${error}</span> <input type="hidden"
-				name="${_csrf.parameterName}" value="${_csrf.token}" />
-
-			<button class="btn btn-lg btn-primary btn-block" type="submit">Log
-				In</button>
-			<h4 class="text-center">
-				<a href="${contextPath}/registration">Create an account</a>
-			</h4>
-		</div>
-
+<div class="container">
+<form name='login' action="<c:url value='/login' />" method='POST'>
+		<table>
+			<tr>
+				<td>UserName:</td>
+				<td><input type='text' name='username' value=''></td>
+			</tr>
+			<tr>
+				<td>Password:</td>
+				<td><input type='password' name='password' /></td>
+			</tr>
+			<tr>
+				<td colspan='2'><input name="submit" type="submit" value="submit" /></td>
+			</tr>
+		</table>
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	</form>
+
+    <!--<form method="POST" action="${contextPath}/login" class="form-signin">
+        <h2 class="form-heading">Log in</h2>
+
+        <div class="form-group ${error != null ? 'has-error' : ''}">
+            <span>${message}</span>
+            <input name="username" type="text" class="form-control" placeholder="Userame"
+                   autofocus="true"/>
+            <input  name="password" type="password" class="form-control" placeholder="Password"/>
+            <span>${error}</span>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
+            <h4 class="text-center"><a href="${contextPath}/registration">Create an account</a></h4>
+        </div>
+
+    </form>-->
+
+</div>
+<!-- /container -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 </body>
-</html>

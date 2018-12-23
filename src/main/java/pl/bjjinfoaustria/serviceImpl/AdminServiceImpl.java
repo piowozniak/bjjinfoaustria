@@ -69,7 +69,7 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public String editUserConfirmation(Model model, User user) {
 		this.user.setEmail(user.getEmail());
-		this.user.setUserName(user.getUserName());
+		this.user.setUsername(user.getUsername());
 		this.user.setFirstName(user.getFirstName());
 		this.user.setLastName(user.getLastName());
 		this.user.setPhoneNumber(user.getPhoneNumber());

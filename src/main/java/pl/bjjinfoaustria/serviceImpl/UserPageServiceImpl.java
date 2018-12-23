@@ -34,11 +34,11 @@ public class UserPageServiceImpl implements UserPageService, ModelService {
 	public String initUserPage(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String userName = authentication.getName();
-		user = userRepository.findByUserName(userName);
+		user = userRepository.findByUsername(userName);
 		listOfEventsUserSignedUp.clear();
 		listOfEventsUserSignedUp = eventRepository.findEventsUserJoined(user.getId());
 		listOfCreatedEvents.clear();
-		listOfCreatedEvents = eventRepository.findByOrganizer(user.getUserName());
+		listOfCreatedEvents = eventRepository.findByOrganizer(user.getUsername());
 		addAttributesToModel(model);
 		return "userpage";
 	}

@@ -30,6 +30,8 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 		// TODO Auto-generated method stub
 		return new String[] { "/" };
 	}
+	
+	
 	/*implements WebApplicationInitializer  {
 //	public void onStartup(ServletContext container) throws ServletException {
 //		AnnotationConfigWebApplicationContext ctx =	new AnnotationConfigWebApplicationContext();

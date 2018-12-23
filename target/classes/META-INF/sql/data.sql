@@ -19,14 +19,14 @@ INSERT INTO Division (id, beltCategory, weightCategory, event_id) VALUES (2, 'WH
 INSERT INTO Division (id, beltCategory, weightCategory, event_id) VALUES (3, 'WHITE', '-70kg', 5); 
 INSERT INTO Division (id, beltCategory, weightCategory, event_id) VALUES (4, 'WHITE', '-76kg', 5); 
 
-INSERT INTO user (id, userName, password, status, firstName, lastName, email, phoneNumber) VALUES (1,'JohnUser', 'test','N' ,'John','Kebab', 'dupa@dup.dup', '65465465');
-INSERT INTO user (id, userName,	password,  status, firstName, lastName, email, phoneNumber) VALUES (2,'admin', 'as','N','test','test', 'test@dusp.dsup', '65465465');
-INSERT INTO user (id, userName, password, status, firstName, lastName, email, phoneNumber) VALUES (3,'user', 'teadsst','A','Ble','Ble', 'Ble', '65465465');
-INSERT INTO user (id, userName, password, status, firstName, lastName, email, phoneNumber) VALUES (4,'GreUser', 'tesasdt','A','Gre','Gre', 'Gre', '65465465');
-INSERT INTO user (id, userName, password, status, firstName, lastName, email, phoneNumber) VALUES (5,'JustynaUser', 'tasdest','N','Justyna','Pardon', 'dupa@dup.dup', '65465465');
-INSERT INTO user (id, userName, password, status, firstName, lastName, email, phoneNumber) VALUES (6,'MarekUser', 'teasdst','N','Marek','ZAustrii', 'dupa@dup.dup', '65465465');
-INSERT INTO user (id, userName, password, status, firstName, lastName, email, phoneNumber) VALUES (7,'PyjotrUser', 'teasdst','N','Pyjotr','Pyjotr', 'Ble', '65465465');
-INSERT INTO user (id, userName, password, status, firstName, lastName, email, phoneNumber) VALUES (8,'BuraczanyUser', 'teasdst','N','Buraczany','Grzesiu', 'Gre', '65465465');
+INSERT INTO user (id, username, password, passwordConfirm, status, firstName, lastName, email, phoneNumber) VALUES (1,'john', '$2a$10$4bMJX7eR2fd2xiUSo/gtr.kci.jPY06N0THDnhjW/uB/jI7cKYetm', 'dupadupa','A' ,'John','Kebab', 'dupa@dup.dup', '65465465');
+INSERT INTO user (id, username,	password, passwordConfirm, status, firstName, lastName, email, phoneNumber) VALUES (2,'admin', 'as', 'as','N','test','test', 'test@dusp.dsup', '65465465');
+INSERT INTO user (id, username, password, passwordConfirm, status, firstName, lastName, email, phoneNumber) VALUES (3,'user', 'teadsst', 'teadsst','A','Ble','Ble', 'Ble', '65465465');
+INSERT INTO user (id, username, password, passwordConfirm, status, firstName, lastName, email, phoneNumber) VALUES (4,'GreUser', 'tesasdt', 'tesasdt','A','Gre','Gre', 'Gre', '65465465');
+INSERT INTO user (id, username, password, passwordConfirm, status, firstName, lastName, email, phoneNumber) VALUES (5,'JustynaUser', 'tasdest', 'tasdest','N','Justyna','Pardon', 'dupa@dup.dup', '65465465');
+INSERT INTO user (id, username, password, passwordConfirm, status, firstName, lastName, email, phoneNumber) VALUES (6,'MarekUser', 'teasdst', 'teasdst','N','Marek','ZAustrii', 'dupa@dup.dup', '65465465');
+INSERT INTO user (id, username, password, passwordConfirm, status, firstName, lastName, email, phoneNumber) VALUES (7,'PyjotrUser', 'teasdst', 'teasdst','N','Pyjotr','Pyjotr', 'Ble', '65465465');
+INSERT INTO user (id, username, password, passwordConfirm, status, firstName, lastName, email, phoneNumber) VALUES (8,'BuraczanyUser', 'teasdst', 'teasdst','N','Buraczany','Grzesiu', 'Gre', '65465465');
 
 INSERT INTO Competitor (id, division_id, user_id, place, status) VALUES (1, 1, 1, '0', 'A');
 INSERT INTO Competitor (id, division_id, user_id, place, status) VALUES (2, 1, 2, '0', 'A');
@@ -36,3 +36,11 @@ INSERT INTO Competitor (id, division_id, user_id, place, status) VALUES (5, 1, 5
 INSERT INTO Competitor (id, division_id, user_id, place, status) VALUES (6, 1, 6, '0', 'A');
 INSERT INTO Competitor (id, division_id, user_id, place, status) VALUES (7, 1, 7, '0', 'A');
 INSERT INTO Competitor (id, division_id, user_id, place, status) VALUES (8, 1, 8, '0', 'A');
+
+INSERT INTO role (id, name) VALUES (1, 'ROLE_ADMIN');
+INSERT INTO role (id, name) VALUES (2, 'ROLE_USER');
+INSERT INTO role (id, name) VALUES (3, 'ROLE_ORGANIZER');
+
+INSERT INTO user_role (user_id, role_id) VALUES (1, 1);
+INSERT INTO user_role (user_id, role_id) VALUES (1, 2);
+INSERT INTO user_role (user_id, role_id) VALUES (1, 3);
