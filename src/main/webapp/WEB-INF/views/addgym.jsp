@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
-
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +17,7 @@
 	<h2>add</h2>
 
 	<!--  dodawanie gym  -->
-	<f:form action="/bjjinfoaustria/add" method="post" modelAttribute="gym">
+	<f:form action="${contextPath }/add" method="post" modelAttribute="gym">
 		<div>
 			Id:
 			<f:input path="id" disabled="true"/>
@@ -51,7 +51,7 @@
 		</div>
 		<button type="submit">submit</button>
 	</f:form>
-	<f:form action="/bjjinfoaustria/" method="get">
+	<f:form action="${contextPath }/homepage" method="get">
 		<button type="submit">back</button>
 	</f:form>
 

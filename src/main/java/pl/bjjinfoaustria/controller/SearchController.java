@@ -5,8 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,13 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import pl.bjjinfoaustria.entity.Gym;
-import pl.bjjinfoaustria.entity.User;
-import pl.bjjinfoaustria.enums.StatusE;
 import pl.bjjinfoaustria.repository.GymRepository;
 import pl.bjjinfoaustria.repository.UserRepository;
 import pl.bjjinfoaustria.service.SearchService;
-import pl.bjjinfoaustria.service.SecurityContextService;
-import pl.bjjinfoaustria.serviceImpl.SearchServiceImpl;
+import pl.bjjinfoaustria.service.SecurityService;
 
 @Controller
 @ComponentScan(basePackages="pl.bjjinfoaustria")
@@ -33,10 +29,13 @@ public class SearchController {
 	SearchService searchService;
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	SecurityService securityService;
 	
 	@RequestMapping("/homepage")
 	public String getAllGyms(Model model) {
-		String test = searchService.getTestUserName();
+		String test = securityService.findLoggedInUserName();
+		System.out.println(test);
 //		Authentication atuthentication = SecurityContextHolder.getContext().getAuthentication();
 //		System.out.println(authentication.getName());
 //		System.out.println(authentication.getAuthorities());

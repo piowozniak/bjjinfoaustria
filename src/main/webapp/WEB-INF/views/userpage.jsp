@@ -4,6 +4,7 @@
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -20,11 +21,11 @@
 		<!--  <a class="button"
 			href="javascript:document.getElementById('logout').submit()">Logout</a>-->
 	</c:if>
-	<f:form style="display: inline;" action="/bjjinfoaustria/search"
+	<f:form style="display: inline;" action="${contextPath }/search"
 		method="get">
 		<button type="submit">gyms</button>
 	</f:form>
-	<f:form style="display: inline;" action="/bjjinfoaustria/events"
+	<f:form style="display: inline;" action="${contextPath }/events"
 		method="get">
 		<button type="submit">events</button>
 	</f:form>
@@ -35,17 +36,19 @@
 			value="${_csrf.token}" />
 	</form>
 	<f:form style="display:inline;" method="get"
-		action="/bjjinfoaustria/displayuserdetails">
+		action="${contextPath }/displayuserdetails">
 		<button type="submit">display user details</button>
 	</f:form>
 	<f:form style="display:inline;" method="get"
-		action="/bjjinfoaustria/displayusersevents">
+		action="${contextPath }/displayusersevents">
 		<button type="submit">display your events</button>
 	</f:form>
-	<f:form style="display:inline;" method="get"
-		action="/bjjinfoaustria/displaycreatedevents">
-		<button type="submit">created events</button>
-	</f:form>
+	<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_ORGANIZER')">
+		<f:form style="display:inline;" method="get"
+			action="${contextPath }/displaycreatedevents">
+			<button type="submit">created events</button>
+		</f:form>
+	</sec:authorize>
 
 
 	<c:if test="${displayedUserDetails }">
@@ -55,7 +58,7 @@
 		<td>${user.email }</td>
 		<td>${user.phoneNumber }</td>
 		<f:form method="get"
-			action="/bjjinfoaustria/edituserdetails?id=${user.id }">
+			action="${contextPath }/edituserdetails?id=${user.id }">
 			<button type="submit">edit details</button>
 		</f:form>
 	</c:if>
@@ -66,26 +69,29 @@
 			<td>${event.typeOfEvent }</td>
 			</br>
 			<td>------------------------</td>
-		</c:forEach>
-	</c:if>
-	<c:if test="${displayedCreatedEvents }">
-		<h2>your created events</h2>
-		<c:forEach items="${ listOfCreatedEvents}" var="event">
-			<td>${event.nameOfEvent }</td>
-			<td>${event.typeOfEvent }</td>
-			<td>${event.status }</td>
-			<form method="get" style="display: inline;"
-				action="/bjjinfoaustria/eventdetails/${event.id }">
-				<button type="submit">details</button>
-			</form>			
-			</br>
-			<td>-----------------------</td>
 			</br>
 		</c:forEach>
-		<form method="get" action="/bjjinfoaustria/createevent">
-			<button type="submit">add event</button>
-		</form>
 	</c:if>
+	<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_ORGANIZER')">
+		<c:if test="${displayedCreatedEvents }">
+			<h2>your created events</h2>
+			<c:forEach items="${ listOfCreatedEvents}" var="event">
+				<td>${event.nameOfEvent }</td>
+				<td>${event.typeOfEvent }</td>
+				<td>${event.status }</td>
+				<form method="get" style="display: inline;"
+					action="${contextPath }/eventdetails/${event.id }">
+					<button type="submit">details</button>
+				</form>
+				</br>
+				<td>-----------------------</td>
+				</br>
+			</c:forEach>
+			<form method="get" action="${contextPath }/createevent">
+				<button type="submit">add event</button>
+			</form>
+		</c:if>
+	</sec:authorize>
 
 
 </body>

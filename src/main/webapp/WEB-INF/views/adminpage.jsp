@@ -4,7 +4,7 @@
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
-
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -28,11 +28,11 @@
 			href="javascript:document.getElementById('logout').submit()">Logout</a>-->
 	</c:if>
 
-	<f:form style="display: inline;" action="/bjjinfoaustria/search"
+	<f:form style="display: inline;" action="${contextPath }/search"
 		method="get">
 		<button type="submit">gyms</button>
 	</f:form>
-	<f:form style="display: inline;" action="/bjjinfoaustria/events"
+	<f:form style="display: inline;" action="${contextPath }/events"
 		method="get">
 		<button type="submit">events</button>
 	</f:form>
@@ -42,14 +42,14 @@
 		<div>confirmation</div>
 		<c:choose>
 			<c:when test="${user.status=='N' }">
-				<p>activate user ${user.userName } ?</p>
+				<p>activate user ${user.username } ?</p>
 			</c:when>
 			<c:otherwise>
-				<p>deactivate user ${user.userName } ?</p>
+				<p>deactivate user ${user.username } ?</p>
 			</c:otherwise>
 		</c:choose>
 		<f:form method="post" modelAttribute="user"
-			action="/bjjinfoaustria/confirmuseractivation?id=${user.id}">
+			action="${contextPath }/confirmuseractivation?id=${user.id}">
 			<button type="submit">confirm</button>
 			<input type="hidden" name="${_csrf.parameterName}"
 				value="${_csrf.token}" />
@@ -57,19 +57,19 @@
 				<f:hidden path="id" />
 			</div>
 		</f:form>
-		<f:form method="get" action="/bjjinfoaustria/adminpage">
+		<f:form method="get" action="${contextPath }/adminpage">
 			<button type="submit">cancel</button>
 		</f:form>
 	</c:if>
 
 	<c:forEach var="user" items="${allUsers }">
-		<td>${user.userName }</td>
+		<td>${user.username }</td>
 		<td>${user.firstName }</td>
 		<td>${user.lastName }</td>
 		<td>${user.status }</td>
 
 		<f:form style="display: inline;"
-			action="/bjjinfoaustria/activateuser/${user.id }" method="get">
+			action="${contextPath }/activateuser/${user.id }" method="get">
 			<button type="submit">
 				<c:if test="${user.status == 'N' }">activate user</c:if>
 				<c:if test="${user.status == 'A' }">deactivate user</c:if>
@@ -77,7 +77,7 @@
 		</f:form>
 		
 		<f:form style="display: inline;"
-			action="/bjjinfoaustria/edituser/${user.id}" method="get">
+			action="${contextPath }/edituser/${user.id}" method="get">
 			
 			<button type="submit">edit user</button>
 		</f:form>

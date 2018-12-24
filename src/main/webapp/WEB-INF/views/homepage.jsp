@@ -5,7 +5,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
 
-
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,12 +20,6 @@
 
 	<h2>hello ${pageContext.request.remoteUser}</h2>
 
-	<sec:authorize access="hasRole('ROLE_ADMIN')">
-		<p>tego nie zobaczy zwykly user</p>
-	</sec:authorize>
-	<sec:authorize access="hasRole('ROLE_USER')">
-		<p>a to tak</p>
-	</sec:authorize>
 	<c:url value="/logout" var="logoutUrl" />
 	<form id="logout" action="${logoutUrl}" method="post">
 		<input type="hidden" name="${_csrf.parameterName}"
@@ -36,27 +30,32 @@
 			action="javascript:document.getElementById('logout').submit()">
 			<button type="submit">Log out</button>
 		</form>
-		
+
 		<!--  <a class="button"
 			href="javascript:document.getElementById('logout').submit()">Logout</a>-->
 	</c:if>
-	<f:form style="display: inline;" action="/bjjinfoaustria/search" method="get">
-			<button type="submit">gyms</button>
-		</f:form>
-		
-		<f:form style="display: inline;" action="/bjjinfoaustria/events" method="get">
-			<button type="submit">events</button>
-		</f:form>
-		<f:form style="display: inline;" action="/bjjinfoaustria/displayuserpage" method="get" >
-			<input type="hidden" name="${_csrf.parameterName}"
-			value="${_csrf.token}" />
-			<button type="submit">user page</button>
-		</f:form>
-		<f:form style="display: inline;" action="/bjjinfoaustria/adminpage" method="get">
+	<f:form style="display: inline;" action="${contextPath }/search"
+		method="get">
+		<button type="submit">gyms</button>
+	</f:form>
+
+	<f:form style="display: inline;" action="${contextPath }/events"
+		method="get">
+		<button type="submit">events</button>
+	</f:form>
+	<f:form style="display: inline;"
+		action="${contextPath }/displayuserpage" method="get">
+
+		<button type="submit">user page</button>
+	</f:form>
+	<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<f:form style="display: inline;" action="${contextPath }/adminpage"
+			method="get">
 			<button type="submit">admin page</button>
 		</f:form>
+	</sec:authorize>
 	</br>
-	
+
 	<h2>news</h2>
 
 </body>

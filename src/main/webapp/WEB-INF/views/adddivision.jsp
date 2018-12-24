@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
-
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +17,7 @@
 	<h2>divisions creator</h2>
 
 	<!--  dodawanie do eventu  -->
-	<f:form action="/bjjinfoaustria/adddivision" method="post" modelAttribute="division">
+	<f:form action="${contextPath }/adddivision" method="post" modelAttribute="division">
 		<div>
 			Id:
 			<f:input path="id" disabled="true"/>
@@ -48,7 +48,7 @@
 				value="${_csrf.token}" />
 		<button type="submit">submit</button>
 	</f:form>
-	<f:form action="/bjjinfoaustria/createcompetition" method="get">
+	<f:form action="${contextPath }/createcompetition" method="get">
 		<button type="submit">back</button>
 	</f:form>
 

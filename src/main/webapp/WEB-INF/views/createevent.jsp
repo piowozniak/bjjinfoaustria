@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
-
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,20 +16,21 @@
 <body>
 	<h2>add event</h2>
 	<!--  dodawanie event  -->
-	<f:form action="/bjjinfoaustria/createevent" method="post"
+	<f:form action="${contextPath }/createevent" method="post"
 		modelAttribute="event">
 		<div>
 			Id:
 			<f:input path="id" disabled="true" />
 		</div>
 		<div>
+			Organizer:
+			<f:input value="${pageContext.request.remoteUser}" path="organizer" disabled="true"/>
+		</div>
+		<div>
 			Event name:
 			<f:input path="nameOfEvent" />
 		</div>
-		<div>
-			Organizer:
-			<f:input path="organizer" disabled="true"/>
-		</div>
+		
 		<div>
 			Host:
 			<f:input path="host" />
@@ -72,7 +73,7 @@
 			<input type="hidden" name="${_csrf.parameterName}"
 				value="${_csrf.token}" />
 	</f:form>
-	<f:form action="/bjjinfoaustria/events" method="get">
+	<f:form action="${contextPath }/events" method="get">
 		<button type="submit">cancel</button>
 	</f:form>
 </body>

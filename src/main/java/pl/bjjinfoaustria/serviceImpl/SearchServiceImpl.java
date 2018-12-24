@@ -15,8 +15,6 @@ public class SearchServiceImpl implements SearchService {
 	
 	@Autowired
 	private GymRepository gymRepository;
-	@Autowired
-	private SecurityContextService securityContextService;
 	
 	@Override
 	public List<Gym> getGymsByAttributes(String name, String city, String region) {
@@ -32,9 +30,6 @@ public class SearchServiceImpl implements SearchService {
 	public List<Gym> findAll() {
 		return gymRepository.findAll();
 	}
-	@Override
-	public String getTestUserName() {
-		return securityContextService.getUserName();
-	}
+
 
 }

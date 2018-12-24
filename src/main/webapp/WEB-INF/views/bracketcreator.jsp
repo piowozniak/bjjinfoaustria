@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
-
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +15,7 @@
 </head>
 <body>
 	<h2>bracket creator</h2>
-	<f:form action="/bjjinfoaustria/displaydivision" method="get">
+	<f:form action="${contextPath }/displaydivision" method="get">
 
 		<select name="divisionId" id="divisionId">
 			<c:forEach items="${divisions}" var="division">
@@ -31,7 +31,7 @@
 			<td>${competitor.user.firstName }</td>
 			<td>${competitor.user.lastName }</td>
 			<f:form style="display: inline"
-				action="/bjjinfoaustria/addcompetitortobracket/${list.index }"
+				action="${contextPath }/addcompetitortobracket/${list.index }"
 				method="get">
 				<button type="submit">add</button>
 			</f:form>
@@ -50,7 +50,7 @@
 					<td>${competitor.user.firstName }</td>
 					<td>${competitor.user.lastName }</td>
 					<f:form style="display: inline"
-						action="/bjjinfoaustria/removecompetitorfrombracket/${fightIndex.index }/${competitorIndex.index }"
+						action="${contextPath }/removecompetitorfrombracket/${fightIndex.index }/${competitorIndex.index }"
 						method="get">
 						<button type="submit">remove</button>
 					</f:form>
@@ -62,12 +62,12 @@
 		</c:forEach>
 
 	</div>
-	<f:form action="/bjjinfoaustria/submitbrackets" method="get">
+	<f:form action="${contextPath }/submitbrackets" method="get">
 	<input type="hidden" name="${_csrf.parameterName}"
 							value="${_csrf.token}" />
 		<button type="submit">submit</button>
 	</f:form>
-	<f:form action="/bjjinfoaustria/eventdetails/${event.id }" method="get">
+	<f:form action="${contextPath }/eventdetails/${event.id }" method="get">
 		<button type="submit">back</button>
 	</f:form>
 

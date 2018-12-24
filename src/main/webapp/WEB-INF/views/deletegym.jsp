@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
-
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +17,7 @@
 	<h2>confirm</h2>
 
 	<!--  usuwanie gym  -->
-	<f:form action="/bjjinfoaustria/delete" method="delete" modelAttribute="gym">
+	<f:form action="${contextPath}/delete" method="delete" modelAttribute="gym">
 		<p>Are you sure you want to delete gym ${gym.name }?</p>
 		<div>
 			<input type="submit" value="confirm">
@@ -27,7 +27,7 @@
 		</div>
 		<button type="submit">confirm</button>
 	</f:form>
-	<f:form action="/bjjinfoaustria/search" method="get">
+	<f:form action="${contextPath}/search" method="get">
 		<button type="submit">cancel</button>
 	</f:form>
 

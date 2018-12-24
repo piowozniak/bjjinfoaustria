@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
-
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +17,7 @@
 	<h2>search</h2>
 
 		<!--  wyszukiwarka  -->
-	<f:form action="/bjjinfoaustria/gymsbycity" method="get">
+	<f:form action="${contextPath }/gymsbycity" method="get">
 		<input name="name" />
 		<select name="city">
 		<option value="">CHOOSE</option>
@@ -35,7 +35,7 @@
 		<button type="submit">Search</button>
 	</f:form>
 	
-	<h2 style="display:inline;">gyms</h2><f:form style="display: inline;" action="/bjjinfoaustria/add" method="get">
+	<h2 style="display:inline;">gyms</h2><f:form style="display: inline;" action="${contextPath }/add" method="get">
 			<button type="submit">add gym</button>
 		</f:form>
 		</br>
@@ -47,12 +47,17 @@
 			<td>${gym.address}</td>
 			<td>${gym.phoneNumber}</td>
 			<td>${gym.headCoach}</td>
-			<a href="/bjjinfoaustria/edit/${gym.id }">edit</a>
-			<a href="/bjjinfoaustria/delete/${gym.id }">delete</a>
+			
+			<f:form method="get" action="${contextPath }/edit/${gym.id }" >
+				<button type="submit">edit</button>
+			</f:form>
+			<f:form method="get" action="${contextPath }/delete/${gym.id }" >
+				<button type="submit">delete</button>
+			</f:form>
 			</br>
 				<div>--------------------</div>
 		</tr></br>
 	</c:forEach>
-<div><a href="/bjjinfoaustria/homepage">back</a></div>
+<div><a href="${contextPath }/homepage">back</a></div>
 </body>
 </html>

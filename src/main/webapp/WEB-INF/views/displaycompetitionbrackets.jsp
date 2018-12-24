@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
-
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +15,7 @@
 </head>
 <body>
 	<h2>brackets</h2>
-	<f:form action="/bjjinfoaustria/displaydivisionincompetition"
+	<f:form action="${contextPath }/displaydivisionincompetition"
 		method="get">
 
 		<select name="divisionId" id="divisionId">
@@ -40,7 +40,7 @@
 					<c:if
 						test="${fight.activeButtonToAddWinner && round.activeRound && division.winnerOfDivision == null }">
 						<f:form
-							action="/bjjinfoaustria/addwinnertonextround/${competitor.id }/${fightIndex.index }/${roundIndex.index }"
+							action="${contextPath }/addwinnertonextround/${competitor.id }/${fightIndex.index }/${roundIndex.index }"
 							method="get">
 							<button style="display: inline;" type="submit">add
 								winner</button>
@@ -61,7 +61,7 @@
 						<td>${winner.winner.user.lastName }</td>
 						<c:if test="${winner.winner!=null }">
 							<f:form
-								action="/bjjinfoaustria/removewinnerfromarray/${winner.winner.id }/${winnerIndex.index }/${roundIndex.index }"
+								action="${contextPath }/removewinnerfromarray/${winner.winner.id }/${winnerIndex.index }/${roundIndex.index }"
 								method="get">
 								<button style="display: inline-block;" type="submit">remove</button>
 							</f:form>
@@ -72,7 +72,7 @@
 				</div>
 				<c:if test="${round.submitButtonActive }">
 					<f:form
-						action="/bjjinfoaustria/submitwinnerstonextround/${roundIndex.index }"
+						action="${contextPath }/submitwinnerstonextround/${roundIndex.index }"
 						method="post">
 						<input type="hidden" name="${_csrf.parameterName}"
 							value="${_csrf.token}" />
@@ -93,7 +93,7 @@
 
 
 	</div>
-	<f:form action="/bjjinfoaustria/eventdetails/${event.id }" method="get">
+	<f:form action="${contextPath }/eventdetails/${event.id }" method="get">
 		<button type="submit">back</button>
 	</f:form>
 

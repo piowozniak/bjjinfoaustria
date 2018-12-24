@@ -1,31 +1,40 @@
 package pl.bjjinfoaustria.serviceImpl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import pl.bjjinfoaustria.entity.Role;
 import pl.bjjinfoaustria.entity.User;
+import pl.bjjinfoaustria.repository.RoleRepository;
 import pl.bjjinfoaustria.repository.UserRepository;
 import pl.bjjinfoaustria.service.AdminService;
 
 @Service
 public class AdminServiceImpl implements AdminService {
 	
-	final private UserRepository userRepository;
+	private final UserRepository userRepository;
+	private final RoleRepository roleRepository;
 	private List<User> allUsers = new ArrayList<>();
 	private User user;
 	private boolean displayUserConfirmation=false;
-	final private String ACTIVE = "A";
-	final private String NONACTIVE = "N";
+	private final String ACTIVE = "A";
+	private final String NONACTIVE = "N";
+	private final long ROLE_USER = 2;
+	private final long ROLE_ORGANIZER = 3;
+	private Set<Role> roles = new HashSet<>();
 	
 	
 	@Autowired
-	public AdminServiceImpl(UserRepository userRepository) {
+	public AdminServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
 		super();
 		this.userRepository = userRepository;
+		this.roleRepository = roleRepository;
 	}
 
 
@@ -48,16 +57,24 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public String confirmUser(Model model, User user) {
 		//TO DO refactor
+		
 		User userFromAllUsers = allUsers.stream().filter(u -> u.getId() == user.getId()).findFirst().get();
 		if (ACTIVE.equals(userFromAllUsers.getStatus())) {
 			userFromAllUsers.setStatus(NONACTIVE);
 		} else if (NONACTIVE.equals(userFromAllUsers.getStatus())) {
 			userFromAllUsers.setStatus(ACTIVE);
+			userFromAllUsers.setRoles(setUserRole(userFromAllUsers));
 		}
 		userRepository.saveAndFlush(userFromAllUsers);
 		displayUserConfirmation = false;
 		addToModel(model);
 		return "adminpage";
+	}
+	private Set<Role> setUserRole(User user) {
+		Role role = roleRepository.findOne(ROLE_USER);
+		Set<Role> userRole = new HashSet<>();
+		userRole.add(role);
+		return userRole;
 	}
 	@Override
 	public String editUser(Model model, long id) {

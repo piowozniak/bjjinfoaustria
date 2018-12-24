@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
-
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +16,7 @@
 <body>
 	<h2>edit user details</h2>
 
-	<f:form action="/bjjinfoaustria/edituserconfirmation" method="post"
+	<f:form action="${contextPath }/edituserconfirmation" method="post"
 		modelAttribute="user">
 		<div>
 			Id:
@@ -56,7 +56,7 @@
 			value="${_csrf.token}" />
 		<button type="submit">submit</button>
 	</f:form>
-	<f:form action="/bjjinfoaustria/adminpage" method="get">
+	<f:form action="${contextPath }/adminpage" method="get">
 		<button type="submit">back</button>
 	</f:form>
 

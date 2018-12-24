@@ -6,6 +6,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
@@ -35,7 +37,7 @@ public class EventServiceImpl implements EventService, DivisionService, ModelSer
 	private DivisionRepository divisionRepository;
 	private static Optional<Division> divCheck;
 	@Autowired
-	private CompetitorRepository competitorRepository;
+	private CompetitorRepository competitorRepository;	
 	private List<Division> listOfDivisions = new ArrayList<>();
 	private Event event;
 	private List<Event> events = new ArrayList<>();
@@ -46,14 +48,14 @@ public class EventServiceImpl implements EventService, DivisionService, ModelSer
 	private final String[] displayEvents = {"Camp", "Seminar", "Competition"};
 
 	@Override
-	public String initializeAddEventForm(Model model) {
-		
+	public String initializeAddEventForm(Model model) {	
 		Event event = new Event();
 		return "createevent";
 	}
 	
 	@Override
 	public String addEvent(Event event, Model model) {
+		event.setOrganizer(SecurityContextHolder.getContext().getAuthentication().getName());
 		if (EventE.COMPETITION.getValue().equals(event.getTypeOfEvent())) {
 			event.setStatus(StatusE.DRAFT.getValue());
 			addModelAttributeIfEventIsCompetition(model, event);
@@ -69,7 +71,7 @@ public class EventServiceImpl implements EventService, DivisionService, ModelSer
 
 	@Override
 	public String joinTypeOfEvent(Model model, long id) {
-		event = eventRepository.findEventById(id);
+		event = eventRepository.findOne(id);
 		EventUsersDTO eventUsersDTO = new EventUsersDTO(event);
 		model.addAttribute("event", event);
 		model.addAttribute("eventUsersDTO", eventUsersDTO);
@@ -91,17 +93,16 @@ public class EventServiceImpl implements EventService, DivisionService, ModelSer
 
 	@Override
 	public void addParticipant(EventUsersDTO eventUsersDTO, Model model) {
-		User user = userRepository.findOne(eventUsersDTO.getIdUsera());
+		User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 		Competitor competitor = new Competitor();
 		competitor.setUser(user);
 		competitor.setStatus(StatusE.SUBMITTED.getValue());
-		Division division;
+		Division division = event.getDivisions().stream().filter(Objects::nonNull).findFirst().get();
+		
 		divCheck = Optional.ofNullable(eventUsersDTO.getDivision());
 		if (divCheck.isPresent()) {
 			division = divisionRepository.findOne(eventUsersDTO.getDivision().getId());
-		} else {
-			division = event.getDivisions().stream().filter(Objects::nonNull).findFirst().get();
-		}
+		} 
 		model.addAttribute("division", division);
 		competitor.setDivision(division);
 		competitorRepository.saveAndFlush(competitor);

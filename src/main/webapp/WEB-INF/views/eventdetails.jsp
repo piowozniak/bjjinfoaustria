@@ -2,7 +2,9 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
-
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,32 +41,34 @@
 	Fee:
 	<div>${event.fee }</div>
 
-	<c:if test="${event.status == 'DRAFT' }">
+	<c:if test="${event.status == 'DRAFT' && pageContext.request.remoteUser == event.organizer }">
 		<form method="get" style="display: inline;"
-			action="/bjjinfoaustria/editevent/${event.id }">
+			action="${contextPath }/editevent/${event.id }">
 			<button type="submit">edit details</button>
 		</form>
 	</c:if>
 	</br>
 	<div>----------------------------------------------</div>
 	</br>
-	<c:if test="${event.status == 'DRAFT' }">
-		<f:form action="/bjjinfoaustria/editdivisions/${event.id }"
+	<c:if test="${event.status == 'DRAFT' && pageContext.request.remoteUser == event.organizer }">
+		<f:form action="${contextPath }/editdivisions/${event.id }"
 			method="get">
 			<button type="submit">edit divisions</button>
 
 		</f:form>
 	</c:if>
 	<c:if test="${event.status == 'SUBMITTED' }">
-		<f:form action="/bjjinfoaustria/createbrackets/${event.id}"
+		<f:form action="${contextPath }/createbrackets/${event.id}"
 			method="get">
 			<button type="submit">create brackets</button>
 		</f:form>
 	</c:if>
-	<f:form action="/bjjinfoaustria/displaybrackets/${event.id}"
-		method="get">
-		<button type="submit">display brackets</button>
-	</f:form>
+	<c:if test="${event.status == 'ACTIVE' }">
+		<f:form action="${contextPath }/displaybrackets/${event.id}"
+			method="get">
+			<button type="submit">display brackets</button>
+		</f:form>
+	</c:if>
 	<c:if test="${event.typeOfEvent=='COMPETITION'}">
 		<h2>divisions</h2>
 		<c:forEach items="${event.divisions }" var="division">
@@ -93,8 +97,9 @@
 						<td>${participant.user.firstName }</td>
 						<td>${participant.user.lastName }</td>
 						<td>${participant.user.email }</td>
-						<td>${participant.status }</td>					
-						<f:form action="/bjjinfoaustria/activateuserinevent/${participant.id }"
+						<td>${participant.status }</td>
+						<f:form style="display:inline;"
+							action="${contextPath }/activateuserinevent/${participant.id }"
 							method="get">
 							<button type="submit">accept participant</button>
 						</f:form>
@@ -107,7 +112,7 @@
 
 
 
-	<f:form action="/bjjinfoaustria/events" method="get">
+	<f:form action="${contextPath }/events" method="get">
 		<button type="submit">back</button>
 	</f:form>
 </body>

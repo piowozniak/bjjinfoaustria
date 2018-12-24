@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
-
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +16,7 @@
 <body>
 	<h2>competition</h2>
 	<!--  dodawanie competition  -->
-	<f:form action="/bjjinfoaustria/createcompetition" method="post"
+	<f:form action="${contextPath }/createcompetition" method="post"
 		modelAttribute="event">
 		<h3>${event.nameOfEvent }</h3>
 		<div>
@@ -31,13 +31,13 @@
 		<input type="hidden" name="${_csrf.parameterName}"
 			value="${_csrf.token}" />
 	</f:form>
-	<f:form action="/bjjinfoaustria/adddivision/${event.id}" method="get">
+	<f:form action="${contextPath }/adddivision/${event.id}" method="get">
 		<button type="submit">add division</button>
 	</f:form>
 	<c:forEach items="${listOfDivisions }" var="division" varStatus="index">
 		<tr>
 			<td>${division.fullNameCategory }</td>
-			<f:form action="/bjjinfoaustria/removediv/${index.index}"
+			<f:form action="${contextPath}/removediv/${index.index}"
 				method="get">
 				<button type="submit">remove</button>
 			</f:form>

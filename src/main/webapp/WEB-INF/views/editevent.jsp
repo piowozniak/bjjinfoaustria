@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
-
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +17,7 @@
 	<h2>edit event</h2>
 	<c:if test="${!displayDraftOrSubmitField }">
 
-		<f:form action="/bjjinfoaustria/editevent" method="post"
+		<f:form action="${contextPath }/editevent" method="post"
 			modelAttribute="event">
 			<div>
 				Id:
@@ -29,7 +29,7 @@
 			</div>
 			<div>
 				Organizer:
-				<f:input path="organizer" />
+				<f:input disabled = "true" path="organizer" />
 			</div>
 			<div>
 				Host:
@@ -92,19 +92,19 @@
 	<c:if test="${displayDraftOrSubmitField }">
 		<div>would you like to save as draft or submit? (if you submit
 			you will be no longer able to edit)</div>
-		<f:form method="post" action="/bjjinfoaustria/editconfirmation/SUBMITTED">
+		<f:form method="post" action="${contextPath }/editconfirmation/SUBMITTED">
 			<input type="hidden" name="${_csrf.parameterName}"
 				value="${_csrf.token}" />
 			<button type="submit">submit</button>
 		</f:form>
-		<f:form method="post" action="/bjjinfoaustria/editconfirmation/DRAFT">
+		<f:form method="post" action="${contextPath }/editconfirmation/DRAFT">
 			<input type="hidden" name="${_csrf.parameterName}"
 				value="${_csrf.token}" />
 			<button type="submit">save as draft</button>
 		</f:form>
 	</c:if>
 
-	<f:form action="/bjjinfoaustria/events" method="get">
+	<f:form action="${contextPath }/events" method="get">
 		<button type="submit">cancel</button>
 	</f:form>
 
