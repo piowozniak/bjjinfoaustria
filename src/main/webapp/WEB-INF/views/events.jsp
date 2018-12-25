@@ -54,12 +54,7 @@
 					</form>
 				</c:if>
 			</sec:authorize>
-			<c:if test="${event.status == 'ACTIVE'}">
-				<form method="get" style="display: inline;"
-					action="${contextPath }/addusertoevent/${event.id }">
-					<button type="submit">add user to event</button>
-				</form>
-			</c:if>
+
 
 
 			<form method="get" style="display: inline;"

@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import pl.bjjinfoaustria.bean.SecurityContext;
 import pl.bjjinfoaustria.dto.EventUsersDTO;
 import pl.bjjinfoaustria.entity.Competitor;
 import pl.bjjinfoaustria.entity.Division;
@@ -25,6 +26,7 @@ import pl.bjjinfoaustria.repository.UserRepository;
 import pl.bjjinfoaustria.service.DivisionService;
 import pl.bjjinfoaustria.service.EventService;
 import pl.bjjinfoaustria.service.ModelService;
+import pl.bjjinfoaustria.service.SecurityService;
 
 @Service
 public class EventServiceImpl implements EventService, DivisionService, ModelService {
@@ -34,10 +36,11 @@ public class EventServiceImpl implements EventService, DivisionService, ModelSer
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
-	private DivisionRepository divisionRepository;
-	private static Optional<Division> divCheck;
+	private DivisionRepository divisionRepository;	
 	@Autowired
 	private CompetitorRepository competitorRepository;	
+	
+	private static Optional<Division> divCheck;
 	private List<Division> listOfDivisions = new ArrayList<>();
 	private Event event;
 	private List<Event> events = new ArrayList<>();
@@ -46,7 +49,39 @@ public class EventServiceImpl implements EventService, DivisionService, ModelSer
 	private boolean editEvent;
 	private boolean displayDraftOrSubmitField = false;
 	private final String[] displayEvents = {"Camp", "Seminar", "Competition"};
+	private String username;
+	private long userId;
+	private boolean isUserAddedToEvent;
 
+	@Override
+	public String initializeEventsPage(Model model) {
+		username = SecurityContext.getUsername();
+		userId = SecurityContext.getUserId();
+		displayDraftOrSubmitField = false;
+		events.clear();
+		events = setEventsListByRole();
+		addAttributesToModel(model);
+		return "events";
+	}
+	
+	private List<Event> setEventsListByRole() {		
+		if (SecurityContext.loggedUserByRole().equals("ROLE_ADMIN")) {
+			return eventRepository.findAll();
+		} else if (SecurityContext.loggedUserByRole().equals("ROLE_ORGANIZER")){
+			return eventRepository.findAllActiveOrByOrganizer(username);
+		} 
+		return eventRepository.findByStatus(StatusE.ACTIVE.getValue());
+	}
+	
+	private List<Event> setEventsListByTypeAndRole(String camp, String seminar, String competition) {
+		if (SecurityContext.loggedUserByRole().equals("ROLE_ADMIN")) {
+			return eventRepository.findEventsByType(camp, seminar, competition);
+		} else if (SecurityContext.loggedUserByRole().equals("ROLE_ORGANIZER")){
+			return eventRepository.findEventsByTypeOrOrganizer(camp, seminar, competition, username);
+		} 
+		return eventRepository.findActiveEventsByType(camp, seminar, competition);
+	}
+	
 	@Override
 	public String initializeAddEventForm(Model model) {	
 		Event event = new Event();
@@ -55,7 +90,7 @@ public class EventServiceImpl implements EventService, DivisionService, ModelSer
 	
 	@Override
 	public String addEvent(Event event, Model model) {
-		event.setOrganizer(SecurityContextHolder.getContext().getAuthentication().getName());
+		event.setOrganizer(username);
 		if (EventE.COMPETITION.getValue().equals(event.getTypeOfEvent())) {
 			event.setStatus(StatusE.DRAFT.getValue());
 			addModelAttributeIfEventIsCompetition(model, event);
@@ -83,17 +118,8 @@ public class EventServiceImpl implements EventService, DivisionService, ModelSer
 	}
 
 	@Override
-	public String allEvents(Model model) {
-		displayDraftOrSubmitField = false;
-		events.clear();
-		events = eventRepository.findAll();
-		addAttributesToModel(model);
-		return "events";
-	}
-
-	@Override
 	public void addParticipant(EventUsersDTO eventUsersDTO, Model model) {
-		User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+		User user = userRepository.findByUsername(username);
 		Competitor competitor = new Competitor();
 		competitor.setUser(user);
 		competitor.setStatus(StatusE.SUBMITTED.getValue());
@@ -116,7 +142,8 @@ public class EventServiceImpl implements EventService, DivisionService, ModelSer
 	@Override
 	public String displayEventsByType(Model model, String camp, String seminar, String competition) {
 		events.clear();
-		events = (seminar == null && camp == null && competition == null) ? eventRepository.findAll() : eventRepository.findEventsByType(camp, seminar, competition);
+		events = (seminar == null && camp == null && competition == null) ? 
+				setEventsListByRole() : setEventsListByTypeAndRole(camp, seminar, competition);
 		addAttributesToModel(model);
 		return "events";
 	}
@@ -243,7 +270,9 @@ public class EventServiceImpl implements EventService, DivisionService, ModelSer
 	@Override
 	public String showEventDetails(long id, Model model) {
 		event = eventRepository.findOne(id);
+		isUserAddedToEvent = eventRepository.findUserInEvent(id, userId).isEmpty() ? false : true;
 		model.addAttribute("event", event);
+		model.addAttribute("isUserAddedToEvent", isUserAddedToEvent);
 		return "eventdetails";
 	}
 
@@ -293,5 +322,21 @@ public class EventServiceImpl implements EventService, DivisionService, ModelSer
 
 	public void setDisplayDraftOrSubmitField(boolean displayDraftOrSubmitField) {
 		this.displayDraftOrSubmitField = displayDraftOrSubmitField;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public boolean isUserAddedToEvent() {
+		return isUserAddedToEvent;
 	}
 }

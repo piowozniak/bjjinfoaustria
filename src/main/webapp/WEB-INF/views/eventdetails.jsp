@@ -41,7 +41,8 @@
 	Fee:
 	<div>${event.fee }</div>
 
-	<c:if test="${event.status == 'DRAFT' && pageContext.request.remoteUser == event.organizer }">
+	<c:if
+		test="${event.status == 'DRAFT' && pageContext.request.remoteUser == event.organizer }">
 		<form method="get" style="display: inline;"
 			action="${contextPath }/editevent/${event.id }">
 			<button type="submit">edit details</button>
@@ -50,13 +51,22 @@
 	</br>
 	<div>----------------------------------------------</div>
 	</br>
-	<c:if test="${event.status == 'DRAFT' && pageContext.request.remoteUser == event.organizer }">
+	<c:if
+		test="${event.status == 'DRAFT' && pageContext.request.remoteUser == event.organizer }">
 		<f:form action="${contextPath }/editdivisions/${event.id }"
 			method="get">
 			<button type="submit">edit divisions</button>
 
 		</f:form>
 	</c:if>
+	<sec:authorize access="hasRole('ROLE_USER')">
+		<c:if test="${event.status == 'ACTIVE'}">
+			<form method="get" style="display: inline;"
+				action="${contextPath }/addusertoevent/${event.id }">
+				<button type="submit">join ${event.typeOfEvent }</button>
+			</form>
+		</c:if>
+	</sec:authorize>
 	<c:if test="${event.status == 'SUBMITTED' }">
 		<f:form action="${contextPath }/createbrackets/${event.id}"
 			method="get">
@@ -85,7 +95,6 @@
 				</c:forEach>
 			</c:if>
 		</c:forEach>
-
 	</c:if>
 
 	<c:if test="${event.typeOfEvent=='SEMINAR'}">
@@ -109,8 +118,6 @@
 			</c:forEach>
 		</c:forEach>
 	</c:if>
-
-
 
 	<f:form action="${contextPath }/events" method="get">
 		<button type="submit">back</button>

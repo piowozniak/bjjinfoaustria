@@ -1,6 +1,5 @@
 package pl.bjjinfoaustria.controller;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -8,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,7 +32,7 @@ public class EventController {
 	
 	@RequestMapping(path="/events")
 	public String allEvents(Model model) {
-		return eventService.allEvents(model);
+		return eventService.initializeEventsPage(model);
 	}
 	
 	@RequestMapping(path="/displayevents")

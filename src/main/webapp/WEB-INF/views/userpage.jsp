@@ -21,6 +21,10 @@
 		<!--  <a class="button"
 			href="javascript:document.getElementById('logout').submit()">Logout</a>-->
 	</c:if>
+	<f:form style="display: inline;" action="${contextPath }/homepage"
+		method="get">
+		<button type="submit">homepage</button>
+	</f:form>
 	<f:form style="display: inline;" action="${contextPath }/search"
 		method="get">
 		<button type="submit">gyms</button>
@@ -29,6 +33,7 @@
 		method="get">
 		<button type="submit">events</button>
 	</f:form>
+	
 	<h2>${pageContext.request.remoteUser}page</h2>
 	<c:url value="/logout" var="logoutUrl" />
 	<form id="logout" action="${logoutUrl}" method="post">

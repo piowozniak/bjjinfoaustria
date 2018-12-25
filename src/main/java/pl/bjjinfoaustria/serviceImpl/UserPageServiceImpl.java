@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import pl.bjjinfoaustria.bean.SecurityContext;
 import pl.bjjinfoaustria.entity.Event;
 import pl.bjjinfoaustria.entity.User;
 import pl.bjjinfoaustria.repository.EventRepository;
@@ -31,10 +32,8 @@ public class UserPageServiceImpl implements UserPageService, ModelService {
 	private boolean displayedCreatedEvents = false;
 	
 	@Override
-	public String initUserPage(Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String userName = authentication.getName();
-		user = userRepository.findByUsername(userName);
+	public String initUserPage(Model model) {		
+		user = userRepository.findByUsername(SecurityContext.getUsername());
 		listOfEventsUserSignedUp.clear();
 		listOfEventsUserSignedUp = eventRepository.findEventsUserJoined(user.getId());
 		listOfCreatedEvents.clear();
@@ -46,7 +45,6 @@ public class UserPageServiceImpl implements UserPageService, ModelService {
 	@Override
 	public String displayEvents(Model model) {
 		displayedEventsList = checkIfDiplayEvents();
-		checkIfDiplayEvents();
 		addAttributesToModel(model);
 		return "userpage";
 	}
