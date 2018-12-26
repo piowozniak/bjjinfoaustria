@@ -9,5 +9,6 @@ public interface UserPageService {
 	public String displayEvents(Model model);
 	public String displayUserDetails(Model model);
 	public String displayCreatedEvents(Model model);
+	public String acceptUserInEvent(Model model, long id);
 
 }

@@ -1,9 +1,12 @@
 package pl.bjjinfoaustria.serviceImpl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -26,7 +29,6 @@ import pl.bjjinfoaustria.repository.UserRepository;
 import pl.bjjinfoaustria.service.DivisionService;
 import pl.bjjinfoaustria.service.EventService;
 import pl.bjjinfoaustria.service.ModelService;
-import pl.bjjinfoaustria.service.SecurityService;
 
 @Service
 public class EventServiceImpl implements EventService, DivisionService, ModelService {
@@ -52,7 +54,7 @@ public class EventServiceImpl implements EventService, DivisionService, ModelSer
 	private String username;
 	private long userId;
 	private boolean isUserAddedToEvent;
-
+	
 	@Override
 	public String initializeEventsPage(Model model) {
 		username = SecurityContext.getUsername();
@@ -111,10 +113,17 @@ public class EventServiceImpl implements EventService, DivisionService, ModelSer
 		model.addAttribute("event", event);
 		model.addAttribute("eventUsersDTO", eventUsersDTO);
 		if (event.getTypeOfEvent().equals(EventE.COMPETITION.getValue())) {
-			List<Division> divisions = divisionRepository.findDivisionsFromCompetitionByEventId(id);
-			model.addAttribute("divisions", divisions);
+			model.addAttribute("divisions", compareDivisionsAndGetList(id));
 		}
 		return "addusertoevent";
+	}
+	
+	private List<Division> compareDivisionsAndGetList(long eventId){
+		List<Division> divisions = divisionRepository.findDivisionsByEventId(eventId);
+		List<Division> competitorsDivision = divisionRepository.findCompetitorsDivisions(eventId, userId);
+		Set<Long> divisionsId = competitorsDivision.stream().map(Division::getId).collect(Collectors.toSet());
+		List<Division> availableDivisions = divisions.stream().filter(d -> !divisionsId.contains(d.getId())).collect(Collectors.toList());
+		return availableDivisions;
 	}
 
 	@Override
@@ -122,7 +131,7 @@ public class EventServiceImpl implements EventService, DivisionService, ModelSer
 		User user = userRepository.findByUsername(username);
 		Competitor competitor = new Competitor();
 		competitor.setUser(user);
-		competitor.setStatus(StatusE.SUBMITTED.getValue());
+		competitor.setStatus(StatusE.SIGNED.getValue());
 		Division division = event.getDivisions().stream().filter(Objects::nonNull).findFirst().get();
 		
 		divCheck = Optional.ofNullable(eventUsersDTO.getDivision());

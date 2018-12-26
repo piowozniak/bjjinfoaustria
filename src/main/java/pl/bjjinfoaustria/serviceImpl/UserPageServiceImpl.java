@@ -10,8 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import pl.bjjinfoaustria.bean.SecurityContext;
+import pl.bjjinfoaustria.entity.Competitor;
 import pl.bjjinfoaustria.entity.Event;
 import pl.bjjinfoaustria.entity.User;
+import pl.bjjinfoaustria.enums.StatusE;
+import pl.bjjinfoaustria.repository.CompetitorRepository;
 import pl.bjjinfoaustria.repository.EventRepository;
 import pl.bjjinfoaustria.repository.UserRepository;
 import pl.bjjinfoaustria.service.ModelService;
@@ -24,6 +27,8 @@ public class UserPageServiceImpl implements UserPageService, ModelService {
 	private EventRepository eventRepository;
 	@Autowired
 	private UserRepository userRepository; 
+	@Autowired
+	private CompetitorRepository competitorRepository;
 	private User user;
 	private List<Event> listOfEventsUserSignedUp = new ArrayList<>();
 	private List<Event> listOfCreatedEvents = new ArrayList<>();
@@ -63,6 +68,14 @@ public class UserPageServiceImpl implements UserPageService, ModelService {
 		return "userpage";
 	}
 	
+	@Override
+	public String acceptUserInEvent(Model model, long id) {
+		Competitor competitor = competitorRepository.findOne(id);
+		competitor.setStatus(StatusE.ACCEPTED.getValue());
+		competitorRepository.saveAndFlush(competitor);
+		return "redirect:/displayuserpage";
+	}
+	
 	private boolean checkIfDisplayDetails() {
 		return displayedUserDetails ? false : true;
 	}
@@ -84,4 +97,6 @@ public class UserPageServiceImpl implements UserPageService, ModelService {
 		model.addAttribute("displayedUserDetails", displayedUserDetails);
 		model.addAttribute("displayedCreatedEvents", displayedCreatedEvents);
 	}
+
+
 }

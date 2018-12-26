@@ -20,38 +20,39 @@
 	<f:form action="${contextPath }/add" method="post" modelAttribute="gym">
 		<div>
 			Id:
-			<f:input path="id" disabled="true"/>
+			<f:input path="id" disabled="true" />
 		</div>
 		<div>
 			Name:
 			<f:input path="name" />
 		</div>
 		<div>
-		City:
-		<f:select path="city" items="${cities}" />
-		<div>
-		</div>
-		Region:
-		<f:select path="region" items="${regions}" />
-		<div>
-		</div>
-		Address:
-		<f:input path="address" />
-		<div>
-		</div>
-		Phone number:
-		<f:input path="phoneNumber" />
-		<div>
-		<div>
-		Head coach:
-		<f:input path="headCoach" />
-		</div>
-		<div>
-			<f:hidden path="id" />
-		</div>
-		<button type="submit">submit</button>
+			City:
+			<f:select path="city" items="${cities}" />
+			<div></div>
+			Region:
+			<f:select path="region" items="${regions}" />
+			<div></div>
+			Address:
+			<f:input path="address" />
+			<div></div>
+			Phone number:
+			<f:input path="phoneNumber" />
+			<div>
+				<div>
+					Head coach:
+					<f:input path="headCoach" />
+				</div>
+				<div>
+					<f:hidden path="id" />
+				</div>
+				<input type="hidden" name="${_csrf.parameterName}"
+			value="${_csrf.token}" />
+				<button type="submit">submit</button>
 	</f:form>
-	<f:form action="${contextPath }/homepage" method="get">
+	<f:form action="${contextPath }/search" method="get">
+		
+
 		<button type="submit">back</button>
 	</f:form>
 

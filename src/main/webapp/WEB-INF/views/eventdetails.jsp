@@ -60,20 +60,31 @@
 		</f:form>
 	</c:if>
 	<sec:authorize access="hasRole('ROLE_USER')">
-		<c:if test="${event.status == 'ACTIVE'}">
+		<c:if
+			test="${(event.status == 'ACTIVE' && !isUserAddedToEvent && (event.typeOfEvent == 'CAMP' || event.typeOfEvent == 'SEMINAR')) 
+		|| event.typeOfEvent == 'COMPETITION'}">
 			<form method="get" style="display: inline;"
 				action="${contextPath }/addusertoevent/${event.id }">
 				<button type="submit">join ${event.typeOfEvent }</button>
 			</form>
 		</c:if>
+		<c:if
+			test="${isUserAddedToEvent && (event.typeOfEvent == 'CAMP' || event.typeOfEvent == 'SEMINAR') }">
+			<form method="post" style="display: inline;"
+				action="${contextPath }/removeuserfromevent/${event.id }">
+				<button type="submit">leave ${event.typeOfEvent }</button>
+			</form>
+		</c:if>
 	</sec:authorize>
-	<c:if test="${event.status == 'SUBMITTED' }">
+	<c:if
+		test="${event.status == 'SUBMITTED' && event.typeOfEvent == 'COMPETITION'}">
 		<f:form action="${contextPath }/createbrackets/${event.id}"
 			method="get">
 			<button type="submit">create brackets</button>
 		</f:form>
 	</c:if>
-	<c:if test="${event.status == 'ACTIVE' }">
+	<c:if
+		test="${event.status == 'ACTIVE' && event.typeOfEvent == 'COMPETITION' }">
 		<f:form action="${contextPath }/displaybrackets/${event.id}"
 			method="get">
 			<button type="submit">display brackets</button>
@@ -96,29 +107,35 @@
 			</c:if>
 		</c:forEach>
 	</c:if>
-
-	<c:if test="${event.typeOfEvent=='SEMINAR'}">
-		<h2>list of participants</h2>
-		<c:forEach items="${event.divisions }" var="division">
-			<c:forEach items="${division.competitors }" var="participant">
-				<c:if test="${participant != null }">
-					<tr>
-						<td>${participant.user.firstName }</td>
-						<td>${participant.user.lastName }</td>
-						<td>${participant.user.email }</td>
-						<td>${participant.status }</td>
-						<f:form style="display:inline;"
-							action="${contextPath }/activateuserinevent/${participant.id }"
-							method="get">
-							<button type="submit">accept participant</button>
-						</f:form>
-					</tr>
-				</c:if>
-				</br>
+	<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_ORGANIZER')">
+		<c:if
+			test="${event.typeOfEvent=='SEMINAR' || event.typeOfEvent == 'CAMP'}">
+			<h2>list of participants</h2>
+			<c:forEach items="${event.divisions }" var="division">
+				<c:forEach items="${division.competitors }" var="participant">
+					<c:if test="${participant != null }">
+						<tr>
+							
+							<td>${participant.user.firstName }</td>
+							<td>${participant.user.lastName }</td>
+							<td>${participant.user.email }</td>
+							<td>${participant.status }</td>
+							<c:if test="${participant.status == 'SUBMITTED' }">
+								<f:form style="display:inline;"
+									action="${contextPath }/activateuserinevent/${participant.id }"
+									method="post">
+									<input type="hidden" name="${_csrf.parameterName}"
+										value="${_csrf.token}" />
+									<button type="submit">accept participant</button>
+								</f:form>
+							</c:if>
+						</tr>
+					</c:if>
+					</br>
+				</c:forEach>
 			</c:forEach>
-		</c:forEach>
-	</c:if>
-
+		</c:if>
+	</sec:authorize>
 	<f:form action="${contextPath }/events" method="get">
 		<button type="submit">back</button>
 	</f:form>

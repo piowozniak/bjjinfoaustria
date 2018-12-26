@@ -25,7 +25,8 @@
 		<div>
 			<f:hidden path="id" />
 		</div>
-		<button type="submit">confirm</button>
+		<input type="hidden" name="${_csrf.parameterName}"
+			value="${_csrf.token}" />
 	</f:form>
 	<f:form action="${contextPath}/search" method="get">
 		<button type="submit">cancel</button>

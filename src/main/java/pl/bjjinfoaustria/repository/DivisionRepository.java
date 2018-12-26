@@ -11,10 +11,10 @@ import pl.bjjinfoaustria.entity.Division;
 @Repository
 public interface DivisionRepository extends JpaRepository<Division, Long>{
 	
-	@Query(value = "select * from Division d left outer join Competitor c on d.id = c.division_id where d.event_id = :eventId", 
+	@Query(value = "select * from Division d where d.event_id = :eventId", 
 			  nativeQuery = true)
-	List<Division> findDivisionsFromCompetitionByEventId(@Param("eventId") long eventId);
+	List<Division> findDivisionsByEventId(@Param("eventId") long eventId);
 	
-	
-
+	@Query(value = "select * from Division d join Competitor c on c.division_id = d.id where c.user_id = :userId and d.event_id = :eventId", nativeQuery = true)
+	List<Division> findCompetitorsDivisions(@Param("eventId") long eventId, @Param("userId") long userId);
 }

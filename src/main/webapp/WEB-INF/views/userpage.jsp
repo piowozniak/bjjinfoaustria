@@ -33,7 +33,7 @@
 		method="get">
 		<button type="submit">events</button>
 	</f:form>
-	
+
 	<h2>${pageContext.request.remoteUser}page</h2>
 	<c:url value="/logout" var="logoutUrl" />
 	<form id="logout" action="${logoutUrl}" method="post">
@@ -72,6 +72,10 @@
 		<c:forEach items="${ listOfEventsUserSignedUp}" var="event">
 			<td>${event.nameOfEvent }</td>
 			<td>${event.typeOfEvent }</td>
+			<form method="get" style="display: inline;"
+				action="${contextPath }/eventdetails/${event.id }">
+				<button type="submit">details</button>
+			</form>
 			</br>
 			<td>------------------------</td>
 			</br>
