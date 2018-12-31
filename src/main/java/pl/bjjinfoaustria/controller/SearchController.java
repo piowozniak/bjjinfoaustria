@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import pl.bjjinfoaustria.entity.Gym;
+import pl.bjjinfoaustria.entity.Region;
 import pl.bjjinfoaustria.repository.GymRepository;
 import pl.bjjinfoaustria.repository.UserRepository;
 import pl.bjjinfoaustria.service.SearchService;
@@ -45,25 +46,23 @@ public class SearchController {
 		return "homepage";
 	}
 	@RequestMapping("/search")
-	public String searchForGymsForm(Model model) {
-		List<Gym> gyms = searchService.findAll();
-		model.addAttribute("gyms", gyms);
-		return "searchforgyms";
+	public String initializeSearchForGymsForm(Model model) {
+		return searchService.findAll(model);
 	}
-	@GetMapping("/gymsbycity")
-	public String getGyms(@RequestParam("city") String city, @RequestParam("name") String name, @RequestParam("region") String region, Model model) {
-		model.addAttribute("gyms", searchService.getGymsByAttributes(name, city, region));
-		return "searchforgyms";
+	
+	@GetMapping("/gymsbyname")
+	public String getGyms(@RequestParam("name") String name, Model model) {
+		return searchService.findByName(model, name);
 	}
-	@ModelAttribute("cities")
-	public List<String> getCities() {
-		List<String> cities = Arrays.asList("VIENNA","INNSBRUCK","LINZ", "SALZBURG");
-		return cities;
+	
+	@GetMapping("/findbyregion")
+	public String setCitiesFromRegionAndFindGymsByRegion(Model model, @RequestParam("regionId") Long regionId) {
+		return searchService.findCitiesByRegionAndGymsByRegion(model, regionId);
 	}
-	@ModelAttribute("regions")
-	public List<String> getRegions() {
-		List<String> regions = Arrays.asList("UPPER AUSTRIA","LOWER AUSTRIA","TYROL", "VORALRBERG");
-		return regions;
+	
+	@GetMapping("/findbycity")
+	public String findByCity(Model model, @RequestParam("cityId") Long cityId) {
+		return searchService.findByCity(model, cityId);
 	}
 	
 }

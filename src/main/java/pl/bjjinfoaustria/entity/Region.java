@@ -8,25 +8,17 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 @Entity
-@Table(name="cities")
-public class City {
+public class Region {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String name;
-	@OneToMany(mappedBy="city", fetch = FetchType.EAGER,  cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Gym> gyms;
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="region_id")
-	private Region region;
-	
+	@OneToMany(mappedBy="region", fetch = FetchType.EAGER,  cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<City> cities;
 	public long getId() {
 		return id;
 	}
@@ -39,11 +31,11 @@ public class City {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public List<Gym> getGyms() {
-		return gyms;
+	public List<City> getCities() {
+		return cities;
 	}
-	public void setGyms(List<Gym> gyms) {
-		this.gyms = gyms;
+	public void setCities(List<City> cities) {
+		this.cities = cities;
 	}
 
 }

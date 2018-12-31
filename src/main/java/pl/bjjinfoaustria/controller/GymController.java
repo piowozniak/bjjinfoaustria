@@ -1,115 +1,57 @@
 package pl.bjjinfoaustria.controller;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import pl.bjjinfoaustria.entity.Gym;
-import pl.bjjinfoaustria.repository.CityRepository;
-import pl.bjjinfoaustria.repository.GymRepository;
-import pl.bjjinfoaustria.serviceImpl.GymServiceImpl;
-import pl.bjjinfoaustria.serviceImpl.SearchServiceImpl;
-import pl.bjjinfoaustria.entity.City;
+import pl.bjjinfoaustria.service.GymService;
 
 
 @Controller
 @ComponentScan(basePackages="pl.bjjinfoaustria")
 public class GymController {
-
-	@Autowired 
-	GymServiceImpl gymServiceImpl;
+	
+	@Autowired
+	GymService gymService;
 	
 	@GetMapping(path="/add")
 	public String addGymForm(Model model) {
-		model.addAttribute("gym", new Gym());
-		return "addgym";
+		return gymService.addGymForm(model);
 	}
 	
 	@PostMapping(path="/add")
-	public String addGym(@ModelAttribute Gym gym) {
-		gymServiceImpl.addGym(gym);
-		return "addgym";
+	public String addGym(Model model,@ModelAttribute Gym gym) {		
+		return gymService.addGym(gym, model);
 	}
 	
 	@RequestMapping(path="/delete/{id}")
 	public String deleteGym(@PathVariable("id") Long id, Model model) {
-		Gym gym = gymServiceImpl.findGym(id);
+		Gym gym = gymService.findGym(id);
 		model.addAttribute("gym", gym);
 		return "deletegym";
 	}
 	@PostMapping(path="/delete")
 	public String deleteConfirm(@ModelAttribute("gym") Gym gym) {
-		gymServiceImpl.deleteGym(gym);
+		gymService.deleteGym(gym);
 		return "redirect:search";
 	}
 	@RequestMapping(path="/edit/{id}")
 	public String editGym(@PathVariable("id") Long id, Model model) {
-		Gym gym = gymServiceImpl.findGym(id);
+		Gym gym = gymService.findGym(id);
 		model.addAttribute("gym", gym);
 		return "addgym";
 	}
 	@PostMapping(path="/edit")
-	public String editConfirm(@ModelAttribute("gym") Gym gym) {
-		gymServiceImpl.addGym(gym);
-		return "redirect:search";
+	public String editConfirm(Model model, @ModelAttribute("gym") Gym gym) {
+		
+		return gymService.addGym(gym, model);
 	}
-	
-	@ModelAttribute("cities")
-	public List<String> getCities() {
-		List<String> cities = Arrays.asList("VIENNA","INNSBRUCK","LINZ", "SALZBURG");
-		return cities;
-	}
-	@ModelAttribute("regions")
-	public List<String> getRegions() {
-		List<String> regions = Arrays.asList("UPPER AUSTRIA","LOWER AUSTRIA","TYROL", "VORALRBERG");
-		return regions;
-	}
-
-	
-//	@ModelAttribute("cities")
-//	public List<City> cities() {
-//		List<City> cities = Arrays.asList(new City(1, "VIENNA"), new City(2, "INNSBRUCK"), new City(3, "LINZ"), new City(4, "SALZBURG"));
-//		return cities;
-//	}
-//	
-//	static class City {
-//		private int id;
-//		private String name;
-//		
-//		public City(int id, String name) {
-//			super();
-//			this.id = id;
-//			this.name = name;
-//		}
-//		public int getId() {
-//			return id;
-//		}
-//		public void setId(int id) {
-//			this.id = id;
-//		}
-//		public String getName() {
-//			return name;
-//		}
-//		public void setName(String name) {
-//			this.name = name;
-//		}
-//		
-//	}
 
 }

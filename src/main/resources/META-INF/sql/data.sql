@@ -1,12 +1,22 @@
-INSERT INTO gyms (id,name,city,region,address,phoneNumber,headCoach) VALUES (1,'BJJ','Vienna','LowerAustria','RandomStrasse','44855465465','John');
-INSERT INTO gyms (id,name,city,region,address,phoneNumber,headCoach) VALUES (2,'MMA','Vienna','LowerAustria','NullStrasse','44855465465','John');
-INSERT INTO gyms (id,name,city,region,address,phoneNumber,headCoach) VALUES (3,'MT','Linz','UpperAustria','PiotrStrasse','448523465465','John');
-INSERT INTO gyms (id,name,city,region,address,phoneNumber,headCoach) VALUES (4,'JUDO','Tirol','Tirol','AclStrasse','44555555555','John');
+INSERT INTO Region (id, name) VALUES (1,'VIENNA');
+INSERT INTO Region (id, name) VALUES (2,'LOWER AUSTRIA');
+INSERT INTO Region (id, name) VALUES (3,'UPPER AUSTRIA');
+INSERT INTO Region (id, name) VALUES (4,'STYRIA');
+INSERT INTO Region (id, name) VALUES (5,'TYROL');
+INSERT INTO Region (id, name) VALUES (6,'CARINTHIA');
+INSERT INTO Region (id, name) VALUES (7,'SALZBURG');
+INSERT INTO Region (id, name) VALUES (8,'VORARLBERG');
+INSERT INTO Region (id, name) VALUES (9,'BURGENLAND');
 
-INSERT INTO cities (id, name) VALUES (1,'VIENNA');
-INSERT INTO cities (id, name) VALUES (2,'INNSBRUCK');
-INSERT INTO cities (id, name) VALUES (3,'LINZ');
-INSERT INTO cities (id, name) VALUES (4,'SALZBURG');
+INSERT INTO cities (id, name, region_id) VALUES (1,'VIENNA', 1);
+INSERT INTO cities (id, name, region_id) VALUES (2,'INNSBRUCK', 5);
+INSERT INTO cities (id, name, region_id) VALUES (3,'LINZ', 3);
+INSERT INTO cities (id, name, region_id) VALUES (4,'SALZBURG', 7);
+
+INSERT INTO gyms (id,name,city_id, address,phoneNumber,headCoach) VALUES (1,'BJJ',1,'RandomStrasse','44855465465','John');
+INSERT INTO gyms (id,name,city_id, address,phoneNumber,headCoach) VALUES (2,'MMA', 1,'NullStrasse','44855465465','John');
+INSERT INTO gyms (id,name,city_id, address,phoneNumber,headCoach) VALUES (3,'MT', 3,'PiotrStrasse','448523465465','John');
+INSERT INTO gyms (id,name,city_id, address,phoneNumber,headCoach) VALUES (4,'JUDO', 4,'AclStrasse','44555555555','John');
 
 INSERT INTO Event (id,nameOfEvent,typeOfEvent,host,organizer,startDate,endDate, startHour, deadline, locationCity, locationAddress,fee, status) VALUES (1,'Summer Camp','CAMP','Carlos Maia','John','12-05-2019','20-05-2019', '10:00', '12-04-2019', 'Dupowo', 'Dupowato', '300', 'SUBMITTED');
 INSERT INTO Event (id,nameOfEvent,typeOfEvent,host,organizer,startDate,endDate, startHour, deadline, locationCity, locationAddress,fee, status) VALUES (2,'Adam Wardzinski Seminar','SEMINAR','Pawel Kozlowski','John','12-08-2019','13-05-2019', '10:00', '12-07-2019', 'Vienna', 'Dupowato', '50', 'SUBMITTED');

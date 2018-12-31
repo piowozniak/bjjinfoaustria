@@ -20,25 +20,38 @@
 	<h2>search</h2>
 
 	<!--  wyszukiwarka  -->
-	<f:form action="${contextPath }/gymsbycity" method="get">
-		<input name="name" />
-		<select name="city">
-			<option value="">CHOOSE</option>
-			<c:forEach items="${cities}" var="city">
-				<option value="${city}">${city}</option>
-			</c:forEach>
-		</select>
-		<select name="region">
+		<label>State:</label>
+	<form style="display: inline;" action="${contextPath }/findbyregion"
+		method="get">
+		<select name="regionId" id="regionId" onchange="this.form.submit()">
 			<option value="">CHOOSE</option>
 			<c:forEach items="${regions}" var="region">
-				<option value="${region}">${region}</option>
+				<option value="${region.id}">${region.name}</option>
 			</c:forEach>
 		</select>
-
+	</form>
+	<label>City:</label>
+	<form style="display: inline;" action="${contextPath }/findbycity"
+		method="get">
+		<select name="cityId" id="cityId" onchange="this.form.submit()">
+			<option value="">CHOOSE</option>
+			<c:forEach items="${cities}" var="city">
+				<option value="${city.id}">${city.name}</option>
+			</c:forEach>
+		</select>
+	</form></br>
+	<label>Name of the gym:</label>
+	<f:form style="display: inline;" action="${contextPath }/gymsbyname" method="get">
+		<input name="name" />
 		<button type="submit">Search</button>
 	</f:form>
+	<f:form style="display: inline;" action="${contextPath }/search"
+		method="get">
+		<button type="submit">reset search</button>
+	</f:form>
 
-	<h2 style="display: inline;">gyms</h2>
+
+	<h2 >gyms</h2>
 	<sec:authorize access="hasRole('ROLE_ADMIN')">
 		<f:form style="display: inline;" action="${contextPath }/add"
 			method="get">
@@ -49,8 +62,8 @@
 	<c:forEach items="${gyms}" var="gym">
 		<tr>
 			<td>${gym.name}</td>
-			<td>${gym.city}</td>
-			<td>${gym.region}</td>
+			<td>${gym.city.name}</td>
+
 			<td>${gym.address}</td>
 			<td>${gym.phoneNumber}</td>
 			<td>${gym.headCoach}</td>

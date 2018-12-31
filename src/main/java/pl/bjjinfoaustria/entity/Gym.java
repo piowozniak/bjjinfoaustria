@@ -24,30 +24,15 @@ public class Gym {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String name;
-	private String city;
-	private String region;
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="city_id")
+	private City city;
 	private String address;
 	private String phoneNumber;
 	private String headCoach;
 
 	public long getId() {
 		return id;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getRegion() {
-		return region;
-	}
-
-	public void setRegion(String region) {
-		this.region = region;
 	}
 
 	public String getAddress() {
@@ -85,4 +70,13 @@ public class Gym {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public City getCity() {
+		return city;
+	}
+
+	public void setCity(City city) {
+		this.city = city;
+	}
+	
 }

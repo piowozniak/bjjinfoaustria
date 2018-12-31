@@ -28,10 +28,9 @@
 		</div>
 		<div>
 			City:
-			<f:select path="city" items="${cities}" />
+			<f:select path="city.id" items="${cities}" itemLabel="name"
+				itemValue="id" />
 			<div></div>
-			Region:
-			<f:select path="region" items="${regions}" />
 			<div></div>
 			Address:
 			<f:input path="address" />
