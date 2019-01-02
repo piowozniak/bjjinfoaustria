@@ -32,25 +32,20 @@ public class GymController {
 	}
 	
 	@RequestMapping(path="/delete/{id}")
-	public String deleteGym(@PathVariable("id") Long id, Model model) {
-		Gym gym = gymService.findGym(id);
-		model.addAttribute("gym", gym);
-		return "deletegym";
+	public String deleteGymForm(@PathVariable("id") Long id, Model model) {
+		return gymService.deleteGymForm(model, id);
 	}
 	@PostMapping(path="/delete")
 	public String deleteConfirm(@ModelAttribute("gym") Gym gym) {
-		gymService.deleteGym(gym);
-		return "redirect:search";
+		return gymService.deleteGymConfirm(gym);
 	}
 	@RequestMapping(path="/edit/{id}")
 	public String editGym(@PathVariable("id") Long id, Model model) {
-		Gym gym = gymService.findGym(id);
-		model.addAttribute("gym", gym);
-		return "addgym";
+		return gymService.editGymForm(model, id);
 	}
+	
 	@PostMapping(path="/edit")
-	public String editConfirm(Model model, @ModelAttribute("gym") Gym gym) {
-		
+	public String editConfirm(Model model, @ModelAttribute("gym") Gym gym) {		
 		return gymService.addGym(gym, model);
 	}
 

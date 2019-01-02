@@ -74,19 +74,32 @@ public class SearchServiceImpl implements SearchService, ModelService, GymServic
 	@Override
 	public String addGym(Gym gym, Model model) {
 		gymRepository.save(gym);
-		cities = cityRepository.findAll();
 		addAttributesToModel(model);
 		return "redirect:search";
 	}
 
 	@Override
-	public Gym findGym(long id) {		
-		return gymRepository.findOne(id);
+	public String editGymForm(Model model, long id) {		
+		Gym gym = gymRepository.findOne(id);
+		cities.clear();
+		cities = cityRepository.findAll();
+		model.addAttribute("gym", gym);
+		addAttributesToModel(model);
+		return "addgym";
 	}
 
 	@Override
-	public void deleteGym(Gym gym) {
-		gymRepository.delete(gym);		
+	public String deleteGymForm(Model model, long id) {
+		Gym gym = gymRepository.findOne(id);	
+		model.addAttribute("gym", gym);
+		return "deletegym"; 
+	}
+	
+	@Override
+	public String deleteGymConfirm(Gym gym1) {
+		Gym gym = gymRepository.findOne(gym1.getId());
+		gymRepository.delete(gym);
+		return "redirect:search";
 	}
 
 	@Override
@@ -97,5 +110,7 @@ public class SearchServiceImpl implements SearchService, ModelService, GymServic
 		model.addAttribute("cities", cities);
 		return "addgym";
 	}
+
+
 
 }

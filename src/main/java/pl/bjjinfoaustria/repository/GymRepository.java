@@ -26,6 +26,9 @@ public interface GymRepository extends JpaRepository<Gym, Long> {
 	List<Gym> findGymsByCity(@Param("cityId") Long cityId);
 	
 	List<Gym> findByName(String name);
+	@Query(value="delete from gyms g where g.id = :id ", nativeQuery=true)
+	void deleteById(@Param("id") long id);
+	
 
 }
 	
