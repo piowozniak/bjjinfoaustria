@@ -24,7 +24,7 @@
 		</div>
 		<div>
 			User name:
-			<f:input path="userName" />
+			<f:input path="username" />
 		</div>
 		<div>
 			First name:

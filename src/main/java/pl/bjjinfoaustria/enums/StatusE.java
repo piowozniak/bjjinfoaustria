@@ -3,12 +3,15 @@ package pl.bjjinfoaustria.enums;
 public enum StatusE {
 	
 	ACTIVE("ACTIVE"),
+	STARTED("STARTED"),
 	SUBMITTED("SUBMITTED"),
 	DRAFT("DRAFT"),
 	NONACTIVE("NONACTIVE"),
 	ACCEPTED("ACCEPTED"),
 	SIGNED("SIGNED"),
-	REJECTED("REJECTED");
+	REJECTED("REJECTED"),
+	ACTIVEUSER("A"),
+	NONACTIVEUSER("N");
 	
 	private final String value;
 

@@ -98,5 +98,24 @@ public class UserPageServiceImpl implements UserPageService, ModelService {
 		model.addAttribute("displayedCreatedEvents", displayedCreatedEvents);
 	}
 
+	@Override
+	public String editUser(Model model) {
+		this.user = userRepository.findOne(user.getId());
+		addAttributesToModel(model);
+		return "edituser";
+	}
+
+	@Override
+	public String editUserConfirmation(Model model, User user) {
+		this.user.setEmail(user.getEmail());
+		this.user.setUsername(user.getUsername());
+		this.user.setFirstName(user.getFirstName());
+		this.user.setLastName(user.getLastName());
+		this.user.setPhoneNumber(user.getPhoneNumber());
+		userRepository.saveAndFlush(this.user);	
+		addAttributesToModel(model);
+		return "userpage";
+	}
+
 
 }

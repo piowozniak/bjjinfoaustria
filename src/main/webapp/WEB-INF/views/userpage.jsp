@@ -34,7 +34,7 @@
 		<button type="submit">events</button>
 	</f:form>
 
-	<h2>${pageContext.request.remoteUser}page</h2>
+	<h2>${pageContext.request.remoteUser} page</h2>
 	<c:url value="/logout" var="logoutUrl" />
 	<form id="logout" action="${logoutUrl}" method="post">
 		<input type="hidden" name="${_csrf.parameterName}"
@@ -63,7 +63,7 @@
 		<td>${user.email }</td>
 		<td>${user.phoneNumber }</td>
 		<f:form method="get"
-			action="${contextPath }/edituserdetails?id=${user.id }">
+			action="${contextPath }/edituserdetails">
 			<button type="submit">edit details</button>
 		</f:form>
 	</c:if>

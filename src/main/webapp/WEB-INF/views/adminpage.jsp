@@ -76,11 +76,20 @@
 			</button>
 		</f:form>
 		
+		
 		<f:form style="display: inline;"
 			action="${contextPath }/edituser/${user.id}" method="get">
 			
 			<button type="submit">edit user</button>
 		</f:form>
+		<c:if test="${user.roles.size() != 2}">
+		<f:form style="display: inline;"
+			action="${contextPath }/giverole/${user.id}" method="post">
+			<input type="hidden" name="${_csrf.parameterName}"
+			value="${_csrf.token}" />
+			<button type="submit">give organizer role</button>
+		</f:form>
+		</c:if>
 		</br>
 
 	</c:forEach>

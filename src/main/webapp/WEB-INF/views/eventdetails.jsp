@@ -51,6 +51,7 @@
 	</br>
 	<div>----------------------------------------------</div>
 	</br>
+
 	<c:if
 		test="${event.status == 'DRAFT' && pageContext.request.remoteUser == event.organizer }">
 		<f:form action="${contextPath }/editdivisions/${event.id }"
@@ -77,7 +78,7 @@
 		</c:if>
 	</sec:authorize>
 	<c:if
-		test="${event.status == 'SUBMITTED' && event.typeOfEvent == 'COMPETITION'}">
+		test="${event.status == 'SUBMITTED' && event.typeOfEvent == 'COMPETITION' && pageContext.request.remoteUser == event.organizer }">
 		<f:form action="${contextPath }/createbrackets/${event.id}"
 			method="get">
 			<button type="submit">create brackets</button>

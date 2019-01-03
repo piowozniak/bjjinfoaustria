@@ -40,8 +40,8 @@ public class UserController {
 	}
 	
 	@RequestMapping(path="/edituserdetails")
-	public String editUserDetails(Model model, @RequestParam("id")String id) {
-		return "";
+	public String editUserDetails(Model model) {
+		return userPageService.editUser(model);
 	}
 	
 	@PostMapping(path="/activateuserinevent/{id}")

@@ -51,6 +51,10 @@ public class AdminController {
 		System.out.println(model.containsAttribute("user"));
 		return adminService.editUserConfirmation(model, user);
 	}
+	@PostMapping(path="/giverole/{id}")
+	public String giveOrganizerRole(Model model, @PathVariable("id") long id) {
+		return adminService.giveOrganizerRole(model, id);
+	}
 	
 
 }

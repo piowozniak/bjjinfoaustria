@@ -11,20 +11,21 @@ import org.springframework.ui.Model;
 
 import pl.bjjinfoaustria.entity.Role;
 import pl.bjjinfoaustria.entity.User;
+import pl.bjjinfoaustria.enums.StatusE;
 import pl.bjjinfoaustria.repository.RoleRepository;
 import pl.bjjinfoaustria.repository.UserRepository;
 import pl.bjjinfoaustria.service.AdminService;
+import pl.bjjinfoaustria.service.ModelService;
 
 @Service
-public class AdminServiceImpl implements AdminService {
+public class AdminServiceImpl implements AdminService, ModelService {
 	
 	private final UserRepository userRepository;
 	private final RoleRepository roleRepository;
 	private List<User> allUsers = new ArrayList<>();
 	private User user;
 	private boolean displayUserConfirmation=false;
-	private final String ACTIVE = "A";
-	private final String NONACTIVE = "N";
+	
 	private final long ROLE_USER = 2;
 	private final long ROLE_ORGANIZER = 3;
 	private Set<Role> roles = new HashSet<>();
@@ -42,7 +43,7 @@ public class AdminServiceImpl implements AdminService {
 	public String displayUsers(Model model) {
 		allUsers = userRepository.findAll();
 		displayUserConfirmation=false;
-		addToModel(model);
+		addAttributesToModel(model);
 		return "adminpage";	
 		
 	}
@@ -50,7 +51,7 @@ public class AdminServiceImpl implements AdminService {
 	public String dislayUserToActivateOrDeactivate(Model model, long id) {
 		user = userRepository.findOne(id);
 		displayUserConfirmation = true;
-		addToModel(model);
+		addAttributesToModel(model);
 		return "adminpage";
 	}
 
@@ -59,15 +60,15 @@ public class AdminServiceImpl implements AdminService {
 		//TO DO refactor
 		
 		User userFromAllUsers = allUsers.stream().filter(u -> u.getId() == user.getId()).findFirst().get();
-		if (ACTIVE.equals(userFromAllUsers.getStatus())) {
-			userFromAllUsers.setStatus(NONACTIVE);
-		} else if (NONACTIVE.equals(userFromAllUsers.getStatus())) {
-			userFromAllUsers.setStatus(ACTIVE);
+		if (StatusE.ACTIVEUSER.getValue().equals(userFromAllUsers.getStatus())) {
+			userFromAllUsers.setStatus(StatusE.NONACTIVEUSER.getValue());
+		} else if (StatusE.NONACTIVEUSER.getValue().equals(userFromAllUsers.getStatus())) {
+			userFromAllUsers.setStatus(StatusE.ACTIVEUSER.getValue());
 			userFromAllUsers.setRoles(setUserRole(userFromAllUsers));
 		}
 		userRepository.saveAndFlush(userFromAllUsers);
 		displayUserConfirmation = false;
-		addToModel(model);
+		addAttributesToModel(model);
 		return "adminpage";
 	}
 	private Set<Role> setUserRole(User user) {
@@ -79,7 +80,7 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public String editUser(Model model, long id) {
 		this.user = userRepository.findOne(id);
-		addToModel(model);
+		addAttributesToModel(model);
 		return "edituser";
 	}
 	
@@ -93,12 +94,23 @@ public class AdminServiceImpl implements AdminService {
 		userRepository.saveAndFlush(this.user);
 		allUsers.clear();
 		allUsers = userRepository.findAll();		
-		addToModel(model);
+		addAttributesToModel(model);
+		return "adminpage";
+	}
+	
+	@Override
+	public String giveOrganizerRole(Model model, long id) {
+		User user = userRepository.findOne(id);
+		Role role = roleRepository.findOne(ROLE_ORGANIZER);
+		user.getRoles().add(role);
+		userRepository.save(user);
+		addAttributesToModel(model);
 		return "adminpage";
 	}
 
 	
-	private void addToModel(Model model ) {
+	@Override
+	public void addAttributesToModel(Model model) {
 		model.addAttribute("allUsers", allUsers);
 		model.addAttribute("user", user);
 		model.addAttribute("displayUserConfirmation", displayUserConfirmation);
@@ -132,12 +144,6 @@ public class AdminServiceImpl implements AdminService {
 	public void setDisplayUserConfirmation(boolean displayUserConfirmation) {
 		this.displayUserConfirmation = displayUserConfirmation;
 	}
-
-
-	
-
-
-
 
 
 }

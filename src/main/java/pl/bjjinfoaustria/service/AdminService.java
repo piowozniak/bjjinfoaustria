@@ -13,5 +13,6 @@ public interface AdminService {
 	String confirmUser(Model model, User user);
 	String editUser(Model model, long id ) ;
 	String editUserConfirmation(Model model, User user);
+	String giveOrganizerRole(Model model, long id);
 
 }
