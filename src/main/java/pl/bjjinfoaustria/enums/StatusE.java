@@ -3,7 +3,7 @@ package pl.bjjinfoaustria.enums;
 public enum StatusE {
 	
 	ACTIVE("ACTIVE"),
-	STARTED("STARTED"),
+	RELEASED("RELEASED"),
 	SUBMITTED("SUBMITTED"),
 	DRAFT("DRAFT"),
 	NONACTIVE("NONACTIVE"),

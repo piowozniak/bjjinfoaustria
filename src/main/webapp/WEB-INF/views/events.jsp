@@ -45,7 +45,7 @@
 								test="${event.status == 'SUBMITTED' || event.status == 'NONACTIVE'}">						
 						activate event
 					</c:if>
-							<c:if test="${event.status == 'ACTIVE' }">
+							<c:if test="${event.status == 'ACTIVE' || event.status == 'RELEASED'}">
 						deactivate event
 					</c:if>
 							<input type="hidden" name="${_csrf.parameterName}"

@@ -34,7 +34,6 @@ public class AdminController {
 	}
 	@RequestMapping(path="/activateuser/{id}", method = RequestMethod.GET)
 	public String activateUser(@PathVariable(value="id", required=false) long id, Model model ) {
-		System.out.println(id);
 		return adminService.dislayUserToActivateOrDeactivate(model, id);
 	}
 	@PostMapping(path="/confirmuseractivation")

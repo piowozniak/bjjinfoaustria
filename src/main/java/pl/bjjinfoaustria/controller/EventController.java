@@ -88,6 +88,15 @@ public class EventController {
 		return eventService.showEventDetails(id, model);
 	}
 	
+	@GetMapping(path="/closeregistration")
+	public String closeRegistration(Model model) {
+		return eventService.closeRegistration(model);
+	}
+	@PostMapping(path="/closeregistration/{id}")
+	public String closeRegistrationConfirmation(Model model, @PathVariable("id") long id) {
+		return eventService.closeRegistrationConfirmation(model, id);
+	}
+	
 	@ModelAttribute("participants" )
 	public List<User> getUsers() {
 		return userRepository.findAll();

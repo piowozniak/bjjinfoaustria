@@ -38,6 +38,7 @@ public class Event {
 	private String locationAddress;
 	private String fee;
 	private String status;
+	private String registrationAvailable;
 	@OneToMany(mappedBy="event", fetch = FetchType.EAGER, orphanRemoval = true)
 	@OrderColumn(name = "id")
 	private List<Division> divisions = new ArrayList<>(); 
@@ -146,6 +147,12 @@ public class Event {
 	}
 	public void setStatus(String string) {
 		this.status = string;
+	}
+	public String getRegistrationAvailable() {
+		return registrationAvailable;
+	}
+	public void setRegistrationAvailable(String registrationAvailable) {
+		this.registrationAvailable = registrationAvailable;
 	}
 	
 

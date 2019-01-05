@@ -49,11 +49,12 @@ public class EventServiceImpl implements EventService, DivisionService, ModelSer
 	private List<Division> temporaryListOfDivisions;
 	private List<Division> divisionsToRemove = new ArrayList<>();
 	private boolean editEvent;
-	private boolean displayDraftOrSubmitField = false;
+	private boolean displayDraftOrSubmitField;
 	private final String[] displayEvents = {"Camp", "Seminar", "Competition"};
 	private String username;
 	private long userId;
 	private boolean isUserAddedToEvent;
+	private boolean isCloseRegistrationAvailable;
 	
 	@Override
 	public String initializeEventsPage(Model model) {
@@ -72,7 +73,7 @@ public class EventServiceImpl implements EventService, DivisionService, ModelSer
 		} else if (SecurityContext.loggedUserByRole().equals("ROLE_ORGANIZER")){
 			return eventRepository.findAllActiveOrByOrganizer(username);
 		} 
-		return eventRepository.findByStatus(StatusE.ACTIVE.getValue());
+		return eventRepository.findByStatus();
 	}
 	
 	private List<Event> setEventsListByTypeAndRole(String camp, String seminar, String competition) {
@@ -93,6 +94,7 @@ public class EventServiceImpl implements EventService, DivisionService, ModelSer
 	@Override
 	public String addEvent(Event event, Model model) {
 		event.setOrganizer(username);
+		event.setRegistrationAvailable("N");
 		if (EventE.COMPETITION.getValue().equals(event.getTypeOfEvent())) {
 			event.setStatus(StatusE.DRAFT.getValue());
 			addModelAttributeIfEventIsCompetition(model, event);
@@ -142,11 +144,6 @@ public class EventServiceImpl implements EventService, DivisionService, ModelSer
 		competitor.setDivision(division);
 		competitorRepository.saveAndFlush(competitor);
 	}
-
-	@Override
-	public Event findEventById(long id) {
-		return eventRepository.findOne(id);
-	}
 	
 	@Override
 	public String displayEventsByType(Model model, String camp, String seminar, String competition) {
@@ -163,6 +160,7 @@ public class EventServiceImpl implements EventService, DivisionService, ModelSer
 		String status = event.getStatus().equals(StatusE.SUBMITTED.getValue()) 
 				|| event.getStatus().equals(StatusE.NONACTIVE.getValue()) ? StatusE.ACTIVE.getValue() : StatusE.NONACTIVE.getValue();
 		event.setStatus(status);
+		event.setRegistrationAvailable("T");
 		eventRepository.saveAndFlush(event);
 		model.addAttribute("events", eventRepository.findAll());
 		return "";
@@ -280,9 +278,28 @@ public class EventServiceImpl implements EventService, DivisionService, ModelSer
 	public String showEventDetails(long id, Model model) {
 		event = eventRepository.findOne(id);
 		isUserAddedToEvent = eventRepository.findUserInEvent(id, userId).isEmpty() ? false : true;
+		isCloseRegistrationAvailable = false;
+		model.addAttribute("isCloseRegistrationAvailable", isCloseRegistrationAvailable);
 		model.addAttribute("event", event);
 		model.addAttribute("isUserAddedToEvent", isUserAddedToEvent);
 		return "eventdetails";
+	}
+	
+	@Override
+	public String closeRegistration(Model model) {
+		isCloseRegistrationAvailable = true;
+		model.addAttribute("isCloseRegistrationAvailable", isCloseRegistrationAvailable);
+		model.addAttribute("event", event);
+		model.addAttribute("isUserAddedToEvent", isUserAddedToEvent);
+		return "eventdetails";
+	}
+
+	@Override
+	public String closeRegistrationConfirmation(Model model, long id) {
+		event = eventRepository.findOne(id);
+		event.setRegistrationAvailable("N");
+		eventRepository.save(event);
+		return "redirect:/eventdetails/" + id;
 	}
 
 	public List<Division> getListOfDivisions() {

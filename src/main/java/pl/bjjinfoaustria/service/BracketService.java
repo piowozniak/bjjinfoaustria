@@ -13,4 +13,5 @@ public interface BracketService {
 	String addCompetitor(Model model, int index);
 	String removeCompetitor(Model model, int fightIndex, int competitorIndex);
 	String saveBrackets(Model model);
+	String submitBracketConfirmation(Model model);
 }

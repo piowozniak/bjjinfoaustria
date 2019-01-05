@@ -51,9 +51,21 @@
 	</br>
 	<div>----------------------------------------------</div>
 	</br>
+	<c:if test="${isCloseRegistrationAvailable }">
+		<div>are you sure you would like to close registration?</div>
+		<f:form method="post" modelAttribute="event"
+			action="${contextPath }/closeregistration/${event.id }">
+			<button type="submit">confirm</button>
+			<input type="hidden" name="${_csrf.parameterName}"
+				value="${_csrf.token}" />
 
+		</f:form>
+		<f:form method="get" action="${contextPath }/eventdetails/${event.id }">
+			<button type="submit">cancel</button>
+		</f:form>
+	</c:if>
 	<c:if
-		test="${event.status == 'DRAFT' && pageContext.request.remoteUser == event.organizer }">
+		test="${event.status == 'DRAFT' && event.typeOfEvent == 'COMPETITION' && pageContext.request.remoteUser == event.organizer }">
 		<f:form action="${contextPath }/editdivisions/${event.id }"
 			method="get">
 			<button type="submit">edit divisions</button>
@@ -62,8 +74,8 @@
 	</c:if>
 	<sec:authorize access="hasRole('ROLE_USER')">
 		<c:if
-			test="${(event.status == 'ACTIVE' && !isUserAddedToEvent && (event.typeOfEvent == 'CAMP' || event.typeOfEvent == 'SEMINAR')) 
-		|| event.typeOfEvent == 'COMPETITION'}">
+			test="${((event.status == 'ACTIVE' && !isUserAddedToEvent && event.registrationAvailable == 'T') 
+			|| (event.status == 'ACTIVE' && event.registrationAvailable == 'T' && event.registrationAvailable == 'T')) && !isCloseRegistrationAvailable}">
 			<form method="get" style="display: inline;"
 				action="${contextPath }/addusertoevent/${event.id }">
 				<button type="submit">join ${event.typeOfEvent }</button>
@@ -78,17 +90,23 @@
 		</c:if>
 	</sec:authorize>
 	<c:if
-		test="${event.status == 'SUBMITTED' && event.typeOfEvent == 'COMPETITION' && pageContext.request.remoteUser == event.organizer }">
+		test="${event.status == 'ACTIVE' && event.typeOfEvent == 'COMPETITION' &&  event.registrationAvailable == 'N' && pageContext.request.remoteUser == event.organizer }">
 		<f:form action="${contextPath }/createbrackets/${event.id}"
 			method="get">
 			<button type="submit">create brackets</button>
 		</f:form>
 	</c:if>
 	<c:if
-		test="${event.status == 'ACTIVE' && event.typeOfEvent == 'COMPETITION' }">
+		test="${event.status == 'RELEASED' && event.typeOfEvent == 'COMPETITION' }">
 		<f:form action="${contextPath }/displaybrackets/${event.id}"
 			method="get">
 			<button type="submit">display brackets</button>
+		</f:form>
+	</c:if>
+	<c:if
+		test="${event.status == 'ACTIVE' && event.registrationAvailable == 'T' && !isCloseRegistrationAvailable && pageContext.request.remoteUser == event.organizer}">
+		<f:form action="${contextPath }/closeregistration" method="get">
+			<button type="submit">close registration</button>
 		</f:form>
 	</c:if>
 	<c:if test="${event.typeOfEvent=='COMPETITION'}">
@@ -116,7 +134,7 @@
 				<c:forEach items="${division.competitors }" var="participant">
 					<c:if test="${participant != null }">
 						<tr>
-							
+
 							<td>${participant.user.firstName }</td>
 							<td>${participant.user.lastName }</td>
 							<td>${participant.user.email }</td>

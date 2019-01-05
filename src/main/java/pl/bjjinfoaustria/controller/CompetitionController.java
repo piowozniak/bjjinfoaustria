@@ -39,9 +39,12 @@ public class CompetitionController {
 		return bracketService.removeCompetitor(model, fightIndex, competitorIndex);
 	}
 	@GetMapping(path="/submitbrackets")
-	public String saveBrackets(Model model) {
-		
+	public String saveBrackets(Model model) {		
 		return bracketService.saveBrackets(model);
+	}
+	@PostMapping(path="/submitbracketsconfirmation")
+	public String submitBracketsConfirmation(Model model) {
+		return bracketService.submitBracketConfirmation(model);
 	}
 	@GetMapping(path="/displaybrackets/{id}")
 	public String displayCompetitionBrackets(@PathVariable("id") long id, Model model) {		

@@ -52,7 +52,7 @@ public class AdminServiceImpl implements AdminService, ModelService {
 		user = userRepository.findOne(id);
 		displayUserConfirmation = true;
 		addAttributesToModel(model);
-		return "adminpage";
+		return "edituser";
 	}
 
 	@Override
@@ -68,8 +68,9 @@ public class AdminServiceImpl implements AdminService, ModelService {
 		}
 		userRepository.saveAndFlush(userFromAllUsers);
 		displayUserConfirmation = false;
+		this.user = userRepository.findOne(user.getId());
 		addAttributesToModel(model);
-		return "adminpage";
+		return "redirect:/edituser/"+user.getId();
 	}
 	private Set<Role> setUserRole(User user) {
 		Role role = roleRepository.findOne(ROLE_USER);
@@ -95,7 +96,7 @@ public class AdminServiceImpl implements AdminService, ModelService {
 		allUsers.clear();
 		allUsers = userRepository.findAll();		
 		addAttributesToModel(model);
-		return "adminpage";
+		return "redirect:/edituser/"+user.getId();
 	}
 	
 	@Override
@@ -105,7 +106,7 @@ public class AdminServiceImpl implements AdminService, ModelService {
 		user.getRoles().add(role);
 		userRepository.save(user);
 		addAttributesToModel(model);
-		return "adminpage";
+		return "redirect:/edituser/" + id;
 	}
 
 	

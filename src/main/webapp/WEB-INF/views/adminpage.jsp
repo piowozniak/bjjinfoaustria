@@ -27,6 +27,10 @@
 		<!--  <a class="button"
 			href="javascript:document.getElementById('logout').submit()">Logout</a>-->
 	</c:if>
+	<f:form style="display: inline;" action="${contextPath }/homepage"
+		method="get">
+		<button type="submit">homepage</button>
+	</f:form>
 
 	<f:form style="display: inline;" action="${contextPath }/search"
 		method="get">
@@ -38,29 +42,6 @@
 	</f:form>
 	</br>
 	<h3>users</h3>
-	<c:if test="${displayUserConfirmation }">
-		<div>confirmation</div>
-		<c:choose>
-			<c:when test="${user.status=='N' }">
-				<p>activate user ${user.username } ?</p>
-			</c:when>
-			<c:otherwise>
-				<p>deactivate user ${user.username } ?</p>
-			</c:otherwise>
-		</c:choose>
-		<f:form method="post" modelAttribute="user"
-			action="${contextPath }/confirmuseractivation?id=${user.id}">
-			<button type="submit">confirm</button>
-			<input type="hidden" name="${_csrf.parameterName}"
-				value="${_csrf.token}" />
-			<div>
-				<f:hidden path="id" />
-			</div>
-		</f:form>
-		<f:form method="get" action="${contextPath }/adminpage">
-			<button type="submit">cancel</button>
-		</f:form>
-	</c:if>
 
 	<c:forEach var="user" items="${allUsers }">
 		<td>${user.username }</td>
@@ -69,27 +50,11 @@
 		<td>${user.status }</td>
 
 		<f:form style="display: inline;"
-			action="${contextPath }/activateuser/${user.id }" method="get">
-			<button type="submit">
-				<c:if test="${user.status == 'N' }">activate user</c:if>
-				<c:if test="${user.status == 'A' }">deactivate user</c:if>
-			</button>
-		</f:form>
-		
-		
-		<f:form style="display: inline;"
 			action="${contextPath }/edituser/${user.id}" method="get">
-			
+
 			<button type="submit">edit user</button>
 		</f:form>
-		<c:if test="${user.roles.size() != 2}">
-		<f:form style="display: inline;"
-			action="${contextPath }/giverole/${user.id}" method="post">
-			<input type="hidden" name="${_csrf.parameterName}"
-			value="${_csrf.token}" />
-			<button type="submit">give organizer role</button>
-		</f:form>
-		</c:if>
+
 		</br>
 
 	</c:forEach>
