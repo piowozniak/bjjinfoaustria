@@ -36,7 +36,7 @@ public class BracketMB {
 		
 	}
 	public void initializeBracketTree() {
-		numberOfFightsInRound = allCompetitorsInDivision.size()%2 == 0 ? allCompetitorsInDivision.size()/2 : null;
+		numberOfFightsInRound = allCompetitorsInDivision.size()%2 == 0 ? allCompetitorsInDivision.size()/2 : prepareFightsWhenCompetitorsAmountIsOdd();
 		for (int i = 0; i<numberOfFightsInRound; i++) {
 			fights.add(new Bracket());
 		}
@@ -50,6 +50,12 @@ public class BracketMB {
 				break;
 			}
 		}
+	}
+	private int prepareFightsWhenCompetitorsAmountIsOdd() {
+		if (allCompetitorsInDivision.size() == 1 ) {
+			return 1;
+		}
+		return allCompetitorsInDivision.size()/2 + 1;
 	}
 	
 	public void removeCompetitorFromFight(int fightIndex, int competitorIndex) {		

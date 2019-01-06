@@ -22,7 +22,7 @@ INSERT INTO Event (id,nameOfEvent,typeOfEvent,host,organizer,startDate,endDate, 
 INSERT INTO Event (id,nameOfEvent,typeOfEvent,host,organizer,startDate,endDate, startHour, deadline, locationCity, locationAddress,fee, status) VALUES (2,'Adam Wardzinski Seminar','SEMINAR','Pawel Kozlowski','john','12-08-2019','13-05-2019', '10:00', '12-07-2019', 'Vienna', 'Dupowato', '50', 'SUBMITTED');
 INSERT INTO Event (id,nameOfEvent,typeOfEvent,host,organizer,startDate,endDate, startHour, deadline, locationCity, locationAddress,fee, status) VALUES (3,'Seminar with Rick Hunley','SEMINAR','Lemmy Krusic','john','12-05-2019','20-05-2019', '10:00', '12-04-2019', 'Linz', 'IndustrizeilleStrasse', '3000', 'SUBMITTED');
 INSERT INTO Event (id,nameOfEvent,typeOfEvent,host,organizer,startDate,endDate, startHour, deadline, locationCity, locationAddress,fee, status) VALUES (4,'Seminar with Frank Artnak','SEMINAR','Mani','john','12-05-2019','20-05-2019', '10:00', '12-04-2019', 'Linz', 'ShitHole', '1300', 'SUBMITTED');
-INSERT INTO Event (id,nameOfEvent,typeOfEvent,host,organizer,startDate,endDate, startHour, deadline, locationCity, locationAddress,fee, status) VALUES (5,'BJJ Austria Open','COMPETITION','Dupa','john','12-05-2019','20-05-2019', '10:00', '12-04-2019', 'Vienna', 'ShitHole', '1300', 'SUBMITTED');
+INSERT INTO Event (id,nameOfEvent,typeOfEvent,host,organizer,startDate,endDate, startHour, deadline, locationCity, locationAddress,fee, status, registrationAvailable) VALUES (5,'BJJ Austria Open','COMPETITION','Dupa','john','12-05-2019','20-05-2019', '10:00', '12-04-2019', 'Vienna', 'ShitHole', '1300', 'ACTIVE', 'N');
 
 INSERT INTO Division (id, event_id) VALUES (5, 1); 
 INSERT INTO Division (id, event_id) VALUES (6, 2); 
@@ -49,7 +49,7 @@ INSERT INTO Competitor (id, division_id, user_id, place, status) VALUES (4, 1, 4
 INSERT INTO Competitor (id, division_id, user_id, place, status) VALUES (5, 1, 5, '0', 'SIGNED');
 INSERT INTO Competitor (id, division_id, user_id, place, status) VALUES (6, 1, 6, '0', 'SIGNED');
 INSERT INTO Competitor (id, division_id, user_id, place, status) VALUES (7, 1, 7, '0', 'SIGNED');
-INSERT INTO Competitor (id, division_id, user_id, place, status) VALUES (8, 1, 8, '0', 'SIGNED');
+
 
 INSERT INTO role (id, name) VALUES (1, 'ROLE_ADMIN');
 INSERT INTO role (id, name) VALUES (2, 'ROLE_USER');

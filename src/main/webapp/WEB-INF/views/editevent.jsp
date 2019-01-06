@@ -28,18 +28,9 @@
 				<f:input path="nameOfEvent" />
 			</div>
 			<div>
-				Organizer:
-				<f:input disabled = "true" path="organizer" />
-			</div>
-			<div>
 				Host:
 				<f:input path="host" />
 			</div>
-			<div>
-				Type of event:
-				<f:input path="typeOfEvent" disabled="true" />
-			</div>
-
 		Start date:
 		<div>
 				<f:input path="startDate" />
@@ -73,6 +64,10 @@
 				<div>
 					<f:hidden path="typeOfEvent" />
 				</div>
+				<div>
+					<f:hidden path="organizer" />
+				</div>
+				
 				<input type="hidden" name="${_csrf.parameterName}"
 					value="${_csrf.token}" />
 				<button type="submit">save details</button>

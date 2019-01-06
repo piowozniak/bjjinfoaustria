@@ -50,18 +50,21 @@ public class DivisionMB {
 				rounds.add(new Round(competitorsInCurrentRound));
 				addFights(round, competitorsInCurrentRound);
 				addFighters(round);
-				competitorsInCurrentRound = competitorsInCurrentRound/2;
+				competitorsInCurrentRound = setCompetitorsInCurrentRound(competitorsInCurrentRound);
 				round++;					
 			}
 			rounds.get(currentRound).setActiveRound(true);
 		}
+	}
+	private int setCompetitorsInCurrentRound(long competitorsInCurrentRound ) {
+		return  competitorsInCurrentRound%2 == 0 ?(int) competitorsInCurrentRound/2 : (int)competitorsInCurrentRound/2 + 1;
 	}
 	private void checkIfWinnerOfDivision( ) {
 		winnerOfDivision = competitors.stream().filter(c -> c.getPlace().equals("1") ).findAny().orElse(null);
 	}
 
 	private void addFights(int round, long competitorsInRound) {
-		int numberOfFightsInRound = (int) (competitorsInRound/2);
+		int numberOfFightsInRound = setCompetitorsInCurrentRound(competitorsInRound);
 		for (int i = 0; i<numberOfFightsInRound; i++) {
 			rounds.get(round).getFightsInRound().add(new Bracket(i+1));
 		}

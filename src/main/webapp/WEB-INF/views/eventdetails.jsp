@@ -51,6 +51,7 @@
 	</br>
 	<div>----------------------------------------------</div>
 	</br>
+	<h2>${ pageContext.request.remoteUser} </h2><h2>${ event.organizer}</h2>
 	<c:if test="${isCloseRegistrationAvailable }">
 		<div>are you sure you would like to close registration?</div>
 		<f:form method="post" modelAttribute="event"

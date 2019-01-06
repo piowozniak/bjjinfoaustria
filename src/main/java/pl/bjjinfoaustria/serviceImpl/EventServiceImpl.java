@@ -95,12 +95,11 @@ public class EventServiceImpl implements EventService, DivisionService, ModelSer
 	public String addEvent(Event event, Model model) {
 		event.setOrganizer(username);
 		event.setRegistrationAvailable("N");
-		if (EventE.COMPETITION.getValue().equals(event.getTypeOfEvent())) {
-			event.setStatus(StatusE.DRAFT.getValue());
+		event.setStatus(StatusE.DRAFT.getValue());
+		if (EventE.COMPETITION.getValue().equals(event.getTypeOfEvent())) {			
 			addModelAttributeIfEventIsCompetition(model, event);
 			return "competitionregistration";
 		}
-		event.setStatus(StatusE.DRAFT.getValue());
 		eventRepository.saveAndFlush(event);
 		Division division = new Division();
 		division.setEvent(event);
@@ -188,6 +187,7 @@ public class EventServiceImpl implements EventService, DivisionService, ModelSer
 		displayDraftOrSubmitField = true;
 		model.addAttribute("displayDraftOrSubmitField", displayDraftOrSubmitField);
 		model.addAttribute("event", event);
+		model.addAttribute("editEvent", editEvent);
 		return "editevent";
 	}
 	@Override
